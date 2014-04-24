@@ -24,7 +24,7 @@ namespace MatrixScreen
             foreach (var viewport in _viewports)
             {
                 viewport.Window.Clear(Color.Black);
-                text.Position = Mouse.GetPosition().ToVector2f();
+                text.Position = new Vector2f(30,30);
                 text.DisplayedString = string.Format("{0}:{1}", Mouse.GetPosition().X, Mouse.GetPosition().Y);
                 viewport.Window.Draw(text);
                 viewport.Window.Display();
