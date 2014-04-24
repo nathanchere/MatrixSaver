@@ -1,6 +1,9 @@
+using System.Drawing;
 using FerretLib.SFML;
 using SFML.Graphics;
 using SFML.Window;
+using Color = SFML.Graphics.Color;
+using Font = SFML.Graphics.Font;
 
 namespace MatrixScreen
 {
@@ -25,6 +28,9 @@ namespace MatrixScreen
             {
                 viewport.Window.Clear(Color.Black);
 
+                text.Color = viewport.WorkingArea.Contains(Mouse.GetPosition().ToPoint()) ?
+                    Color.Green : Color.Red;
+
                 text.Position = new Vector2f(30, 30);
                 text.DisplayedString = string.Format("Cursor: {0}:{1}", Mouse.GetPosition().X, Mouse.GetPosition().Y);
                 viewport.Window.Draw(text);
@@ -33,7 +39,7 @@ namespace MatrixScreen
                 text.DisplayedString = string.Format("Viewport #{0}; origin: {1},{2}",
                     viewport.ID,
                     viewport.WorkingArea.Top,
-                    viewport.WorkingArea.Left);
+                    viewport.WorkingArea.Left);                
                 viewport.Window.Draw(text);
 
                 text.Position = new Vector2f(30, 58);
