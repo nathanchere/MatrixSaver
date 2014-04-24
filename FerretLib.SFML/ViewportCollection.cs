@@ -38,13 +38,12 @@ namespace FerretLib.SFML
 
         private Rectangle GetWorkingArea(List<ViewPort> viewPorts)
         {
-            return new Rectangle(
-                viewPorts.Select(x => x.WorkingArea.X).Min(), // Left
-                viewPorts.Select(x => x.WorkingArea.Y).Min(), // Top
-                viewPorts.Select(x => x.WorkingArea.Right).Min(), // Right
-                viewPorts.Select(x => x.WorkingArea.Bottom).Min() // Bottom
-            );
-
+            var result = new Rectangle();
+            result.X = viewPorts.Select(x => x.WorkingArea.X).Min();
+            result.Y = viewPorts.Select(x => x.WorkingArea.Y).Min();
+            result.Height = viewPorts.Select(x => x.WorkingArea.Bottom).Max() - result.Y;
+            result.Width = viewPorts.Select(x => x.WorkingArea.Right).Max() - result.X;
+            return result;
         }
 
         #region IEnumerable support        

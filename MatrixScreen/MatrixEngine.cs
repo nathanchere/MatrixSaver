@@ -38,8 +38,8 @@ namespace MatrixScreen
                 text.Position = new Vector2f(30, 44);
                 text.DisplayedString = string.Format("Viewport #{0}; origin: {1},{2}",
                     viewport.ID,
-                    viewport.WorkingArea.Top,
-                    viewport.WorkingArea.Left);                
+                    viewport.WorkingArea.Left,
+                    viewport.WorkingArea.Top);
                 viewport.Window.Draw(text);
 
                 text.Position = new Vector2f(30, 58);
