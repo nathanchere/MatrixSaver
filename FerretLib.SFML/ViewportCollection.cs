@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using SFML.Window;
 
 namespace FerretLib.SFML
@@ -8,7 +10,7 @@ namespace FerretLib.SFML
     {
 
         public List<ViewPort> ViewPorts { get; protected set; }
-        public System.Drawing.Rectangle WorkingArea { get; protected set; }
+        public Rectangle WorkingArea { get; protected set; }
 
         public ViewPortCollection(bool isFullScreen, bool isMultiMonitor)
         {
@@ -29,7 +31,20 @@ namespace FerretLib.SFML
                 viewPort.Window.MouseButtonPressed += (o, e) => { if (MouseButtonPressed != null)MouseButtonPressed(viewPort, e); };
                 viewPort.Window.MouseButtonReleased += (o, e) => { if (MouseButtonReleased != null)MouseButtonReleased(viewPort, e); };
                 viewPort.Window.MouseWheelMoved += (o, e) => { if (MouseWheelMoved != null)MouseWheelMoved(viewPort, e); };
-            }            
+            }
+            
+            WorkingArea = GetWorkingArea(ViewPorts);
+        }
+
+        private Rectangle GetWorkingArea(List<ViewPort> viewPorts)
+        {
+            return new Rectangle(
+                viewPorts.Select(x => x.WorkingArea.X).Min(), // Left
+                viewPorts.Select(x => x.WorkingArea.Y).Min(), // Top
+                viewPorts.Select(x => x.WorkingArea.Right).Min(), // Right
+                viewPorts.Select(x => x.WorkingArea.Bottom).Min() // Bottom
+            );
+
         }
 
         #region IEnumerable support        
