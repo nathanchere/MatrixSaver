@@ -59,8 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DebugEngine.cs" />
+    <Compile Include="MatrixEngine\GlyphManager.cs" />
     <Compile Include="MatrixEngine.cs" />
-    <Compile Include="Random.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

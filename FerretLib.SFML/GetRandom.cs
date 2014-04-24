@@ -2,7 +2,7 @@
 
 namespace MatrixScreen
 {
-    public static class Random
+    public static class GetRandom
     {
         private static System.Random _randomNumber;
 

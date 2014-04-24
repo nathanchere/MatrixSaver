@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions.cs" />
+    <Compile Include="GetRandom.cs" />
     <Compile Include="IWorldEngine.cs" />
     <Compile Include="FpsTimer.cs" />
     <Compile Include="ViewPort.cs" />
