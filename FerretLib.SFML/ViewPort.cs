@@ -32,7 +32,7 @@ namespace FerretLib.SFML
             if (isFullScreen)
             {
                 style = Styles.Fullscreen;
-                WorkingArea = screen.WorkingArea;
+                WorkingArea = screen.Bounds;
             } else {                
                 style = Styles.Resize;
                 WorkingArea = new Rectangle(
