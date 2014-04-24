@@ -1,3 +1,4 @@
+using System;
 using FerretLib.SFML;
 using SFML.Graphics;
 using SFML.Window;
@@ -60,11 +61,13 @@ namespace MatrixScreen
                     _viewports.WorkingArea.Bottom);
                 viewport.Window.Draw(text);
 
-                glyphSprite.TextureRect = new IntRect(GLYPH_WIDTH * 4, 0, GLYPH_WIDTH, GLYPH_HEIGHT);
-                glyphSprite.Draw(viewport.Window,RenderStates.Default);
+                glyphSprite.TextureRect = new IntRect(GLYPH_WIDTH * (int)(DateTime.Now.Second * 0.25f), ((int)(DateTime.Now.Millisecond * 0.008)% 4) * GLYPH_HEIGHT, GLYPH_WIDTH, GLYPH_HEIGHT);
+                glyphSprite.Position = Mouse.GetPosition().ToVector2f();
+                glyphSprite.Draw(viewport.Window, RenderStates.Default);
+                glyphSprite.Color = new Color(0,255,0);
 
                 viewport.Window.Display();
-            }
+            }            
         }
 
         void IWorldEngine.Update()
