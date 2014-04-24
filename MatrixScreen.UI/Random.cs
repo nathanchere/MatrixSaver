@@ -1,28 +1,14 @@
-﻿using System;
-using FerretLib.SFML;
-using FerretSS.Engines;
-using SFML.Window;
+﻿using SFML.Window;
 
 namespace MatrixScreen
 {
-    public class Program
-    {        
-
-        private static void Main(string[] args)
-        {
-            var screenSaver = new ScreenSaverEngine();
-            screenSaver.Engine = new Epilepsy01();
-            screenSaver.BindEscapeToExit();
-            screenSaver.Run();            
-        }
-    }
-
-    public static class GetRandom
+    public static class Random
     {
-        private static Random _randomNumber;
-        private static Random RandomNumber
+        private static System.Random _randomNumber;
+
+        private static System.Random RandomNumber
         {
-            get { _randomNumber = _randomNumber ?? new Random(); return _randomNumber; }
+            get { _randomNumber = _randomNumber ?? new System.Random(); return _randomNumber; }
         }
 
         public static float Float(float min, float max)
