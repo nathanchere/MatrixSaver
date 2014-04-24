@@ -1,4 +1,4 @@
-namespace FerretLib.SFML.Utility
+namespace FerretLib.SFML
 {
     public interface IWorldEngine
     {

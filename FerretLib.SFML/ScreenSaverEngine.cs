@@ -1,11 +1,10 @@
-﻿using FerretLib.SFML.Utility;
-using SFML.Window;
+﻿using SFML.Window;
 
 namespace FerretLib.SFML
 {
     public class ScreenSaverEngine
     {
-        private ViewPortCollection _viewPorts;
+        private readonly ViewPortCollection _viewPorts;
         public IWorldEngine Engine { get; set; }    
         private bool _isFinished = false;
 
@@ -40,16 +39,16 @@ namespace FerretLib.SFML
             Engine.Initialise(_viewPorts);
             while (!_isFinished)
             {
-                FPSTimer.Update();
+                FpsTimer.Update();
                 _viewPorts.HandleEvents();
                 Engine.Update();
                 Engine.Render();         
             }
         }
 
-        public double GetFPS()
+        public double GetFps()
         {
-            return FPSTimer.GetFPS;
+            return FpsTimer.GetFps;
         }
 
     }

@@ -53,8 +53,8 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Utility\IWorldEngine.cs" />
-    <Compile Include="Utility\FPSTimer.cs" />
+    <Compile Include="IWorldEngine.cs" />
+    <Compile Include="FPSTimer.cs" />
     <Compile Include="ViewPort.cs" />
     <Compile Include="ScreenSaverEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

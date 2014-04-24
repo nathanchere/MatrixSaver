@@ -1,13 +1,11 @@
 using FerretLib.SFML;
-using FerretLib.SFML.Utility;
 using SFML.Graphics;
 
 namespace MatrixScreen
 {
     public class MatrixEngine : IWorldEngine
     {
-        private ViewPortCollection _viewports;
-        byte r, g, b;
+        private ViewPortCollection _viewports;        
 
         public MatrixEngine()
         {            
@@ -18,7 +16,7 @@ namespace MatrixScreen
         {
             foreach (var viewport in _viewports)
             {
-                viewport.Window.Clear(new Color(r++, g += 2, b += 6));
+                viewport.Window.Clear(Color.Black);
                 viewport.Window.Display();
             }
         }
