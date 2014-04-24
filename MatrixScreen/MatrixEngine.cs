@@ -46,7 +46,7 @@ namespace MatrixScreen
 
         void IWorldEngine.Update()
         {
-
+            glyphs.Update();
         }
 
         void IWorldEngine.Initialise(ViewPortCollection viewports)
