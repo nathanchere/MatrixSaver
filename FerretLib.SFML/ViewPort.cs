@@ -13,11 +13,11 @@ namespace FerretLib.SFML
         /// <summary>
         /// Keeps track of the viewport's position relative to the total desktop/display area available
         /// </summary>
-        public System.Drawing.Rectangle WorkingArea { get; protected set; }
+        public Rectangle WorkingArea { get; protected set; }
 
         public ViewPort(Screen screen, bool isFullScreen)
         {            
-            Styles style = Styles.None;
+            Styles style;
 
             if (isFullScreen)
             {
@@ -48,7 +48,7 @@ namespace FerretLib.SFML
         }
 
         #region IDisposable Support
-        private bool _isDisposed = false;
+        private bool _isDisposed;
 
         void IDisposable.Dispose()
         {

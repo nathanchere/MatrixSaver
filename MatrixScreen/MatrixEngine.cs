@@ -1,14 +1,21 @@
 using FerretLib.SFML;
 using SFML.Graphics;
+using SFML.Window;
 
 namespace MatrixScreen
 {
     public class MatrixEngine : IWorldEngine
     {
-        private ViewPortCollection _viewports;        
+        private ViewPortCollection _viewports;
+        private Text text;
 
         public MatrixEngine()
-        {            
+        {
+            text = new Text {
+                Font = new Font(@"data\lekton.ttf"),                
+                CharacterSize = 12,
+                Color = Color.Green,
+            };
         }
 
         #region IWorldEngine
@@ -17,6 +24,9 @@ namespace MatrixScreen
             foreach (var viewport in _viewports)
             {
                 viewport.Window.Clear(Color.Black);
+                text.Position = Mouse.GetPosition().ToVector2f();
+                text.DisplayedString = string.Format("{0}:{1}", Mouse.GetPosition().X, Mouse.GetPosition().Y);
+                viewport.Window.Draw(text);
                 viewport.Window.Display();
             }
         }
