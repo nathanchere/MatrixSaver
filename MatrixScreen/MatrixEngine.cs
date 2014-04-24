@@ -10,6 +10,11 @@ namespace MatrixScreen
     {
         private ViewPortCollection _viewports;
         private Text text;
+
+        const int GLYPH_TEXTURE_SIZE = 2048;
+        const int GLYPH_WIDTH = GLYPH_TEXTURE_SIZE / 16;
+        const int GLYPH_HEIGHT = GLYPH_TEXTURE_SIZE / 8;
+
         private Texture glyphTexture;
         private Sprite glyphSprite;
 
@@ -55,6 +60,7 @@ namespace MatrixScreen
                     _viewports.WorkingArea.Bottom);
                 viewport.Window.Draw(text);
 
+                glyphSprite.TextureRect = new IntRect(GLYPH_WIDTH * 4, 0, GLYPH_WIDTH, GLYPH_HEIGHT);
                 glyphSprite.Draw(viewport.Window,RenderStates.Default);
 
                 viewport.Window.Display();
