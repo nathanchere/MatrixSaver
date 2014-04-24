@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DebugEngine.cs" />
     <Compile Include="MatrixEngine.cs" />
     <Compile Include="Random.cs" />
     <Compile Include="Program.cs" />

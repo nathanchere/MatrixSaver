@@ -20,7 +20,7 @@ namespace FerretLib.SFML
             int index = 0;
             foreach (var screen in System.Windows.Forms.Screen.AllScreens)
             {
-                ViewPorts.Add(new ViewPort(screen, index++, isFullScreen));
+                ViewPorts.Add(new ViewPort(this, screen, index++, isFullScreen));
                 if (!isMultiMonitor) break;
             }
 
@@ -59,15 +59,15 @@ namespace FerretLib.SFML
 
         public Vector2f GetLocalCoordinates(Vector2i globalCoordinates, ViewPort viewport)
         {
-            if(viewport.ID == 0)
-            return new Vector2f(
-                globalCoordinates.X - -(viewport.WorkingArea.Left),
-                globalCoordinates.Y - -(viewport.WorkingArea.Top)
-                );
+            if (viewport.ID == 0)
+                return new Vector2f(
+                    globalCoordinates.X - -(viewport.WorkingArea.Left),
+                    globalCoordinates.Y - -(viewport.WorkingArea.Top)
+                    );
             int x = globalCoordinates.X - viewport.WorkingArea.Left;
             int y = globalCoordinates.Y - viewport.WorkingArea.Top;
 
-            return new Vector2f(x, y);
+            return new Vector2f(x, y);   
         }
 
         #region IEnumerable support        

@@ -11,6 +11,8 @@ namespace FerretLib.SFML
     /// </todo>
     public class ViewPort : IDisposable
     {
+        public ViewPortCollection Parent { get; protected set; }
+
         public RenderWindow Window { get; protected set; }
 
         /// <summary>
@@ -23,11 +25,12 @@ namespace FerretLib.SFML
         /// </summary>
         public readonly int ID;
 
-        public ViewPort(Screen screen, int id, bool isFullScreen)
-        {            
-            Styles style;
-
+        public ViewPort(ViewPortCollection parent, Screen screen, int id, bool isFullScreen)
+        {
             ID = id;
+            Parent = parent;
+
+            Styles style;            
 
             if (isFullScreen)
             {
@@ -61,6 +64,11 @@ namespace FerretLib.SFML
             Window.SetTitle(Window.Position.X + "," + Window.Position.Y);
         }
 
+        public Vector2f GetLocalCoordinates(Vector2i input)
+        {
+            return Parent.GetLocalCoordinates(input, this);
+        }
+
         #region IDisposable Support
         private bool _isDisposed;
 
@@ -79,7 +87,6 @@ namespace FerretLib.SFML
 
             _isDisposed = true;
         }
-        #endregion
-
+        #endregion        
     }
 }
