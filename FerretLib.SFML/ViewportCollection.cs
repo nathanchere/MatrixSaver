@@ -14,9 +14,10 @@ namespace FerretLib.SFML
         {
             ViewPorts = new List<ViewPort>();
 
+            int index = 0;
             foreach (var screen in System.Windows.Forms.Screen.AllScreens)
             {
-                ViewPorts.Add(new ViewPort(screen, isFullScreen));                
+                ViewPorts.Add(new ViewPort(screen, index++, isFullScreen));
                 if (!isMultiMonitor) break;
             }
 

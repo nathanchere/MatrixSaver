@@ -6,6 +6,9 @@ using SFML.Window;
 
 namespace FerretLib.SFML
 {
+    /// <todo>
+    /// * Add a debug text output helper / shortcut
+    /// </todo>
     public class ViewPort : IDisposable
     {
         public RenderWindow Window { get; protected set; }
@@ -15,9 +18,16 @@ namespace FerretLib.SFML
         /// </summary>
         public Rectangle WorkingArea { get; protected set; }
 
-        public ViewPort(Screen screen, bool isFullScreen)
+        /// <summary>
+        /// Index; only useful for multiple monitors
+        /// </summary>
+        public readonly int ID;
+
+        public ViewPort(Screen screen, int id, bool isFullScreen)
         {            
             Styles style;
+
+            ID = id;
 
             if (isFullScreen)
             {

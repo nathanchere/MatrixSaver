@@ -24,9 +24,18 @@ namespace MatrixScreen
             foreach (var viewport in _viewports)
             {
                 viewport.Window.Clear(Color.Black);
-                text.Position = new Vector2f(30,30);
-                text.DisplayedString = string.Format("{0}:{1}", Mouse.GetPosition().X, Mouse.GetPosition().Y);
+
+                text.Position = new Vector2f(30, 30);
+                text.DisplayedString = string.Format("Cursor: {0}:{1}", Mouse.GetPosition().X, Mouse.GetPosition().Y);
                 viewport.Window.Draw(text);
+
+                text.Position = new Vector2f(30, 60);
+                text.DisplayedString = string.Format("Viewport #{0}; origin: {1},{2}",
+                    viewport.ID,
+                    viewport.WorkingArea.Top,
+                    viewport.WorkingArea.Left);
+                viewport.Window.Draw(text);
+
                 viewport.Window.Display();
             }
         }
