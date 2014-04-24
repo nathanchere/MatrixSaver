@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -36,14 +37,37 @@ namespace FerretLib.SFML
             WorkingArea = GetWorkingArea(ViewPorts);
         }
 
+        public Vector2i CursorPosition()
+        {           
+            return new Vector2i(
+                Mouse.GetPosition().X - WorkingArea.Left,
+                Mouse.GetPosition().Y - WorkingArea.Top
+            );
+        }
+
         private Rectangle GetWorkingArea(List<ViewPort> viewPorts)
         {
-            var result = new Rectangle();
-            result.X = viewPorts.Select(x => x.WorkingArea.X).Min();
-            result.Y = viewPorts.Select(x => x.WorkingArea.Y).Min();
+            var result = new Rectangle
+            {
+                X = viewPorts.Select(x => x.WorkingArea.X).Min(),
+                Y = viewPorts.Select(x => x.WorkingArea.Y).Min()
+            };
             result.Height = viewPorts.Select(x => x.WorkingArea.Bottom).Max() - result.Y;
             result.Width = viewPorts.Select(x => x.WorkingArea.Right).Max() - result.X;
             return result;
+        }
+
+        public Vector2f GetLocalCoordinates(Vector2i globalCoordinates, ViewPort viewport)
+        {
+            if(viewport.ID == 0)
+            return new Vector2f(
+                globalCoordinates.X - -(viewport.WorkingArea.Left),
+                globalCoordinates.Y - -(viewport.WorkingArea.Top)
+                );
+            int x = globalCoordinates.X - viewport.WorkingArea.Left;
+            int y = globalCoordinates.Y - viewport.WorkingArea.Top;
+
+            return new Vector2f(x, y);
         }
 
         #region IEnumerable support        
@@ -77,7 +101,6 @@ namespace FerretLib.SFML
         public event MouseButtonPressedHandler MouseButtonPressed;
         public event MouseButtonReleasedHandler MouseButtonReleased;
         public event MouseWheelMovedHandler MouseWheelMoved;
-        #endregion
-        
+        #endregion        
     }
 }

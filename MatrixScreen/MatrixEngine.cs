@@ -36,10 +36,8 @@ namespace MatrixScreen
         #region IWorldEngine
         void IWorldEngine.Render()
         {
-            int x = Mouse.GetPosition().X - _viewports.WorkingArea.Left;
-            int y = Mouse.GetPosition().Y - _viewports.WorkingArea.Top;
-            var globalCursorText = string.Format("Global cursor: {0}:{1}", x,y);
-
+            var cursorPosition = _viewports.CursorPosition();
+            var globalCursorText = string.Format("Global cursor: {0}:{1}", cursorPosition.X, cursorPosition.Y);
             foreach (var viewport in _viewports)
             {
                 viewport.Window.Clear(Color.Black);
@@ -55,14 +53,20 @@ namespace MatrixScreen
                 text.DisplayedString = globalCursorText;
                 viewport.Window.Draw(text);
 
+                var pos = _viewports.GetLocalCoordinates(Mouse.GetPosition(),viewport);
                 text.Position = new Vector2f(30, 70);
+                text.DisplayedString = string.Format("Local position: {0}:{1}",
+                    pos.X,pos.Y);
+                viewport.Window.Draw(text);
+
+                text.Position = new Vector2f(30, 90);
                 text.DisplayedString = string.Format("Viewport #{0}; origin: {1},{2}",
                     viewport.ID,
                     viewport.WorkingArea.Left,
                     viewport.WorkingArea.Top);
                 viewport.Window.Draw(text);
 
-                text.Position = new Vector2f(30, 90);
+                text.Position = new Vector2f(30, 110);
                 text.DisplayedString = string.Format("Global boundaries: t:{0},l:{1},r:{2},b{3}",
                     _viewports.WorkingArea.Top,
                     _viewports.WorkingArea.Left,
@@ -71,7 +75,7 @@ namespace MatrixScreen
                 viewport.Window.Draw(text);
 
                 glyphSprite.TextureRect = new IntRect(GLYPH_WIDTH * (int)(DateTime.Now.Second * 0.25f), ((int)(DateTime.Now.Millisecond * 0.008)% 4) * GLYPH_HEIGHT, GLYPH_WIDTH, GLYPH_HEIGHT);
-                glyphSprite.Position = Mouse.GetPosition().ToVector2f();
+                glyphSprite.Position = _viewports.GetLocalCoordinates(Mouse.GetPosition(), viewport);
                 glyphSprite.Draw(viewport.Window, RenderStates.Default);
                 glyphSprite.Color = new Color(0,255,0);
 
