@@ -40,6 +40,11 @@ namespace MatrixScreen
         {
             return RandomNumber.Next(min, max);
         }
+        
+        public static bool Bool(float chanceOfTrue = 0.5f)
+        {
+            return Double(0, 1f) <= chanceOfTrue;
+        }
 
         public static byte Byte(byte max = byte.MaxValue)
         {
