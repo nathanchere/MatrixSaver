@@ -36,6 +36,10 @@ namespace MatrixScreen
         #region IWorldEngine
         void IWorldEngine.Render()
         {
+            int x = Mouse.GetPosition().X - _viewports.WorkingArea.Left;
+            int y = Mouse.GetPosition().Y - _viewports.WorkingArea.Top;
+            var globalCursorText = string.Format("Global cursor: {0}:{1}", x,y);
+
             foreach (var viewport in _viewports)
             {
                 viewport.Window.Clear(Color.Black);
@@ -47,14 +51,18 @@ namespace MatrixScreen
                 text.DisplayedString = string.Format("Cursor: {0}:{1}", Mouse.GetPosition().X, Mouse.GetPosition().Y);
                 viewport.Window.Draw(text);
 
-                text.Position = new Vector2f(30, 44);
+                text.Position = new Vector2f(30, 50);
+                text.DisplayedString = globalCursorText;
+                viewport.Window.Draw(text);
+
+                text.Position = new Vector2f(30, 70);
                 text.DisplayedString = string.Format("Viewport #{0}; origin: {1},{2}",
                     viewport.ID,
                     viewport.WorkingArea.Left,
                     viewport.WorkingArea.Top);
                 viewport.Window.Draw(text);
 
-                text.Position = new Vector2f(30, 58);
+                text.Position = new Vector2f(30, 90);
                 text.DisplayedString = string.Format("Global boundaries: t:{0},l:{1},r:{2},b{3}",
                     _viewports.WorkingArea.Top,
                     _viewports.WorkingArea.Left,
@@ -67,7 +75,7 @@ namespace MatrixScreen
                 glyphSprite.Draw(viewport.Window, RenderStates.Default);
                 glyphSprite.Color = new Color(0,255,0);
 
-                glyphSprite.Scale = new Vector2f(0.1f,0.1f);
+                glyphSprite.Scale = new Vector2f(0.6f,0.6f);
 
                 viewport.Window.Display();
             }            
