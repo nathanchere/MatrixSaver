@@ -30,6 +30,7 @@ namespace MatrixScreen
 
             glyphTexture = new Texture(@"data\glyphs.png") {Smooth = true, Repeated = false};
             glyphSprite = new Sprite(glyphTexture);
+            glyphSprite.Origin = new Vector2f(GLYPH_WIDTH * 0.5f, GLYPH_HEIGHT * 0.5f);
         }
 
         #region IWorldEngine
@@ -65,6 +66,8 @@ namespace MatrixScreen
                 glyphSprite.Position = Mouse.GetPosition().ToVector2f();
                 glyphSprite.Draw(viewport.Window, RenderStates.Default);
                 glyphSprite.Color = new Color(0,255,0);
+
+                glyphSprite.Scale = new Vector2f(0.1f,0.1f);
 
                 viewport.Window.Display();
             }            
