@@ -24,5 +24,10 @@ namespace FerretLib.SFML
         {
             return new Point((int)input.X, (int)input.Y);
         }
+
+        public static Vector2f ToVector2f(this Size input)
+        {
+            return new Vector2f(input.Width, input.Height);
+        }
     }
 }
