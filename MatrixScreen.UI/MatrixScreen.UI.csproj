@@ -58,9 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engines\Clouds\Cloud.cs" />
-    <Compile Include="Engines\Clouds\CloudsHandler.cs" />
-    <Compile Include="Engines\Epilepsy01\Epilepsy01.cs" />
+    <Compile Include="MatrixEngine.cs" />
+    <Compile Include="Random.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

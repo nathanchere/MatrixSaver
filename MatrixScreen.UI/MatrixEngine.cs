@@ -1,14 +1,15 @@
 using FerretLib.SFML;
 using FerretLib.SFML.Utility;
 using SFML.Graphics;
-namespace FerretSS.Engines
+
+namespace MatrixScreen
 {
-    public class Epilepsy01 : IWorldEngine
+    public class MatrixEngine : IWorldEngine
     {
         private ViewPortCollection _viewports;
         byte r, g, b;
 
-        public Epilepsy01()
+        public MatrixEngine()
         {            
         }
 
