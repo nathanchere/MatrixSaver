@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FerretLib.SFML", "FerretLib.SFML\FerretLib.SFML.csproj", "{A8A5B3D5-9042-453C-81C7-C66A66F79855}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatrixScreen.UI", "MatrixScreen.UI\MatrixScreen.UI.csproj", "{518695B2-F450-4CC1-9E8F-DDCE94C3DEF9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8A5B3D5-9042-453C-81C7-C66A66F79855}.Debug|x86.ActiveCfg = Debug|x86
+		{A8A5B3D5-9042-453C-81C7-C66A66F79855}.Debug|x86.Build.0 = Debug|x86
+		{A8A5B3D5-9042-453C-81C7-C66A66F79855}.Release|x86.ActiveCfg = Release|x86
+		{A8A5B3D5-9042-453C-81C7-C66A66F79855}.Release|x86.Build.0 = Release|x86
+		{518695B2-F450-4CC1-9E8F-DDCE94C3DEF9}.Debug|x86.ActiveCfg = Debug|x86
+		{518695B2-F450-4CC1-9E8F-DDCE94C3DEF9}.Debug|x86.Build.0 = Debug|x86
+		{518695B2-F450-4CC1-9E8F-DDCE94C3DEF9}.Release|x86.ActiveCfg = Release|x86
+		{518695B2-F450-4CC1-9E8F-DDCE94C3DEF9}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
