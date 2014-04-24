@@ -11,9 +11,19 @@ namespace MatrixScreen
             get { _randomNumber = _randomNumber ?? new System.Random(); return _randomNumber; }
         }
 
+        public static float Float(float max = float.MaxValue)
+        {
+            return Float(0, max);
+        }
+
         public static float Float(float min, float max)
         {
             return (float) Double(min, max);
+        }
+
+        public static double Double(double max = double.MaxValue)
+        {
+            return Double(0,max);
         }
 
         public static double Double(double min, double max)
@@ -21,9 +31,19 @@ namespace MatrixScreen
             return (RandomNumber.NextDouble()*(max - min)) + min;
         }
 
+        public static int Int(int max = int.MaxValue)
+        {
+            return Int(0, max);
+        }
+
         public static int Int(int min, int max)
         {
             return RandomNumber.Next(min, max);
+        }
+
+        public static byte Byte(byte max = byte.MaxValue)
+        {
+            return Byte(0, max);
         }
 
         public static byte Byte(byte min, byte max)
