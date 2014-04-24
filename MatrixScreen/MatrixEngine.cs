@@ -1,4 +1,3 @@
-using System.Drawing;
 using FerretLib.SFML;
 using SFML.Graphics;
 using SFML.Window;
@@ -11,14 +10,20 @@ namespace MatrixScreen
     {
         private ViewPortCollection _viewports;
         private Text text;
+        private Texture glyphTexture;
+        private Sprite glyphSprite;
 
         public MatrixEngine()
         {
-            text = new Text {
-                Font = new Font(@"data\lekton.ttf"),                
+            text = new Text
+            {
+                Font = new Font(@"data\lekton.ttf"),
                 CharacterSize = 12,
                 Color = Color.Green,
             };
+
+            glyphTexture = new Texture(@"data\glyphs.png") {Smooth = true, Repeated = false};
+            glyphSprite = new Sprite(glyphTexture);
         }
 
         #region IWorldEngine
@@ -50,13 +55,15 @@ namespace MatrixScreen
                     _viewports.WorkingArea.Bottom);
                 viewport.Window.Draw(text);
 
+                glyphSprite.Draw(viewport.Window,RenderStates.Default);
+
                 viewport.Window.Display();
             }
         }
 
         void IWorldEngine.Update()
         {
-            
+
         }
 
         void IWorldEngine.Initialise(ViewPortCollection viewports)
@@ -64,6 +71,6 @@ namespace MatrixScreen
             _viewports = viewports;
         }
         #endregion
-        
+
     }
 }
