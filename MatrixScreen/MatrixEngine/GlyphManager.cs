@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using FerretLib.SFML;
 using SFML.Graphics;
 using SFML.Window;
+using Color = SFML.Graphics.Color;
 
 namespace MatrixScreen
 {
@@ -39,9 +41,18 @@ namespace MatrixScreen
             glyphSprite.Color = new Color(0, 255, 0);
 
             glyphSprite.Scale = new Vector2f(0.4f, 0.4f);
-            streams.ForEach(x => {                
+            streams.ForEach(x =>
+            {
+                var shape = new RectangleShape(x.DrawingArea().Size.ToVector2f())
+                {
+                    FillColor = new Color(60,255,0,30),
+                    Position = viewport.GetLocalCoordinates(x.DrawingArea().Location.ToVector2i()),
+                    Origin = new Vector2f(GLYPH_WIDTH * 0.5f, 0),
+                };
+                shape.Draw(viewport.Window, RenderStates.Default);
+
                 glyphSprite.TextureRect = new IntRect(GLYPH_WIDTH * (int)(DateTime.Now.Second * 0.25f), ((int)(DateTime.Now.Millisecond * 0.008) % 4) * GLYPH_HEIGHT, GLYPH_WIDTH, GLYPH_HEIGHT);
-                glyphSprite.Position = viewport.GetLocalCoordinates(x.Position.ToVector2i());
+                glyphSprite.Position = viewport.GetLocalCoordinates(x.GlyphPosition.ToVector2i());
                 glyphSprite.Draw(viewport.Window, RenderStates.Default);
                 glyphSprite.Color = new Color(0, 255, 0);
             });
@@ -57,13 +68,26 @@ namespace MatrixScreen
         internal class GlyphStream
         {
             private float movementRate = 0.4f;
+            private int numberOfGlyphs = 6;
 
             public GlyphStream()
             {
-                Position = new Vector2f(40,0);
+                Position = new Vector2f(40,-500);
+                GlyphPosition = new Vector2f(40,220);
             }
 
-            public Vector2f Position;
+            public Vector2f Position; // Stream position - scrolls down the screen
+            public Vector2f GlyphPosition; // Individual glyphs location - doesn't change
+
+            public Rectangle DrawingArea()
+            {
+                return new Rectangle(
+                    (int)Position.X,
+                    (int)Position.Y,
+                    (int)Position.X + GLYPH_WIDTH,
+                    (int)Position.Y + (GLYPH_HEIGHT * numberOfGlyphs)
+                    );
+            }
 
             public void Update()
             {

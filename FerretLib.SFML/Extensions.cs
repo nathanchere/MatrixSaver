@@ -34,5 +34,15 @@ namespace FerretLib.SFML
         {
             return new Vector2f(input.X, input.Y);
         }
+
+        public static Vector2i ToVector2i(this Size input)
+        {
+            return new Vector2i(input.Width, input.Height);
+        }
+
+        public static Vector2i ToVector2i(this Point input)
+        {
+            return new Vector2i(input.X, input.Y);
+        }
     }
 }
