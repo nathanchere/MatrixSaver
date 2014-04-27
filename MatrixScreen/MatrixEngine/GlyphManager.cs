@@ -11,7 +11,7 @@ using Color = SFML.Graphics.Color;
 namespace MatrixScreen
 {
     public class GlyphManager
-    {
+    {        
         const int GLYPH_TEXTURE_SIZE = 2048;
         const int GLYPH_WIDTH = GLYPH_TEXTURE_SIZE / 16;
         const int GLYPH_HEIGHT = GLYPH_TEXTURE_SIZE / 8;
@@ -22,10 +22,13 @@ namespace MatrixScreen
         private const int MAX_STREAMS = 20;
         private const float CHANCE_OF_NEW_STREAM = 0.4f;
 
-        private List<GlyphStream> streams; 
+        private readonly Rectangle _workingArea;
 
-        public GlyphManager()
+        private List<GlyphStream> streams;
+
+        public GlyphManager(Rectangle workingArea)
         {
+            _workingArea = workingArea;
             glyphTexture = new Texture(@"data\glyphs.png") { Smooth = true, Repeated = false };
             glyphSprite = new Sprite(glyphTexture);
             glyphSprite.Origin = new Vector2f(GLYPH_WIDTH * 0.5f, GLYPH_HEIGHT * 0.5f);
@@ -59,35 +62,42 @@ namespace MatrixScreen
             });
         }
 
-        public void Update(double delta, Rectangle workingArea)
+        public void Update(double delta)
         {
             streams.ForEach(x=>x.Update(delta));
 
-            //streams = streams.Where(x => !x.Position.X > ).ToList();
-            // cull dead streams, etc
+            streams = streams.Where(x => !(x.Position.Y > _workingArea.Bottom)).ToList();
+            
+            while (streams.Count < MAX_STREAMS) streams.Add(new GlyphStream());            
         }
 
         internal class GlyphStream
         {
-            private float movementRate = 30f;
+            private float movementRate = 120f;
             private int numberOfGlyphs = 6;
 
             public GlyphStream()
-            {
-                Position = new Vector2f(40,-500);
+            {                
+                movementRate = GetRandom.Float(50,300);
                 GlyphPosition = new Vector2f(40,220);
+                Position = new Vector2f(GetRandom.Int(0, 1920), -Size.Y);
             }
 
             public Vector2f Position; // Stream position - scrolls down the screen
             public Vector2f GlyphPosition; // Individual glyphs location - doesn't change
+
+            public Vector2f Size
+            {
+                get { return new Vector2f(GLYPH_WIDTH, GLYPH_HEIGHT * numberOfGlyphs); }
+            }
 
             public Rectangle DrawingArea()
             {
                 return new Rectangle(
                     (int)Position.X,
                     (int)Position.Y,
-                    (int)Position.X + GLYPH_WIDTH,
-                    (int)Position.Y + (GLYPH_HEIGHT * numberOfGlyphs)
+                    (int)Position.X + (int)Size.X,
+                    (int)Position.Y + (int)Size.Y
                     );
             }
 

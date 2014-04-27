@@ -25,8 +25,6 @@ namespace MatrixScreen
                 CharacterSize = 14,
                 Color = Color.Green,
             };
-
-            glyphs = new GlyphManager();            
         }
 
         #region IWorldEngine
@@ -56,7 +54,7 @@ namespace MatrixScreen
 
         void IWorldEngine.Update(ChronoEventArgs chronoArgs)
         {
-            glyphs.Update(chronoArgs.Delta, workingArea);
+            glyphs.Update(chronoArgs.Delta);
             _chrono = chronoArgs;
         }
 
@@ -64,6 +62,8 @@ namespace MatrixScreen
         {
             _viewports = viewports;
             workingArea = _viewports.WorkingArea.Normalize();
+
+            glyphs = new GlyphManager(workingArea);
         }
         #endregion
 
