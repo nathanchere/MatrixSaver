@@ -14,18 +14,21 @@ namespace FerretLib.SFML
         private FpsCounter _fps;
 
         private const int POLL_INTERVAL = 1000;
-        private const double POLL_MULTIPLIER = 1 / POLL_INTERVAL;        
+        private const double POLL_MULTIPLIER = 1 / POLL_INTERVAL;
+
+        public Chrono()
+        {
+            _fps = new FpsCounter();
+            _monotonic = GetTickCount();
+        }
 
         internal ChronoEventArgs Update()
         {
             var ticks = GetTickCount();
-
             var delta = (float)((ticks - _monotonic) * POLL_MULTIPLIER);
-
             var fps = _fps.Update(ticks);
-
+           
             _monotonic = ticks;
-
             return new ChronoEventArgs(_monotonic, delta, fps);
         }
 
