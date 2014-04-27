@@ -67,7 +67,7 @@ namespace MatrixScreen
             }            
         }
 
-        void IWorldEngine.Update()
+        void IWorldEngine.Update(ChronoEventArgs chronoArgs)
         {
 
         }

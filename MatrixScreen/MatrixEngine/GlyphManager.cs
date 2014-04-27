@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using FerretLib.SFML;
 using SFML.Graphics;
 using SFML.Window;
@@ -58,10 +59,11 @@ namespace MatrixScreen
             });
         }
 
-        public void Update()
+        public void Update(float delta, Rectangle workingArea)
         {
             streams.ForEach(x=>x.Update());
 
+            //streams = streams.Where(x => !x.Position.X > ).ToList();
             // cull dead streams, etc
         }
 

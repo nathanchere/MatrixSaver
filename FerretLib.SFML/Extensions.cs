@@ -5,6 +5,7 @@ namespace FerretLib.SFML
 {
     public static class Extensions
     {
+        #region Basic conversion
         public static Vector2i ToVector2i(this Vector2f input)
         {
             return new Vector2i((int)input.X, (int)input.Y);
@@ -43,6 +44,12 @@ namespace FerretLib.SFML
         public static Vector2i ToVector2i(this Point input)
         {
             return new Vector2i(input.X, input.Y);
+        }
+        #endregion
+
+        public static Rectangle Normalize(this Rectangle rectangle)
+        {
+            return new Rectangle(0,0,rectangle.Width,rectangle.Height);
         }
     }
 }

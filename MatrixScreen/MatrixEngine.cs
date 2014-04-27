@@ -1,3 +1,4 @@
+using System.Drawing;
 using FerretLib.SFML;
 using SFML.Graphics;
 using SFML.Window;
@@ -12,6 +13,8 @@ namespace MatrixScreen
         private Text text;
         private GlyphManager glyphs;
 
+        private readonly Rectangle workingArea;
+
         public MatrixEngine()
         {
             text = new Text
@@ -22,6 +25,7 @@ namespace MatrixScreen
             };
 
             glyphs = new GlyphManager();
+            //workingArea = _viewports.WorkingArea.
         }
 
         #region IWorldEngine
@@ -44,9 +48,9 @@ namespace MatrixScreen
             }
         }
 
-        void IWorldEngine.Update()
+        void IWorldEngine.Update(ChronoEventArgs chronoArgs)
         {
-            glyphs.Update();
+            glyphs.Update(chronoArgs.Delta, _viewports.WorkingArea);
         }
 
         void IWorldEngine.Initialise(ViewPortCollection viewports)

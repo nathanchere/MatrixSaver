@@ -3,7 +3,7 @@ namespace FerretLib.SFML
     public interface IWorldEngine
     {
         void Render();
-        void Update();
+        void Update(ChronoEventArgs chronoArgs);
         void Initialise(ViewPortCollection viewports);
     }
 }
