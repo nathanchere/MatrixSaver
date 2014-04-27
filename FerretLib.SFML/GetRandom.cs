@@ -1,6 +1,6 @@
 ﻿using SFML.Window;
 
-namespace MatrixScreen
+namespace FerretLib.SFML
 {
     public static class GetRandom
     {
