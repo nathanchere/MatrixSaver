@@ -20,11 +20,11 @@ namespace FerretLib.SFML
         private readonly double POLL_MULTIPLIER; // Multiply by this to convert ticks to seconds
 
         public Chrono()
-        {
-            _fps = new FpsCounter(POLL_INTERVAL);
+        {            
             QueryPerformanceFrequency(out POLL_INTERVAL);
             POLL_MULTIPLIER = 1d / POLL_INTERVAL;
 
+            _fps = new FpsCounter(POLL_INTERVAL);
             QueryPerformanceCounter(out _monotonic);
         }
 

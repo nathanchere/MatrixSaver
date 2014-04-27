@@ -42,7 +42,7 @@ namespace MatrixScreen
 
 
                 text.Position = new Vector2f(30, 30);
-                text.DisplayedString = string.Format("Cursor: {0}:{1}\nD:{2}; {3:######0.0} FPS",
+                text.DisplayedString = string.Format("Cursor: {0}:{1}\n{2:0.00000}d // {3:#####0.00}FPS",
                     cursorPosition.X, cursorPosition.Y,
                     _chrono.Delta,
                     _chrono.Fps
