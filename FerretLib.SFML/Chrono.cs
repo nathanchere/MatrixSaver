@@ -20,13 +20,7 @@ namespace FerretLib.SFML
         {
             var ticks = GetTickCount();
 
-            var delta = ticks - _monotonic; // TODO: divide by?
-
-            // DEBUG
-            var x = GetTickCount();
-            Thread.Sleep(550);
-            var y = GetTickCount() - x;
-            //DEBUG
+            var delta = (float)((ticks - _monotonic) * POLL_MULTIPLIER);
 
             var fps = _fps.Update(ticks);
 
