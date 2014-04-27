@@ -8,7 +8,7 @@ namespace FerretLib.SFML
         public IWorldEngine Engine { get; set; }
 
         private readonly ViewPortCollection _viewPorts;        
-        private Chrono _chrono;
+        private readonly Chrono _chrono;
         private bool _isFinished = false;
 
         /// <summary>
