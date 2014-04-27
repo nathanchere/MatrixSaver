@@ -12,7 +12,7 @@ namespace FerretLib.SFML
         }
 
         public int Monotonic { get; private set; }
-        public float Delta { get; private set; }
-        public float Fps { get; private set; }
+        public double Delta { get; private set; }
+        public double Fps { get; private set; }
     }
 }

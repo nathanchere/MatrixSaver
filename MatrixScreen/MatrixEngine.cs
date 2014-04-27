@@ -15,7 +15,7 @@ namespace MatrixScreen
 
         private Rectangle workingArea;
 
-        private float _delta;
+        private ChronoEventArgs _chrono;
 
         public MatrixEngine()
         {
@@ -41,9 +41,11 @@ namespace MatrixScreen
                     Color.Green : Color.Red;
 
                 text.Position = new Vector2f(30, 30);
-                text.DisplayedString = string.Format("Cursor: {0}:{1} [delta:{2:0.000}]",
+                text.DisplayedString = string.Format("Cursor: {0}:{1}\nD:{2}; {3:######0.0} FPS",
                     cursorPosition.X, cursorPosition.Y,
-                    _delta);
+                    _chrono.Delta,
+                    _chrono.Fps
+                    );
                 viewport.Window.Draw(text);
                 glyphs.Draw(viewport);
 
@@ -54,7 +56,7 @@ namespace MatrixScreen
         void IWorldEngine.Update(ChronoEventArgs chronoArgs)
         {
             glyphs.Update(chronoArgs.Delta, workingArea);
-            _delta = chronoArgs.Delta;
+            _chrono = chronoArgs;
         }
 
         void IWorldEngine.Initialise(ViewPortCollection viewports)
