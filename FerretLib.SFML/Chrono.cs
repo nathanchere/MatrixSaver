@@ -7,24 +7,33 @@ namespace FerretLib.SFML
     //TODO: possibly change to use QueryPerformanceCounter
     internal class Chrono
     {
-        [DllImport("kernel32", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
-        private static extern int GetTickCount();
+        [DllImport("Kernel32.dll")]
+        private static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
 
-        private int _monotonic;
+        [DllImport("Kernel32.dll")]
+        private static extern bool QueryPerformanceFrequency(out long lpFrequency);
+
+        private long _monotonic;
         private FpsCounter _fps;
-
-        private const int POLL_INTERVAL = 1000;
-        private const double POLL_MULTIPLIER = 1d / POLL_INTERVAL;
+    
+        private readonly long POLL_INTERVAL; // Number of 'ticks' per second
+        private readonly double POLL_MULTIPLIER; // Multiply by this to convert ticks to seconds
 
         public Chrono()
         {
-            _fps = new FpsCounter();
-            _monotonic = GetTickCount();
+            _fps = new FpsCounter(POLL_INTERVAL);
+            QueryPerformanceFrequency(out POLL_INTERVAL);
+            POLL_MULTIPLIER = 1d / POLL_INTERVAL;
+
+            QueryPerformanceCounter(out _monotonic);
         }
 
         internal ChronoEventArgs Update()
         {
-            var ticks = GetTickCount();
+            long ticks;
+            QueryPerformanceCounter(out ticks);
+            
+
             var delta = (ticks - _monotonic) * POLL_MULTIPLIER;
             var fps = _fps.Update(ticks);
            
@@ -34,19 +43,28 @@ namespace FerretLib.SFML
 
         internal class FpsCounter
         {
-            private int _frames; // Number of frames elapsed since last FPS calculation
-            private int _nextTicks; // When to next calculate FPS
+            private long _frames; // Number of frames elapsed since last FPS calculation
+            private long _nextTicks; // When to next calculate FPS
             private float _fps; // Last calculated FPS
 
-            public float Update(int ticks)
+            private readonly long _timerFrequency;
+            private readonly double _timerMultiplier;
+
+            public FpsCounter(long timerFrequency)
+            {
+                _timerFrequency = timerFrequency;
+                _timerMultiplier = 1d / _timerFrequency;
+            }
+
+            public float Update(long ticks)
             {
                 _frames++;
 
                 if (_nextTicks <= ticks)
                 {
-                    _fps = (float)Math.Round(_frames * (ticks - _nextTicks + POLL_INTERVAL) * POLL_MULTIPLIER, 2);
+                    _fps = (float)Math.Round(_frames * (ticks - _nextTicks + _timerFrequency) * _timerMultiplier, 2);
                     _frames = 0;
-                    _nextTicks = ticks + POLL_INTERVAL;
+                    _nextTicks = ticks + _timerFrequency;
                 }
 
                 return _fps;
