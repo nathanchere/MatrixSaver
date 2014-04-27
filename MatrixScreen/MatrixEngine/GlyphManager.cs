@@ -26,9 +26,9 @@ namespace MatrixScreen
 
         private List<GlyphStream> streams;
 
-        public GlyphManager(Rectangle workingArea)
+        public GlyphManager(Vector2u workingArea)
         {
-            _workingArea = workingArea;
+            _workingArea = workingArea.ToRectangle();
             glyphTexture = new Texture(@"data\glyphs.png") { Smooth = true, Repeated = false };
             glyphSprite = new Sprite(glyphTexture);
             glyphSprite.Origin = new Vector2f(GLYPH_WIDTH * 0.5f, GLYPH_HEIGHT * 0.5f);

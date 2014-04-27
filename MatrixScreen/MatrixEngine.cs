@@ -10,10 +10,11 @@ namespace MatrixScreen
     public class MatrixEngine : IWorldEngine
     {
         private ViewPortCollection _viewports;
+        
+        private RenderTexture canvas;
+
         private Text text;
         private GlyphManager glyphs;
-
-        private Rectangle workingArea;
 
         private ChronoEventArgs _chrono;
 
@@ -60,10 +61,10 @@ namespace MatrixScreen
 
         void IWorldEngine.Initialise(ViewPortCollection viewports)
         {
-            _viewports = viewports;
-            workingArea = _viewports.WorkingArea.Normalize();
+            _viewports = viewports;            
+            canvas = new RenderTexture((uint) viewports.WorkingArea.Width, (uint) viewports.WorkingArea.Height, false);
 
-            glyphs = new GlyphManager(workingArea);
+            glyphs = new GlyphManager(canvas.Size);
         }
         #endregion
 
