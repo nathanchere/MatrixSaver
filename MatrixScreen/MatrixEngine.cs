@@ -40,6 +40,7 @@ namespace MatrixScreen
                 text.Color = viewport.WorkingArea.Contains(Mouse.GetPosition().ToPoint()) ?
                     Color.Green : Color.Red;
 
+
                 text.Position = new Vector2f(30, 30);
                 text.DisplayedString = string.Format("Cursor: {0}:{1}\nD:{2}; {3:######0.0} FPS",
                     cursorPosition.X, cursorPosition.Y,

@@ -25,7 +25,7 @@ namespace FerretLib.SFML
         internal ChronoEventArgs Update()
         {
             var ticks = GetTickCount();
-            var delta = (float)((ticks - _monotonic) * POLL_MULTIPLIER);
+            var delta = (ticks - _monotonic) * POLL_MULTIPLIER;
             var fps = _fps.Update(ticks);
            
             _monotonic = ticks;

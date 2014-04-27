@@ -59,7 +59,7 @@ namespace MatrixScreen
             });
         }
 
-        public void Update(float delta, Rectangle workingArea)
+        public void Update(double delta, Rectangle workingArea)
         {
             streams.ForEach(x=>x.Update(delta));
 
@@ -91,9 +91,9 @@ namespace MatrixScreen
                     );
             }
 
-            public void Update(float delta)
+            public void Update(double delta)
             {
-                Position.Y += movementRate * delta;
+                Position.Y += (float)(movementRate * delta);
             }
 
             public void Draw()

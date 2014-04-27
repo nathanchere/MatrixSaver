@@ -4,7 +4,7 @@ namespace FerretLib.SFML
 {
     public class ChronoEventArgs : EventArgs
     {
-        public ChronoEventArgs(int monotonic, float delta, float fps)
+        public ChronoEventArgs(int monotonic, double delta, double fps)
         {
             Monotonic = monotonic;
             Delta = delta;
