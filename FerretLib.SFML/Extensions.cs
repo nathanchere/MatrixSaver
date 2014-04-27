@@ -45,6 +45,11 @@ namespace FerretLib.SFML
         {
             return new Vector2i(input.X, input.Y);
         }
+
+        public static Rectangle ToRectangle(this Vector2u input)
+        {
+            return new Rectangle(0, 0, (int)input.X, (int)input.Y);
+        }
         #endregion
 
         public static Rectangle Normalize(this Rectangle rectangle)
