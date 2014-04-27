@@ -5,8 +5,10 @@ namespace FerretLib.SFML
 {
     public class ScreenSaverEngine
     {
-        private readonly ViewPortCollection _viewPorts;
-        private IWorldEngine Engine { get; set; }
+        public IWorldEngine Engine { get; set; }
+
+        private readonly ViewPortCollection _viewPorts;        
+        private Chrono _chrono;
         private bool _isFinished = false;
 
         /// <summary>
@@ -15,6 +17,7 @@ namespace FerretLib.SFML
         public ScreenSaverEngine()
         {
             _viewPorts = new ViewPortCollection(true, true);
+            _chrono = new Chrono();
         }
 
         /// <summary>
@@ -40,8 +43,8 @@ namespace FerretLib.SFML
             Engine.Initialise(_viewPorts);
             while (!_isFinished)
             {
-                var updateArgs = GetUpdate();
-                Chrono.Update();
+                var updateArgs = _chrono.Update();
+
                 _viewPorts.HandleEvents();
                 Engine.Update(updateArgs);
                 Engine.Render();         
