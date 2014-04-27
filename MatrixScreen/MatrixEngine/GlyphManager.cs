@@ -61,7 +61,7 @@ namespace MatrixScreen
 
         public void Update(float delta, Rectangle workingArea)
         {
-            streams.ForEach(x=>x.Update());
+            streams.ForEach(x=>x.Update(delta));
 
             //streams = streams.Where(x => !x.Position.X > ).ToList();
             // cull dead streams, etc
@@ -69,7 +69,7 @@ namespace MatrixScreen
 
         internal class GlyphStream
         {
-            private float movementRate = 0.4f;
+            private float movementRate = 30f;
             private int numberOfGlyphs = 6;
 
             public GlyphStream()
@@ -91,9 +91,9 @@ namespace MatrixScreen
                     );
             }
 
-            public void Update()
+            public void Update(float delta)
             {
-                Position.Y += movementRate;
+                Position.Y += movementRate * delta;
             }
 
             public void Draw()

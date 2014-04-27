@@ -14,7 +14,7 @@ namespace FerretLib.SFML
         private FpsCounter _fps;
 
         private const int POLL_INTERVAL = 1000;
-        private const double POLL_MULTIPLIER = 1 / POLL_INTERVAL;
+        private const double POLL_MULTIPLIER = 1d / POLL_INTERVAL;
 
         public Chrono()
         {

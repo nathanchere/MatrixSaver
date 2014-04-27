@@ -9,7 +9,6 @@ namespace FerretLib.SFML
 {
     public class ViewPortCollection : IEnumerable<ViewPort>
     {
-
         public List<ViewPort> ViewPorts { get; protected set; }
         public Rectangle WorkingArea { get; protected set; }
 
