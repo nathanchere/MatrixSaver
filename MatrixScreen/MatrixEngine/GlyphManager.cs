@@ -29,9 +29,11 @@ namespace MatrixScreen
         public GlyphManager(Vector2u workingArea)
         {
             _workingArea = workingArea.ToRectangle();
+
             glyphTexture = new Texture(@"data\glyphs.png") { Smooth = true, Repeated = false };
             glyphSprite = new Sprite(glyphTexture);
             glyphSprite.Origin = new Vector2f(GLYPH_WIDTH * 0.5f, GLYPH_HEIGHT * 0.5f);
+
             streams = new List<GlyphStream>();
             streams.Add(new GlyphStream());
         }
@@ -56,7 +58,7 @@ namespace MatrixScreen
                 shape.Draw(viewport.Window, RenderStates.Default);
 
                 glyphSprite.TextureRect = new IntRect(GLYPH_WIDTH * (int)(DateTime.Now.Second * 0.25f), ((int)(DateTime.Now.Millisecond * 0.008) % 4) * GLYPH_HEIGHT, GLYPH_WIDTH, GLYPH_HEIGHT);
-                glyphSprite.Position = viewport.GetLocalCoordinates(x.GlyphPosition.ToVector2i());
+                glyphSprite.Position = x.GlyphPosition;
                 glyphSprite.Draw(viewport.Window, RenderStates.Default);
                 glyphSprite.Color = new Color(0, 255, 0);
             });
@@ -75,12 +77,14 @@ namespace MatrixScreen
         {
             private float movementRate = 120f;
             private int numberOfGlyphs = 6;
+            private float scale = 1.0f;
 
             public GlyphStream()
             {                
-                movementRate = GetRandom.Float(50,300);
-                GlyphPosition = new Vector2f(40,220);
+                movementRate = GetRandom.Float(50,300);                
                 Position = new Vector2f(GetRandom.Int(0, 1920), -Size.Y);
+                GlyphPosition = new Vector2f(Position.X, GetRandom.Float(0,1080));
+                scale = GetRandom.Float(0.1f, 1.0f);
             }
 
             public Vector2f Position; // Stream position - scrolls down the screen
@@ -88,7 +92,7 @@ namespace MatrixScreen
 
             public Vector2f Size
             {
-                get { return new Vector2f(GLYPH_WIDTH, GLYPH_HEIGHT * numberOfGlyphs); }
+                get { return new Vector2f(GLYPH_WIDTH * scale, GLYPH_HEIGHT * numberOfGlyphs * scale); }
             }
 
             public Rectangle DrawingArea()

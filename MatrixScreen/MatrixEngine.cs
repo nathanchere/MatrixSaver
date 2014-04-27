@@ -31,6 +31,13 @@ namespace MatrixScreen
         #region IWorldEngine
         void IWorldEngine.Render()
         {
+            canvas.Clear(Color.Black);
+
+            foreach (var viewport in _viewports)
+            {
+                
+            }
+
             var cursorPosition = _viewports.CursorPosition();
             foreach (var viewport in _viewports)
             {
