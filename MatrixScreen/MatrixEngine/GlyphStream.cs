@@ -15,7 +15,12 @@ namespace MatrixScreen
         public int numberOfGlyphs = 6;
         public float scale = 1.0f;
 
-        private static Texture glyphTexture;
+        private static Texture glyphTexture = new Texture(@"data\glyphs.png")
+        {
+            Smooth = true,
+            Repeated = false
+        };
+
         private static Sprite glyphSprite;
             
         // TODO: list of glyphs
@@ -26,10 +31,6 @@ namespace MatrixScreen
 
         public GlyphStream()
         {
-            glyphTexture = new Texture(@"data\glyphs.png") {
-                Smooth = true, Repeated = false
-            };
-
             glyphSprite = new Sprite(glyphTexture);
             glyphSprite.Origin = new Vector2f(GLYPH_WIDTH * 0.5f, GLYPH_HEIGHT * 0.5f);
         }
@@ -70,15 +71,15 @@ namespace MatrixScreen
             glyphSprite.Position = Mouse.GetPosition().ToVector2f();
             glyphSprite.Draw(canvas, RenderStates.Default);        
 
-            var shape = new RectangleShape(x.Size) {
+            var shape = new RectangleShape(Size) {
                 FillColor = new Color(0,255,0,40),
-                Position = x.Position,
+                Position = Position,
                 Origin = new Vector2f(GLYPH_WIDTH * 0.5f, 0),
             };
             shape.Draw(canvas, RenderStates.Default);
 
             glyphSprite.TextureRect = new IntRect(GLYPH_WIDTH * (int)(DateTime.Now.Second * 0.25f), ((int)(DateTime.Now.Millisecond * 0.008) % 4) * GLYPH_HEIGHT, GLYPH_WIDTH, GLYPH_HEIGHT);
-            glyphSprite.Position = x.GlyphPosition;
+            glyphSprite.Position = GlyphPosition;
             glyphSprite.Draw(canvas, RenderStates.Default);
         }
 
