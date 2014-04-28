@@ -19,9 +19,12 @@ namespace MatrixScreen
         }
 
         #region Contracts
+        byte i;
         public void Render(RenderTarget canvas)
         {
-            canvas.Clear(Color.Black);
+            i++;
+            ((RenderTexture)canvas).Display();
+            canvas.Clear(new Color(i,(byte)(255 - i),0,255));            
             glyphs.Render(canvas);
             chrono.Render(canvas);
         }

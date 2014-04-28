@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 using SFML.Graphics;
 using SFML.Window;
 using Color = SFML.Graphics.Color;
+using KeyEventArgs = SFML.Window.KeyEventArgs;
 
 namespace FerretLib.SFML
 {
@@ -26,11 +28,18 @@ namespace FerretLib.SFML
         {
             ViewPorts = new List<ViewPort>();
 
-            int index = 0;
-            foreach (var screen in System.Windows.Forms.Screen.AllScreens) {
-                ViewPorts.Add(new ViewPort(this, screen, index++, isFullScreen));
-                if (!isMultiMonitor)
+            if (isMultiMonitor)
+            {
+                int index = 0;
+                foreach (var screen in Screen.AllScreens)
+                {
+                    ViewPorts.Add(new ViewPort(this, screen, index++, isFullScreen));
                     break;
+                }
+            }
+            else
+            {
+                ViewPorts.Add(new ViewPort(this, Screen.PrimaryScreen, 0, isFullScreen));
             }
 
             foreach (var viewPort in ViewPorts) {
