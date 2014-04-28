@@ -87,7 +87,7 @@ namespace MatrixScreen
 
         public void Render(RenderTarget canvas)
         {
-            glyphSprite.Color = new Color(0, 255, 0,20);
+            glyphSprite.Color = new Color(0, 255, 0, 190);
             glyphSprite.Scale = new Vector2f(0.6f, 0.6f);
             glyphSprite.TextureRect = new IntRect(GLYPH_WIDTH * (int)(DateTime.Now.Second * 0.25f), ((int)(DateTime.Now.Millisecond * 0.008) % 4) * GLYPH_HEIGHT, GLYPH_WIDTH, GLYPH_HEIGHT);
             glyphSprite.Position = Mouse.GetPosition().ToVector2f();
@@ -96,7 +96,7 @@ namespace MatrixScreen
             glyphSprite.Scale = new Vector2f(0.4f, 0.4f);
             streams.ForEach(x => {                
                 var shape = new RectangleShape(x.DrawingArea().Size.ToVector2f()) {
-                    FillColor = new Color(0,255,0,20),
+                    FillColor = new Color(0,255,0,40),
                     Position = x.Position,
                     Origin = new Vector2f(GLYPH_WIDTH * 0.5f, 0),
                 };

@@ -137,6 +137,9 @@ namespace FerretLib.SFML
         public event MouseWheelMovedHandler MouseWheelMoved;
         #endregion
 
+        // shitty hack
+        Shape hack = new RectangleShape(new Vector2f(0,0)){FillColor = new Color(0,0,0,0)};
+
         public void Draw(RenderTexture canvas)
         {
             var sprite = new Sprite(canvas.Texture) {
@@ -155,6 +158,7 @@ namespace FerretLib.SFML
                 viewport.Window.Draw(sprite);
             }
 
+            ViewPorts.ForEach(x => x.Window.Draw(hack));
             ViewPorts.ForEach(x => x.Window.Display());
         }
     }

@@ -21,6 +21,7 @@ namespace FerretLib.SFML
         {
             _viewPorts = new ViewPortCollection(false, false);
             _canvas = new RenderTexture((uint) _viewPorts.WorkingArea.Width, (uint) _viewPorts.WorkingArea.Height, false);
+            _canvas.Clear(Color.Black);
             _canvas.Display(); // Needed due to FBO causing inverted co-ords otherwise
             _chrono = new Chrono();
         }

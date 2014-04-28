@@ -18,13 +18,11 @@ namespace MatrixScreen
             chrono = new ChronoDisplay();
         }
 
-        #region Contracts
-        byte i;
+        #region Contracts       
         public void Render(RenderTarget canvas)
         {
-            i++;
             ((RenderTexture)canvas).Display();
-            canvas.Clear(new Color(i,(byte)(255 - i),0,255));            
+            ((RenderTexture)canvas).Clear(Color.Black);
             glyphs.Render(canvas);
             chrono.Render(canvas);
         }
