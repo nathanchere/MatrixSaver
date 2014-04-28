@@ -35,7 +35,7 @@ namespace MatrixScreen
 
             foreach (var viewport in _viewports)
             {
-                
+                // Render from global texture here
             }
 
             var cursorPosition = _viewports.CursorPosition();
