@@ -20,15 +20,16 @@ namespace MatrixScreen
 
         #region Contracts
         public void Render(RenderTarget canvas)
-        {                                    
-            glyphs.Draw(canvas);
+        {
+            canvas.Clear(Color.Black);
+            glyphs.Render(canvas);
             chrono.Render(canvas);
         }
 
         public void Update(ChronoEventArgs chronoArgs)
         {
             chrono.Update(chronoArgs);
-            glyphs.Update(chronoArgs.Delta);
+            glyphs.Update(chronoArgs);
         }
 
         void IWorldEngine.Initialise(ViewPortCollection viewports)
