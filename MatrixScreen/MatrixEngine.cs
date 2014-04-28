@@ -9,8 +9,6 @@ namespace MatrixScreen
 {
     public class MatrixEngine : IWorldEngine
     {
-        private ViewPortCollection _viewports;
-
         private GlyphManager glyphs;
 
         private ChronoDisplay chrono;
@@ -23,32 +21,30 @@ namespace MatrixScreen
         #region Contracts
         public void Render(RenderTarget canvas)
         {
-            canvas.Clear(Color.Black);            
+            var vertices = new []{
+                new Vertex(new Vector2f(0,0), new Color(0,48,32)),
+                new Vertex(new Vector2f(canvas.Size.X,0), new Color(0,0,32)),
+                new Vertex(new Vector2f(canvas.Size.X,canvas.Size.Y), new Color(32,0,0)),
+                new Vertex(new Vector2f(0,canvas.Size.Y), new Color(16,0,32)),
+            };
+            canvas.Draw(vertices, PrimitiveType.Quads);
 
-            var cursorPosition = _viewports.CursorPosition();
-            foreach (var viewport in _viewports) {
-                viewport.Window.Clear(Color.Black);
-
-                chrono.Render(canvas);
-                //glyphs.Draw(canvas);
-
-                viewport.Window.Display();
-            }
+            chrono.Render(canvas);
+            //glyphs.Draw(canvas);                    
         }
 
         public void Update(ChronoEventArgs chronoArgs)
         {
             chrono.Update(chronoArgs);
-
             glyphs.Update(chronoArgs.Delta);
         }
 
         void IWorldEngine.Initialise(ViewPortCollection viewports)
         {
-            _viewports = viewports;
-            canvas = new RenderTexture((uint)viewports.WorkingArea.Width, (uint)viewports.WorkingArea.Height, false);
-
-            glyphs = new GlyphManager(canvas.Size);
+            var area = new Vector2u(
+                (uint)viewports.WorkingArea.Width,
+                (uint)viewports.WorkingArea.Height);
+            glyphs = new GlyphManager(area);
         }
         #endregion
 
