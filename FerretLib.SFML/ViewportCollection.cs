@@ -34,7 +34,6 @@ namespace FerretLib.SFML
                 foreach (var screen in Screen.AllScreens)
                 {
                     ViewPorts.Add(new ViewPort(this, screen, index++, isFullScreen));
-                    break;
                 }
             }
             else
@@ -142,7 +141,8 @@ namespace FerretLib.SFML
 
         public void Draw(RenderTexture canvas)
         {
-            var sprite = new Sprite(canvas.Texture) {
+            var sprite = new Sprite(canvas.Texture)
+            {
                 Position = new Vector2f()
             };
 
