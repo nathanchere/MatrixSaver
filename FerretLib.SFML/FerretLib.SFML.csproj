@@ -58,6 +58,7 @@
     <Compile Include="ChronoEventArgs.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GetRandom.cs" />
+    <Compile Include="IEntity.cs" />
     <Compile Include="IWorldEngine.cs" />
     <Compile Include="Chrono.cs" />
     <Compile Include="ViewPort.cs" />

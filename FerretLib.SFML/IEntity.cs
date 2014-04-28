@@ -1,9 +1,10 @@
+using SFML.Graphics;
+
 namespace FerretLib.SFML
 {
     public interface IEntity
     {
-        void Render();
-        void Update(ChronoEventArgs chonoArgs);
-
+        void Render(RenderTarget target);
+        void Update(ChronoEventArgs chronoArgs);
     }
 }

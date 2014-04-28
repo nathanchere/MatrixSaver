@@ -3,41 +3,68 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using SFML.Graphics;
 using SFML.Window;
+using Color = SFML.Graphics.Color;
 
 namespace FerretLib.SFML
 {
     public class ViewPortCollection : IEnumerable<ViewPort>
     {
-        public List<ViewPort> ViewPorts { get; protected set; }
-        public Rectangle WorkingArea { get; protected set; }
+        public List<ViewPort> ViewPorts
+        {
+            get;
+            protected set;
+        }
+        public Rectangle WorkingArea
+        {
+            get;
+            protected set;
+        }
 
         public ViewPortCollection(bool isFullScreen, bool isMultiMonitor)
         {
             ViewPorts = new List<ViewPort>();
 
             int index = 0;
-            foreach (var screen in System.Windows.Forms.Screen.AllScreens)
-            {
+            foreach (var screen in System.Windows.Forms.Screen.AllScreens) {
                 ViewPorts.Add(new ViewPort(this, screen, index++, isFullScreen));
-                if (!isMultiMonitor) break;
+                if (!isMultiMonitor)
+                    break;
             }
 
-            foreach (var viewPort in ViewPorts)
-            {
-                viewPort.Window.KeyPressed += (o, e) => { if(KeyPressed!=null)KeyPressed(viewPort, e); };
-                viewPort.Window.KeyReleased += (o, e) => { if (KeyReleased != null)KeyReleased(viewPort, e); };
-                viewPort.Window.MouseMoved += (o, e) => { if (MouseMoved != null)MouseMoved(viewPort, e); };
-                viewPort.Window.MouseButtonPressed += (o, e) => { if (MouseButtonPressed != null)MouseButtonPressed(viewPort, e); };
-                viewPort.Window.MouseButtonReleased += (o, e) => { if (MouseButtonReleased != null)MouseButtonReleased(viewPort, e); };
-                viewPort.Window.MouseWheelMoved += (o, e) => { if (MouseWheelMoved != null)MouseWheelMoved(viewPort, e); };
+            foreach (var viewPort in ViewPorts) {
+                viewPort.Window.KeyPressed += (o, e) => {
+                    if (KeyPressed != null)
+                        KeyPressed(viewPort, e);
+                };
+                viewPort.Window.KeyReleased += (o, e) => {
+                    if (KeyReleased != null)
+                        KeyReleased(viewPort, e);
+                };
+                viewPort.Window.MouseMoved += (o, e) => {
+                    if (MouseMoved != null)
+                        MouseMoved(viewPort, e);
+                };
+                viewPort.Window.MouseButtonPressed += (o, e) => {
+                    if (MouseButtonPressed != null)
+                        MouseButtonPressed(viewPort, e);
+                };
+                viewPort.Window.MouseButtonReleased += (o, e) => {
+                    if (MouseButtonReleased != null)
+                        MouseButtonReleased(viewPort, e);
+                };
+                viewPort.Window.MouseWheelMoved += (o, e) => {
+                    if (MouseWheelMoved != null)
+                        MouseWheelMoved(viewPort, e);
+                };
             }
-            
+
             WorkingArea = GetWorkingArea(ViewPorts);
         }
 
         public Vector2i CursorPosition()
-        {           
+        {
             return new Vector2i(
                 Mouse.GetPosition().X - WorkingArea.Left,
                 Mouse.GetPosition().Y - WorkingArea.Top
@@ -46,8 +73,7 @@ namespace FerretLib.SFML
 
         private Rectangle GetWorkingArea(List<ViewPort> viewPorts)
         {
-            var result = new Rectangle
-            {
+            var result = new Rectangle {
                 X = viewPorts.Select(x => x.WorkingArea.X).Min(),
                 Y = viewPorts.Select(x => x.WorkingArea.Y).Min()
             };
@@ -66,10 +92,10 @@ namespace FerretLib.SFML
             int x = globalCoordinates.X - viewport.WorkingArea.Left;
             int y = globalCoordinates.Y - viewport.WorkingArea.Top;
 
-            return new Vector2f(x, y);   
+            return new Vector2f(x, y);
         }
 
-        #region IEnumerable support        
+        #region IEnumerable support
         public IEnumerator<ViewPort> GetEnumerator()
         {
             return ViewPorts.GetEnumerator();
@@ -83,7 +109,7 @@ namespace FerretLib.SFML
 
         public void HandleEvents()
         {
-            ViewPorts.ForEach(x=>x.Window.DispatchEvents());  
+            ViewPorts.ForEach(x => x.Window.DispatchEvents());
         }
 
         #region Event goodness
@@ -100,6 +126,20 @@ namespace FerretLib.SFML
         public event MouseButtonPressedHandler MouseButtonPressed;
         public event MouseButtonReleasedHandler MouseButtonReleased;
         public event MouseWheelMovedHandler MouseWheelMoved;
-        #endregion        
+        #endregion
+
+        public void Draw(RenderTexture canvas)
+        {
+            var color = new[]
+            {
+                new Color(20,0,0), 
+                new Color(0,0,20), 
+                new Color(0,20,0),
+            };
+            int i = 0;
+            foreach (var viewport in ViewPorts) {
+                viewport.Window.Clear(color[i++]);
+            }
+        }
     }
 }

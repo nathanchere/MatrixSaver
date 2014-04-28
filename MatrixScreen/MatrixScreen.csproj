@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChronoDisplay.cs" />
     <Compile Include="DebugEngine.cs" />
     <Compile Include="MatrixEngine\GlyphManager.cs" />
     <Compile Include="MatrixEngine.cs" />

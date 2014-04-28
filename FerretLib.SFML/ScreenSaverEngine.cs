@@ -1,4 +1,5 @@
-﻿using Sfml = SFML;
+﻿using SFML.Graphics;
+using Sfml = SFML;
 using SFML.Window;
 
 namespace FerretLib.SFML
@@ -8,6 +9,8 @@ namespace FerretLib.SFML
         public IWorldEngine Engine { get; set; }
 
         private readonly ViewPortCollection _viewPorts;        
+        private RenderTexture _canvas;
+
         private readonly Chrono _chrono;
         private bool _isFinished = false;
 
@@ -17,6 +20,7 @@ namespace FerretLib.SFML
         public ScreenSaverEngine()
         {
             _viewPorts = new ViewPortCollection(true, true);
+            _canvas = new RenderTexture((uint) _viewPorts.WorkingArea.Width, (uint) _viewPorts.WorkingArea.Height, false);
             _chrono = new Chrono();
         }
 
@@ -41,13 +45,16 @@ namespace FerretLib.SFML
         public void Run()
         {
             Engine.Initialise(_viewPorts);
+            
             while (!_isFinished)
             {
                 var updateArgs = _chrono.Update();
 
                 _viewPorts.HandleEvents();
                 Engine.Update(updateArgs);
-                Engine.Render();         
+                Engine.Render(_canvas);
+
+                _viewPorts.Draw(_canvas);
             }
         }
         

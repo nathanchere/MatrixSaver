@@ -23,7 +23,7 @@ namespace MatrixScreen
         }
 
         #region IWorldEngine
-        void IWorldEngine.Render()
+        public void Render()
         {
             var cursorPosition = _viewports.CursorPosition();
             var globalCursorText = string.Format("Global cursor: {0}:{1}", cursorPosition.X, cursorPosition.Y);
@@ -67,7 +67,7 @@ namespace MatrixScreen
             }            
         }
 
-        void IWorldEngine.Update(ChronoEventArgs chronoArgs)
+        public void Update(ChronoEventArgs chronoArgs)
         {
 
         }
