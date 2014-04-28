@@ -20,25 +20,9 @@ namespace MatrixScreen
 
         #region Contracts
         public void Render(RenderTarget canvas)
-        {
-            var vertices = new[]{
-                new Vertex(new Vector2f(0,0), new Color(255,255,0)),
-                new Vertex(new Vector2f(canvas.Size.X,0), new Color(255,0,0)),
-                new Vertex(new Vector2f(canvas.Size.X,canvas.Size.Y), new Color(0,255,0)),
-                new Vertex(new Vector2f(0,canvas.Size.Y), new Color(0,0,255)),
-            };
-
-            var verticesInner = new[]{
-                new Vertex(new Vector2f(10,10), new Color(0,0,30)),
-                new Vertex(new Vector2f(canvas.Size.X-10,10), new Color(0,0,0)),
-                new Vertex(new Vector2f(canvas.Size.X-10,canvas.Size.Y-10), new Color(30,0,30)),
-                new Vertex(new Vector2f(10,canvas.Size.Y-10), new Color(0,0,0)),
-            };
-            canvas.Draw(vertices, PrimitiveType.Quads);
-            canvas.Draw(verticesInner, PrimitiveType.Quads);
-
+        {                                    
+            glyphs.Draw(canvas);
             chrono.Render(canvas);
-            //glyphs.Draw(canvas);                    
         }
 
         public void Update(ChronoEventArgs chronoArgs)
