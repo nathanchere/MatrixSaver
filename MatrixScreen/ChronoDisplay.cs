@@ -29,7 +29,6 @@ namespace MatrixScreen
         {
             _chrono = chronoArgs;
 
-
             _text.DisplayedString = string.Format("Dδ{0:0.00000}\n{1:#####0.00}FPS",
                 _chrono.Delta, _chrono.Fps);
             var x = (byte)(DateTime.Now.Millisecond % 255);

@@ -37,52 +37,20 @@ namespace MatrixScreen
             glyphSprite.Origin = new Vector2f(GLYPH_WIDTH * 0.5f, GLYPH_HEIGHT * 0.5f);
 
             streams = new List<GlyphStream>();
-            streams.Add(new GlyphStream());
         }
 
-        internal class GlyphStream
+        private void AddNewGlyphStream()
         {
-            private float movementRate = 120f;
-            private int numberOfGlyphs = 6;
-            private float scale = 1.0f;
+            var stream = new GlyphStream();
+            stream.movementRate = GetRandom.Float(50, 300);
+            stream.numberOfGlyphs = GetRandom.Int(3,6);            
+            stream.scale = GetRandom.Float(0.1f, 1.0f);
+                        
+            stream.Position = new Vector2f(GetRandom.Int(0, _workingArea.Width), 0 - stream.Size.Y);
+            stream.GlyphPosition = new Vector2f(stream.Position.X, GetRandom.Float(0, 1080));
 
-            public GlyphStream()
-            {
-                movementRate = GetRandom.Float(50, 300);
-                Position = new Vector2f(GetRandom.Int(0, 1920), -Size.Y);
-                GlyphPosition = new Vector2f(Position.X, GetRandom.Float(0, 1080));
-                scale = GetRandom.Float(0.1f, 1.0f);
-            }
 
-            public Vector2f Position; // Stream position - scrolls down the screen
-            public Vector2f GlyphPosition; // Individual glyphs location - doesn't change
-
-            public Vector2f Size
-            {
-                get
-                {
-                    return new Vector2f(GLYPH_WIDTH * scale, GLYPH_HEIGHT * numberOfGlyphs * scale);
-                }
-            }
-
-            public Rectangle DrawingArea()
-            {
-                return new Rectangle(
-                    (int)Position.X,
-                    (int)Position.Y,
-                    (int)Position.X + (int)Size.X,
-                    (int)Position.Y + (int)Size.Y
-                    );
-            }
-
-            public void Update(double delta)
-            {
-                Position.Y += (float)(movementRate * delta);
-            }
-
-            public void Draw()
-            {
-            }
+            streams.Add(stream);
         }
 
         public void Render(RenderTarget canvas)
@@ -95,7 +63,7 @@ namespace MatrixScreen
 
             glyphSprite.Scale = new Vector2f(0.4f, 0.4f);
             streams.ForEach(x => {                
-                var shape = new RectangleShape(x.DrawingArea().Size.ToVector2f()) {
+                var shape = new RectangleShape(x.Size) {
                     FillColor = new Color(0,255,0,40),
                     Position = x.Position,
                     Origin = new Vector2f(GLYPH_WIDTH * 0.5f, 0),
@@ -114,8 +82,48 @@ namespace MatrixScreen
 
             streams = streams.Where(x => !(x.Position.Y > _workingArea.Bottom)).ToList();
 
-            while (streams.Count < MAX_STREAMS)
-                streams.Add(new GlyphStream());
+            while (streams.Count < MAX_STREAMS) AddNewGlyphStream();
+        }
+
+
+        internal class GlyphStream
+        {
+            public float movementRate = 120f;
+            public int numberOfGlyphs = 6;
+            public float scale = 1.0f;
+            
+            // TODO: list of glyphs
+            // TODO: chance of glyph change; glyph index, color
+
+            public Vector2f Position; // Stream position - scrolls down the screen
+            public Vector2f GlyphPosition; // Individual glyphs location - doesn't change
+
+            public Vector2f Size
+            {
+                get
+                {
+                    return new Vector2f(GLYPH_WIDTH * scale, GLYPH_HEIGHT * numberOfGlyphs * scale);
+                }
+            }
+
+            public IntRect DrawingArea()
+            {
+                return new IntRect(
+                    (int)Position.X,
+                    (int)Position.Y,
+                    (int)Position.X + (int)Size.X,
+                    (int)Position.Y + (int)Size.Y
+                    );
+            }
+
+            public void Update(double delta)
+            {
+                Position.Y += (float)(movementRate * delta);
+            }
+
+            public void Draw()
+            {
+            }
         }
     }
 }
