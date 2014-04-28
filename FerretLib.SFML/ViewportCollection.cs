@@ -136,6 +136,7 @@ namespace FerretLib.SFML
 
             foreach (var viewport in ViewPorts)
             {
+                viewport.Window.Clear(Color.Black);
                 var rect = new IntRect(
                     viewport.Window.Position.X - WorkingArea.Left,
                     viewport.Window.Position.Y - WorkingArea.Top,
