@@ -1,4 +1,5 @@
-﻿using FerretLib.SFML;
+﻿using System;
+using FerretLib.SFML;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -29,10 +30,10 @@ namespace MatrixScreen
             _chrono = chronoArgs;
 
 
-            _text.DisplayedString = string.Format("δ{0:   0.00000}\n{1:#####0.00}FPS",
+            _text.DisplayedString = string.Format("Dδ{0:0.00000}\n{1:#####0.00}FPS",
                 _chrono.Delta, _chrono.Fps);
-
-            _color = new Color();
+            var x = (byte)(DateTime.Now.Millisecond % 255);
+            _color = new Color(x,255,x);
         }
     }
 }
