@@ -130,11 +130,18 @@ namespace FerretLib.SFML
 
         public void Draw(RenderTexture canvas)
         {
-            var sprite = new Sprite(canvas.Texture) {Position = new Vector2f()};
-            
-            foreach (var viewport in ViewPorts) {
-                //sprite.Position = viewport.Window.Position.ToVector2f();
-                sprite.TextureRect = viewport.WorkingArea.ToIntRect();
+            var sprite = new Sprite(canvas.Texture) {
+                Position = new Vector2f()
+            };
+
+            foreach (var viewport in ViewPorts)
+            {
+                var rect = new IntRect(
+                    viewport.Window.Position.X - WorkingArea.Left,
+                    viewport.Window.Position.Y - WorkingArea.Top,
+                    viewport.WorkingArea.Width,
+                    viewport.WorkingArea.Height);
+                sprite.TextureRect = rect;
                 viewport.Window.Draw(sprite);
             }
 
