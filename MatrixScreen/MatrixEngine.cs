@@ -11,33 +11,26 @@ namespace MatrixScreen
     {
         private ViewPortCollection _viewports;
 
-        private RenderTexture canvas;
-
-
         private GlyphManager glyphs;
 
         private ChronoDisplay chrono;
 
         public MatrixEngine()
         {
-
+            chrono = new ChronoDisplay();
         }
 
         #region Contracts
-        public void Render()
+        public void Render(RenderTarget canvas)
         {
-            canvas.Clear(Color.Black);
-
-            foreach (var viewport in _viewports) {
-                // Render from global texture here
-            }
+            canvas.Clear(Color.Black);            
 
             var cursorPosition = _viewports.CursorPosition();
             foreach (var viewport in _viewports) {
                 viewport.Window.Clear(Color.Black);
 
-                chrono.Render(viewport.Window);
-                glyphs.Draw(viewport);
+                chrono.Render(canvas);
+                //glyphs.Draw(canvas);
 
                 viewport.Window.Display();
             }

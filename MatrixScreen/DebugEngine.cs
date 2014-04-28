@@ -23,7 +23,7 @@ namespace MatrixScreen
         }
 
         #region IWorldEngine
-        public void Render()
+        public void Render(RenderTarget target)
         {
             var cursorPosition = _viewports.CursorPosition();
             var globalCursorText = string.Format("Global cursor: {0}:{1}", cursorPosition.X, cursorPosition.Y);
