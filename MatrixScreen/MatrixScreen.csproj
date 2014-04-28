@@ -61,8 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChronoDisplay.cs" />
-    <Compile Include="MatrixEngine\GlyphManager.cs" />
+    <Compile Include="MatrixEngine\GlyphStreamManager.cs" />
     <Compile Include="MatrixEngine.cs" />
+    <Compile Include="MatrixEngine\GlyphStream.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

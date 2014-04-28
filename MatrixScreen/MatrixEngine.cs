@@ -9,7 +9,7 @@ namespace MatrixScreen
 {
     public class MatrixEngine : IWorldEngine
     {
-        private GlyphManager glyphs;
+        private GlyphStreamManager _glyphsStream;
 
         private ChronoDisplay chrono;
 
@@ -23,14 +23,14 @@ namespace MatrixScreen
         {
             ((RenderTexture)canvas).Display();
             ((RenderTexture)canvas).Clear(Color.Black);
-            glyphs.Render(canvas);
+            _glyphsStream.Render(canvas);
             chrono.Render(canvas);
         }
 
         public void Update(ChronoEventArgs chronoArgs)
         {
             chrono.Update(chronoArgs);
-            glyphs.Update(chronoArgs);
+            _glyphsStream.Update(chronoArgs);
         }
 
         void IWorldEngine.Initialise(ViewPortCollection viewports)
@@ -38,7 +38,7 @@ namespace MatrixScreen
             var area = new Vector2u(
                 (uint)viewports.WorkingArea.Width,
                 (uint)viewports.WorkingArea.Height);
-            glyphs = new GlyphManager(area);
+            _glyphsStream = new GlyphStreamManager(area);
         }
         #endregion
 
