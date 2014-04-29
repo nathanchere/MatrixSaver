@@ -31,7 +31,7 @@ namespace MatrixScreen
             stream.scale = GetRandom.Float(0.1f, 0.4f);
 
             stream.Position = new Vector2f(GetRandom.Int(0, _workingArea.Width), 0 - stream.Size.Y);
-            stream.GlyphPosition = new Vector2f(stream.Position.X, GetRandom.Float(0 - stream.TotalGlyphHeight, _workingArea.Height));
+            stream.GlyphPosition = new Vector2f(stream.Position.X, GetRandom.Float(0 - stream.Size.Y, _workingArea.Height));
             streams.Add(stream);
         }
 
@@ -45,7 +45,11 @@ namespace MatrixScreen
             streams.ForEach(x => x.Update(chronoArgs.Delta));
 
             // Cull completed streams
-            streams = streams.Where(x => !(x.Position.Y > _workingArea.Bottom)).ToList();
+            streams = streams.Where(
+                x => !(
+                    x.Position.Y > _workingArea.Bottom
+                    || x.Position.Y > x.GlyphPosition.Y + x.Size.Y
+                )).ToList();
 
             // Add new streams
             if (streams.Count < MAX_STREAMS && GetRandom.Float(0,1) < CHANCE_OF_NEW_STREAM)

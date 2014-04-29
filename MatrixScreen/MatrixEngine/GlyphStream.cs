@@ -44,8 +44,6 @@ namespace MatrixScreen
             }
         }
 
-        public float TotalGlyphHeight { get { return GLYPH_HEIGHT * scale * numberOfGlyphs; } }
-
         public IntRect DrawingArea()
         {
             return new IntRect(
