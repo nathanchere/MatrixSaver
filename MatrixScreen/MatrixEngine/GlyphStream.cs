@@ -1,7 +1,9 @@
 using System;
+using System.Drawing;
 using FerretLib.SFML;
 using SFML.Graphics;
 using SFML.Window;
+using Color = SFML.Graphics.Color;
 
 namespace MatrixScreen
 {
@@ -14,6 +16,7 @@ namespace MatrixScreen
         public float movementRate = 120f;
         public int numberOfGlyphs = 6;
         public float scale = 1.0f;
+        public float marginScale = 0.8f; // 1 for normal; lower for glyphs closer together vertically
 
         private static Texture glyphTexture = new Texture(@"data\glyphs.png")
         {
@@ -38,9 +41,14 @@ namespace MatrixScreen
 
         public Vector2f Size
         {
+            get { return new Vector2f(GlyphSize.X, GlyphSize.Y + (GlyphSize.Y * (numberOfGlyphs - 1) * marginScale)); }
+        }
+
+        public Vector2f GlyphSize
+        {
             get
             {
-                return new Vector2f(GLYPH_WIDTH * scale, GLYPH_HEIGHT * numberOfGlyphs * scale);
+                return new Vector2f(GLYPH_WIDTH * scale, GLYPH_HEIGHT * scale);
             }
         }
 
@@ -71,7 +79,7 @@ namespace MatrixScreen
             glyphSprite.TextureRect = new IntRect(GLYPH_WIDTH * (int)(DateTime.Now.Second * 0.25f), ((int)(DateTime.Now.Millisecond * 0.008) % 4) * GLYPH_HEIGHT, GLYPH_WIDTH, GLYPH_HEIGHT);
             for (int i = 0; i < numberOfGlyphs; i++)
             {
-                glyphSprite.Position = new Vector2f(GlyphPosition.X, GlyphPosition.Y + (GLYPH_HEIGHT * scale) * i);
+                glyphSprite.Position = new Vector2f(GlyphPosition.X, GlyphPosition.Y + (GLYPH_HEIGHT * scale * marginScale) * i);
                 glyphSprite.Draw(canvas, RenderStates.Default);        
             }
             
@@ -88,6 +96,23 @@ namespace MatrixScreen
         public void Update(ChronoEventArgs chronoArgs)
         {
             throw new NotImplementedException();
+        }
+        
+        /// <summary>
+        /// Hide any extra glyphs in glyph strings that extend beyond screen boundaries
+        /// </summary>
+        public void ClipGlyphs(Rectangle workingArea)
+        {
+            while (GlyphPosition.Y < (0 - GlyphSize.Y))
+            {
+                GlyphPosition.Y += GLYPH_HEIGHT;
+                numberOfGlyphs--;
+            }
+
+            while (GlyphPosition.Y + Size.Y > workingArea.Height + GLYPH_HEIGHT)
+            {
+                numberOfGlyphs--;
+            }
         }
     }
 }
