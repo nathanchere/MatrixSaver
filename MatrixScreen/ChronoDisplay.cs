@@ -34,6 +34,6 @@ namespace MatrixScreen
                 _chrono.Delta, _chrono.Fps);
             var x = (byte)(DateTime.Now.Millisecond % 255);
             _color = new Color(x,255,x);
-        }
+        }        
     }
 }

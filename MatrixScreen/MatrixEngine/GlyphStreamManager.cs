@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -37,11 +38,7 @@ namespace MatrixScreen
             streams.ForEach(x => x.Update(chronoArgs));
 
             // Cull completed streams
-            streams = streams.Where(
-                x => !(
-                    x.Position.Y > _workingArea.Bottom
-                    || x.Position.Y > x.GlyphPosition.Y + x.Size.Y
-                )).ToList();
+            streams = streams.Where(x => !x.IsExpired).ToList();
 
             // Add new streams
             if (streams.Count < MAX_STREAMS && GetRandom.Float(0,1) < CHANCE_OF_NEW_STREAM)

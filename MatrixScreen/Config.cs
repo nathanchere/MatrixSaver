@@ -7,6 +7,6 @@ namespace MatrixScreen
 {
     public static class Config
     {
-        public const bool IsDebugRendering = false;
+        public const bool IsDebugRendering = true;
     }
 }

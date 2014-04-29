@@ -7,62 +7,55 @@ using Color = SFML.Graphics.Color;
 
 namespace MatrixScreen
 {
-    internal class GlyphStream : IEntity
+    public class GlyphStream : IEntity
     {
-        const int GLYPH_TEXTURE_SIZE = 2048;
-        const int GLYPH_WIDTH = GLYPH_TEXTURE_SIZE / 16;
-        const int GLYPH_HEIGHT = GLYPH_TEXTURE_SIZE / 8;
+        private readonly float movementRate;
+        private int _numberOfGlyphs;
+        private readonly float scale;
+        private float marginScale = 0.8f; // 1 for normal; lower for glyphs closer together vertically               
 
-        public float movementRate = 120f;
-        public int numberOfGlyphs = 6;
-        public float scale = 1.0f;
-        public float marginScale = 0.8f; // 1 for normal; lower for glyphs closer together vertically
-
-        private static Texture glyphTexture = new Texture(@"data\glyphs.png")
-        {
-            Smooth = true,
-            Repeated = false
-        };
-
-        private static Sprite glyphSprite;
+        private readonly Rectangle _workingArea;
 
         // TODO: list of glyphs
         // TODO: chance of glyph change; glyph index, color
 
-        public Vector2f Position; // Stream position - scrolls down the screen
-        public Vector2f GlyphPosition; // Individual glyphs location - doesn't change
+        private Vector2f Position; // Stream position - scrolls down the screen
+        private Vector2f GlyphPosition; // Individual glyphs location - doesn't change
 
         public GlyphStream(Rectangle workingArea)
         {
-            glyphSprite = new Sprite(glyphTexture);
-            glyphSprite.Origin = new Vector2f(GLYPH_WIDTH * 0.5f, GLYPH_HEIGHT * 0.5f);
-
+            _workingArea = workingArea;
             movementRate = GetRandom.Float(50, 300);
-            numberOfGlyphs = GetRandom.Int(3, 6);
-            scale = GetRandom.Float(0.1f, 0.4f);
+            _numberOfGlyphs = GetRandom.Int(3, 12);
+            scale = GetRandom.Float(0.1f, 0.6f);
 
             GlyphPosition = new Vector2f(
-                GetRandom.Int((int)-Size.X, workingArea.Width + (int)Size.X),
-                GetRandom.Int((int)-Size.Y, workingArea.Width + (int)Size.Y));
+                GetRandom.Int((int)-Size.X, _workingArea.Width + (int)Size.X),
+                GetRandom.Int((int)-Size.Y, _workingArea.Width + (int)Size.Y));
 
             Position = new Vector2f(GlyphPosition.X, GlyphPosition.Y - Size.Y);
 
-            ClipGlyphs(workingArea);
+            ClipGlyphs(_workingArea);
+
+            // create glyphs
+            // glyphSprite.Scale = new Vector2f(scale, scale);
         }
 
 
         public Vector2f Size
         {
-            get { return new Vector2f(GlyphSize.X, GlyphSize.Y + (GlyphSize.Y * (numberOfGlyphs - 1) * marginScale)); }
+            get { return new Vector2f(GlyphSize.X, GlyphSize.Y + (GlyphSize.Y * (_numberOfGlyphs - 1) * marginScale)); }
         }
 
         public Vector2f GlyphSize
         {
             get
             {
-                return new Vector2f(GLYPH_WIDTH * scale, GLYPH_HEIGHT * scale);
+                return new Vector2f(Glyph.GLYPH_WIDTH * scale, Glyph.GLYPH_HEIGHT * scale);
             }
         }
+
+        public bool IsExpired { get; private set; }
 
         public IntRect DrawingArea()
         {
@@ -72,30 +65,11 @@ namespace MatrixScreen
                 (int)Position.X + (int)Size.X,
                 (int)Position.Y + (int)Size.Y
                 );
-        }       
+        }
 
         public void Render(RenderTarget canvas)
         {
-            glyphSprite.Scale = new Vector2f(scale, scale);
-            //glyphSprite.Origin = new Vector2f(GLYPH_WIDTH * 0.5f * scale, 0);
-            glyphSprite.TextureRect = new IntRect(GLYPH_WIDTH * (int)(DateTime.Now.Second * 0.25f), ((int)(DateTime.Now.Millisecond * 0.008) % 4) * GLYPH_HEIGHT, GLYPH_WIDTH, GLYPH_HEIGHT);
-            for (int i = 0; i < numberOfGlyphs; i++)
-            {
-                var y = GlyphPosition.Y + (GLYPH_HEIGHT * scale * marginScale) * i;
-                if (
-                    DrawingArea().Top + DrawingArea().Height > y
-                    && DrawingArea().Top < y + (GLYPH_HEIGHT * scale * marginScale)
-                    )
-                {
-                    glyphSprite.Color = new Color(0, 255, 0, 190);
-                    glyphSprite.Position = new Vector2f(GlyphPosition.X, y);
-                    glyphSprite.Draw(canvas, RenderStates.Default);
-                }
-                else
-                {
-                    glyphSprite.Color = new Color(255, 255, 255, 5);
-                }
-            }
+            // foreach glyphs, render
 
             if (Config.IsDebugRendering) // debug
             {
@@ -103,17 +77,28 @@ namespace MatrixScreen
                 {
                     FillColor = new Color(0, 255, 0, 40),
                     Position = Position,
-                    Origin = new Vector2f(GLYPH_WIDTH*0.5f*scale, 0),
+                    Origin = new Vector2f(Glyph.GLYPH_WIDTH * 0.5f * scale, 0),
                 };
                 shape.Draw(canvas, RenderStates.Default);
-
-                glyphSprite.Draw(canvas, RenderStates.Default);
             }
         }
 
         public void Update(ChronoEventArgs chronoArgs)
         {
+            if (IsExpired) return;
+
             Position.Y += (float)(movementRate * chronoArgs.Delta);
+
+            CheckIfExpired();
+        }
+
+        private void CheckIfExpired()
+        {
+            if (Position.Y > _workingArea.Bottom ||
+                Position.Y > GlyphPosition.Y + Size.Y)
+            {
+                IsExpired = true;
+            }
         }
 
         /// <summary>
@@ -123,13 +108,13 @@ namespace MatrixScreen
         {
             while (GlyphPosition.Y < (0 - GlyphSize.Y))
             {
-                GlyphPosition.Y += GLYPH_HEIGHT;
-                numberOfGlyphs--;
+                GlyphPosition.Y += Glyph.GLYPH_HEIGHT;
+                _numberOfGlyphs--;
             }
 
-            while (GlyphPosition.Y + Size.Y > workingArea.Height + GLYPH_HEIGHT)
+            while (GlyphPosition.Y + Size.Y > workingArea.Height + Glyph.GLYPH_HEIGHT)
             {
-                numberOfGlyphs--;
+                _numberOfGlyphs--;
             }
         }
     }

@@ -1,3 +1,4 @@
+using System;
 using SFML.Graphics;
 
 namespace FerretLib.SFML
