@@ -44,6 +44,8 @@ namespace MatrixScreen
             }
         }
 
+        public float TotalGlyphHeight { get { return GLYPH_HEIGHT * scale * numberOfGlyphs; } }
+
         public IntRect DrawingArea()
         {
             return new IntRect(
@@ -66,20 +68,22 @@ namespace MatrixScreen
         public void Render(RenderTarget canvas)
         {
             glyphSprite.Color = new Color(0, 255, 0, 190);
-            glyphSprite.Scale = new Vector2f(0.6f, 0.6f);
+            glyphSprite.Scale = new Vector2f(scale,scale);
+            //glyphSprite.Origin = new Vector2f(GLYPH_WIDTH * 0.5f * scale, 0);
             glyphSprite.TextureRect = new IntRect(GLYPH_WIDTH * (int)(DateTime.Now.Second * 0.25f), ((int)(DateTime.Now.Millisecond * 0.008) % 4) * GLYPH_HEIGHT, GLYPH_WIDTH, GLYPH_HEIGHT);
-            glyphSprite.Position = Mouse.GetPosition().ToVector2f();
-            glyphSprite.Draw(canvas, RenderStates.Default);        
-
+            for (int i = 0; i < numberOfGlyphs; i++)
+            {
+                glyphSprite.Position = new Vector2f(GlyphPosition.X, GlyphPosition.Y + (GLYPH_HEIGHT * scale) * i);
+                glyphSprite.Draw(canvas, RenderStates.Default);        
+            }
+            
             var shape = new RectangleShape(Size) {
                 FillColor = new Color(0,255,0,40),
                 Position = Position,
-                Origin = new Vector2f(GLYPH_WIDTH * 0.5f, 0),
+                Origin = new Vector2f(GLYPH_WIDTH * 0.5f * scale, 0),
             };
             shape.Draw(canvas, RenderStates.Default);
 
-            glyphSprite.TextureRect = new IntRect(GLYPH_WIDTH * (int)(DateTime.Now.Second * 0.25f), ((int)(DateTime.Now.Millisecond * 0.008) % 4) * GLYPH_HEIGHT, GLYPH_WIDTH, GLYPH_HEIGHT);
-            glyphSprite.Position = GlyphPosition;
             glyphSprite.Draw(canvas, RenderStates.Default);
         }
 

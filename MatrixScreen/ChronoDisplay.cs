@@ -21,7 +21,8 @@ namespace MatrixScreen
         }
 
         public void Render(RenderTarget target)
-        {            
+        {
+            _text.DisplayedString += "\nCanvas: " + target.Size.X + "x" + target.Size.Y;
             target.Draw(_text);
         }
 
