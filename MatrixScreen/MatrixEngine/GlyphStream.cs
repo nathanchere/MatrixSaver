@@ -72,16 +72,7 @@ namespace MatrixScreen
                 (int)Position.X + (int)Size.X,
                 (int)Position.Y + (int)Size.Y
                 );
-        }
-
-        public void Update(double delta)
-        {
-            Position.Y += (float)(movementRate * delta);
-        }
-
-        public void Draw()
-        {
-        }
+        }       
 
         public void Render(RenderTarget canvas)
         {
@@ -106,20 +97,23 @@ namespace MatrixScreen
                 }
             }
 
-            //var shape = new RectangleShape(Size)
-            //{
-            //    FillColor = new Color(0, 255, 0, 40),
-            //    Position = Position,
-            //    Origin = new Vector2f(GLYPH_WIDTH * 0.5f * scale, 0),
-            //};
-            //shape.Draw(canvas, RenderStates.Default);
+            if (Config.IsDebugRendering) // debug
+            {
+                var shape = new RectangleShape(Size)
+                {
+                    FillColor = new Color(0, 255, 0, 40),
+                    Position = Position,
+                    Origin = new Vector2f(GLYPH_WIDTH*0.5f*scale, 0),
+                };
+                shape.Draw(canvas, RenderStates.Default);
 
-            //glyphSprite.Draw(canvas, RenderStates.Default);
+                glyphSprite.Draw(canvas, RenderStates.Default);
+            }
         }
 
         public void Update(ChronoEventArgs chronoArgs)
         {
-            throw new NotImplementedException();
+            Position.Y += (float)(movementRate * chronoArgs.Delta);
         }
 
         /// <summary>

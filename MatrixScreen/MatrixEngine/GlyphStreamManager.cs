@@ -34,7 +34,7 @@ namespace MatrixScreen
 
         public void Update(ChronoEventArgs chronoArgs)
         {
-            streams.ForEach(x => x.Update(chronoArgs.Delta));
+            streams.ForEach(x => x.Update(chronoArgs));
 
             // Cull completed streams
             streams = streams.Where(
