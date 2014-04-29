@@ -10,10 +10,11 @@ namespace MatrixScreen
 {
     public class GlyphStreamManager : IEntity
     {
-        private const int MAX_STREAMS = 10;
+        private const int MAX_STREAMS = 13;
         private const float CHANCE_OF_NEW_STREAM = 0.2f; // TODO - implement chance of occurring per second, max MAX_STREAMS
 
         private readonly Rectangle _workingArea;
+        private const int _workingAreaMargin = 40;
 
         private List<GlyphStream> streams;
 
@@ -31,8 +32,8 @@ namespace MatrixScreen
             stream.scale = GetRandom.Float(0.1f, 0.4f);
 
             stream.GlyphPosition = new Vector2f(
-                GetRandom.Int((int)-stream.Size.X, _workingArea.Width + (int)stream.Size.X),
-                GetRandom.Int((int)-stream.Size.Y, _workingArea.Width + (int)stream.Size.Y));
+                GetRandom.Int((int)-stream.Size.X + _workingAreaMargin, _workingArea.Width + (int)stream.Size.X - _workingAreaMargin),
+                GetRandom.Int((int)-stream.Size.Y + _workingAreaMargin, _workingArea.Width + (int)stream.Size.Y - _workingAreaMargin));
 
             stream.Position = new Vector2f(stream.GlyphPosition.X, stream.GlyphPosition.Y - stream.Size.Y);
 

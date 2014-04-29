@@ -11,7 +11,7 @@ namespace MatrixScreen
     {
         const int GLYPH_TEXTURE_SIZE = 2048;
         const int GLYPH_WIDTH = GLYPH_TEXTURE_SIZE / 16;
-        const int GLYPH_HEIGHT = GLYPH_TEXTURE_SIZE / 8;        
+        const int GLYPH_HEIGHT = GLYPH_TEXTURE_SIZE / 8;
 
         public float movementRate = 120f;
         public int numberOfGlyphs = 6;
@@ -25,7 +25,7 @@ namespace MatrixScreen
         };
 
         private static Sprite glyphSprite;
-            
+
         // TODO: list of glyphs
         // TODO: chance of glyph change; glyph index, color
 
@@ -73,31 +73,43 @@ namespace MatrixScreen
 
         public void Render(RenderTarget canvas)
         {
-            glyphSprite.Color = new Color(0, 255, 0, 190);
-            glyphSprite.Scale = new Vector2f(scale,scale);
+            glyphSprite.Scale = new Vector2f(scale, scale);
             //glyphSprite.Origin = new Vector2f(GLYPH_WIDTH * 0.5f * scale, 0);
             glyphSprite.TextureRect = new IntRect(GLYPH_WIDTH * (int)(DateTime.Now.Second * 0.25f), ((int)(DateTime.Now.Millisecond * 0.008) % 4) * GLYPH_HEIGHT, GLYPH_WIDTH, GLYPH_HEIGHT);
             for (int i = 0; i < numberOfGlyphs; i++)
             {
-                glyphSprite.Position = new Vector2f(GlyphPosition.X, GlyphPosition.Y + (GLYPH_HEIGHT * scale * marginScale) * i);
-                glyphSprite.Draw(canvas, RenderStates.Default);        
+                var y = GlyphPosition.Y + (GLYPH_HEIGHT * scale * marginScale) * i;
+                if (
+                    DrawingArea().Top + DrawingArea().Height > y
+                    && DrawingArea().Top < y + (GLYPH_HEIGHT * scale * marginScale)
+                    )
+                {
+                    glyphSprite.Color = new Color(0, 255, 0, 190);
+                    glyphSprite.Position = new Vector2f(GlyphPosition.X, y);
+                    glyphSprite.Draw(canvas, RenderStates.Default);
+                }
+                else
+                {
+                    glyphSprite.Color = new Color(255, 255, 255, 5);
+                }
             }
-            
-            var shape = new RectangleShape(Size) {
-                FillColor = new Color(0,255,0,40),
-                Position = Position,
-                Origin = new Vector2f(GLYPH_WIDTH * 0.5f * scale, 0),
-            };
-            shape.Draw(canvas, RenderStates.Default);
 
-            glyphSprite.Draw(canvas, RenderStates.Default);
+            //var shape = new RectangleShape(Size)
+            //{
+            //    FillColor = new Color(0, 255, 0, 40),
+            //    Position = Position,
+            //    Origin = new Vector2f(GLYPH_WIDTH * 0.5f * scale, 0),
+            //};
+            //shape.Draw(canvas, RenderStates.Default);
+
+            //glyphSprite.Draw(canvas, RenderStates.Default);
         }
 
         public void Update(ChronoEventArgs chronoArgs)
         {
             throw new NotImplementedException();
         }
-        
+
         /// <summary>
         /// Hide any extra glyphs in glyph strings that extend beyond screen boundaries
         /// </summary>
