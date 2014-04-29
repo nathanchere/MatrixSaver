@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using FerretLib.SFML;
 using SFML.Graphics;
@@ -10,13 +11,13 @@ namespace MatrixScreen
     public class GlyphStream : IEntity
     {
         private readonly float movementRate;
-        private int _numberOfGlyphs;
         private readonly float scale;
         private float marginScale = 0.8f; // 1 for normal; lower for glyphs closer together vertically               
 
         private readonly Rectangle _workingArea;
 
-        // TODO: list of glyphs
+        private List<Glyph> _glyphs;
+
         // TODO: chance of glyph change; glyph index, color
 
         private Vector2f Position; // Stream position - scrolls down the screen
@@ -26,25 +27,31 @@ namespace MatrixScreen
         {
             _workingArea = workingArea;
             movementRate = GetRandom.Float(50, 300);
-            _numberOfGlyphs = GetRandom.Int(3, 12);
+            var numberOfGlyphs = GetRandom.Int(3, 12);
             scale = GetRandom.Float(0.1f, 0.6f);
 
             GlyphPosition = new Vector2f(
-                GetRandom.Int((int)-Size.X, _workingArea.Width + (int)Size.X),
-                GetRandom.Int((int)-Size.Y, _workingArea.Width + (int)Size.Y));
+                GetRandom.Int((int)-GlyphSize.X, (int) (_workingArea.Width + GlyphSize.X)),
+                GetRandom.Int((int)-GlyphSize.Y, (int)(_workingArea.Height + GlyphSize.Y)));
 
-            Position = new Vector2f(GlyphPosition.X, GlyphPosition.Y - Size.Y);
+            Position = new Vector2f(GlyphPosition.X, GlyphPosition.Y - GlyphSize.Y);
 
-            ClipGlyphs(_workingArea);
+            _glyphs = new List<Glyph>();
+            for (int i = 0; i < numberOfGlyphs; i++)
+            {
+                var y = GlyphPosition.Y + (i * Glyph.GLYPH_HEIGHT * scale * marginScale);
 
-            // create glyphs
-            // glyphSprite.Scale = new Vector2f(scale, scale);
+                if (y + Glyph.GLYPH_HEIGHT < 0) continue;
+                if (y > workingArea.Height) continue;
+
+                _glyphs.Add(new Glyph(new Vector2f(GlyphPosition.X, y), scale));
+            }
         }
 
 
         public Vector2f Size
         {
-            get { return new Vector2f(GlyphSize.X, GlyphSize.Y + (GlyphSize.Y * (_numberOfGlyphs - 1) * marginScale)); }
+            get { return new Vector2f(GlyphSize.X, GlyphSize.Y + (GlyphSize.Y * (_glyphs.Count - 1) * marginScale)); }
         }
 
         public Vector2f GlyphSize
@@ -69,7 +76,7 @@ namespace MatrixScreen
 
         public void Render(RenderTarget canvas)
         {
-            // foreach glyphs, render
+            _glyphs.ForEach(g=>g.Render(canvas));
 
             if (Config.IsDebugRendering) // debug
             {
@@ -98,23 +105,6 @@ namespace MatrixScreen
                 Position.Y > GlyphPosition.Y + Size.Y)
             {
                 IsExpired = true;
-            }
-        }
-
-        /// <summary>
-        /// Hide any extra glyphs in glyph strings that extend beyond screen boundaries
-        /// </summary>
-        public void ClipGlyphs(Rectangle workingArea)
-        {
-            while (GlyphPosition.Y < (0 - GlyphSize.Y))
-            {
-                GlyphPosition.Y += Glyph.GLYPH_HEIGHT;
-                _numberOfGlyphs--;
-            }
-
-            while (GlyphPosition.Y + Size.Y > workingArea.Height + Glyph.GLYPH_HEIGHT)
-            {
-                _numberOfGlyphs--;
             }
         }
     }

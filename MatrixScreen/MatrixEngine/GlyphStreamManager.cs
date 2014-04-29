@@ -37,7 +37,6 @@ namespace MatrixScreen
         {
             streams.ForEach(x => x.Update(chronoArgs));
 
-            // Cull completed streams
             streams = streams.Where(x => !x.IsExpired).ToList();
 
             // Add new streams
