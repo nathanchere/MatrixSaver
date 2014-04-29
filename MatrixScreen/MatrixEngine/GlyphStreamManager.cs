@@ -14,8 +14,6 @@ namespace MatrixScreen
         private const float CHANCE_OF_NEW_STREAM = 0.2f; // TODO - implement chance of occurring per second, max MAX_STREAMS
 
         private readonly Rectangle _workingArea;
-        private const int _workingAreaMargin = 40;
-
         private List<GlyphStream> streams;
 
         public GlyphStreamManager(Vector2u workingArea)
@@ -25,9 +23,8 @@ namespace MatrixScreen
         }
 
         private void AddNewGlyphStream()
-        {
-            var stream = new GlyphStream(_workingArea);            
-            streams.Add(stream);
+        {    
+            streams.Add(new GlyphStream(_workingArea));
         }
 
         public void Render(RenderTarget canvas)
