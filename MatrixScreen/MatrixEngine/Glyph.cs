@@ -18,6 +18,7 @@ namespace MatrixScreen
         public const int GLYPH_HEIGHT = GLYPH_TEXTURE_SIZE / GLYPH_TEXTURE_ROWS;
 
         private float _chanceOfChange;
+        private float _changeCounter;
 
         private readonly Sprite _sprite;
         private static readonly Texture _texture = new Texture(@"data\glyphs.png")
@@ -55,6 +56,7 @@ namespace MatrixScreen
             };
 
             Index = GetRandom.Int(MAX_INDEX);
+            _chanceOfChange = GetRandom.Float(0.4f);
         }
 
         public void Render(RenderTarget target)
@@ -70,6 +72,12 @@ namespace MatrixScreen
 
         public void Update(ChronoEventArgs chronoArgs)
         {
+            _changeCounter += GetRandom.Float(1) * (float)chronoArgs.Delta;
+            if (_changeCounter > 1f - _chanceOfChange)
+            {
+                _changeCounter = 0;
+                Index = GetRandom.Int(MAX_INDEX);
+            }
             // random change to change
 
             // isdraw = is contained in drawing area

@@ -26,7 +26,7 @@ namespace MatrixScreen
         public GlyphStream(Rectangle workingArea)
         {
             _workingArea = workingArea;
-            movementRate = GetRandom.Float(50, 300);
+            movementRate = GetRandom.Float(50, 300) * 0.1f;
             var numberOfGlyphs = GetRandom.Int(3, 12);
             scale = GetRandom.Float(0.1f, 0.6f);
 
@@ -95,7 +95,7 @@ namespace MatrixScreen
         {
             if (IsExpired) return;
 
-            //MaskPosition.Y += (float)(movementRate * chronoArgs.Delta);
+            MaskPosition.Y += (float)(movementRate * chronoArgs.Delta);
             _glyphs.ForEach(g=>g.Update(chronoArgs));
 
             CheckIfExpired();
