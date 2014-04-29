@@ -20,7 +20,7 @@ namespace MatrixScreen
 
         // TODO: chance of glyph change; glyph index, color
 
-        private Vector2f Position; // Stream position - scrolls down the screen
+        private Vector2f MaskPosition; // Stream position - scrolls down the screen
         private Vector2f GlyphPosition; // Individual glyphs location - doesn't change
 
         public GlyphStream(Rectangle workingArea)
@@ -33,9 +33,7 @@ namespace MatrixScreen
             GlyphPosition = new Vector2f(
                 GetRandom.Int((int)-GlyphSize.X, (int) (_workingArea.Width + GlyphSize.X)),
                 GetRandom.Int((int)-GlyphSize.Y, (int)(_workingArea.Height + GlyphSize.Y)));
-
-            Position = new Vector2f(GlyphPosition.X, GlyphPosition.Y - GlyphSize.Y);
-
+            
             _glyphs = new List<Glyph>();
             for (int i = 0; i < numberOfGlyphs; i++)
             {
@@ -46,6 +44,9 @@ namespace MatrixScreen
 
                 _glyphs.Add(new Glyph(new Vector2f(GlyphPosition.X, y), scale));
             }
+
+            MaskPosition = new Vector2f(GlyphPosition.X, GlyphPosition.Y - Size.Y);
+
         }
 
 
@@ -64,13 +65,13 @@ namespace MatrixScreen
 
         public bool IsExpired { get; private set; }
 
-        public IntRect DrawingArea()
+        public IntRect MaskArea()
         {
             return new IntRect(
-                (int)Position.X,
-                (int)Position.Y,
-                (int)Position.X + (int)Size.X,
-                (int)Position.Y + (int)Size.Y
+                (int)MaskPosition.X,
+                (int)MaskPosition.Y,
+                (int)MaskPosition.X + (int)Size.X,
+                (int)MaskPosition.Y + (int)Size.Y
                 );
         }
 
@@ -83,7 +84,7 @@ namespace MatrixScreen
                 var shape = new RectangleShape(Size)
                 {
                     FillColor = new Color(0, 255, 0, 40),
-                    Position = Position,
+                    Position = MaskPosition,
                     Origin = new Vector2f(Glyph.GLYPH_WIDTH * 0.5f * scale, 0),
                 };
                 shape.Draw(canvas, RenderStates.Default);
@@ -94,15 +95,16 @@ namespace MatrixScreen
         {
             if (IsExpired) return;
 
-            Position.Y += (float)(movementRate * chronoArgs.Delta);
+            //MaskPosition.Y += (float)(movementRate * chronoArgs.Delta);
+            _glyphs.ForEach(g=>g.Update(chronoArgs));
 
             CheckIfExpired();
         }
 
         private void CheckIfExpired()
         {
-            if (Position.Y > _workingArea.Bottom ||
-                Position.Y > GlyphPosition.Y + Size.Y)
+            if (MaskPosition.Y > _workingArea.Bottom ||
+                MaskPosition.Y > GlyphPosition.Y + Size.Y)
             {
                 IsExpired = true;
             }

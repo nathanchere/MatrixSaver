@@ -17,6 +17,8 @@ namespace MatrixScreen
         public const int GLYPH_WIDTH = GLYPH_TEXTURE_SIZE / GLYPH_TEXTURE_COLUMNS;
         public const int GLYPH_HEIGHT = GLYPH_TEXTURE_SIZE / GLYPH_TEXTURE_ROWS;
 
+        private float _chanceOfChange;
+
         private readonly Sprite _sprite;
         private static readonly Texture _texture = new Texture(@"data\glyphs.png")
         {
@@ -25,7 +27,6 @@ namespace MatrixScreen
         };
 
         private int _index;
-
         private int Index
         {
             get { return _index; }
@@ -42,12 +43,13 @@ namespace MatrixScreen
             }
         }
 
+        bool _isDraw = false;
 
         public Glyph(Vector2f location, float scale)
         {
             _sprite = new Sprite(_texture)
             {
-                Origin = new Vector2f(GLYPH_WIDTH * 0.5f, GLYPH_HEIGHT * 0.5f),
+                Origin = new Vector2f(GLYPH_WIDTH * 0.5f, 0),
                 Scale = new Vector2f(scale, scale),
                 Position = location
             };
@@ -56,13 +58,7 @@ namespace MatrixScreen
         }
 
         public void Render(RenderTarget target)
-        {
-            //var y = GlyphPosition.Y + (GLYPH_HEIGHT * scale * marginScale) * i;
-            //if (
-            //    DrawingArea().Top + DrawingArea().Height > y
-            //    && DrawingArea().Top < y + (GLYPH_HEIGHT * scale * marginScale)
-            //    )
-            //{
+        {  
             _sprite.Color = new Color(0, 255, 0, 190);
             _sprite.Draw(target, RenderStates.Default);
             //}
@@ -74,6 +70,10 @@ namespace MatrixScreen
 
         public void Update(ChronoEventArgs chronoArgs)
         {
+            // random change to change
+
+            // isdraw = is contained in drawing area
+
             //_sprite.TextureRect = new IntRect(GLYPH_WIDTH * (int)(DateTime.Now.Second * 0.25f), ((int)(DateTime.Now.Millisecond * 0.008) % 4) * GLYPH_HEIGHT, GLYPH_WIDTH, GLYPH_HEIGHT);
         }
     }
