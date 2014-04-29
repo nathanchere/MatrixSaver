@@ -17,9 +17,7 @@ namespace MatrixScreen
         public const int GLYPH_WIDTH = GLYPH_TEXTURE_SIZE / GLYPH_TEXTURE_COLUMNS;
         public const int GLYPH_HEIGHT = GLYPH_TEXTURE_SIZE / GLYPH_TEXTURE_ROWS;
 
-        private float _chanceOfChange;
-        private float _changeCounter;
-
+        private readonly TwitchCalculator _twitch;
         private readonly Sprite _sprite;
         private static readonly Texture _texture = new Texture(@"data\glyphs.png")
         {
@@ -31,7 +29,8 @@ namespace MatrixScreen
         private int Index
         {
             get { return _index; }
-            set { 
+            set
+            {
                 _index = value;
                 var x = value % GLYPH_TEXTURE_COLUMNS;
                 var y = (value - x) / GLYPH_TEXTURE_COLUMNS;
@@ -56,11 +55,11 @@ namespace MatrixScreen
             };
 
             Index = GetRandom.Int(MAX_INDEX);
-            _chanceOfChange = GetRandom.Float(0.4f);
+            _twitch = new TwitchCalculator();
         }
 
         public void Render(RenderTarget target)
-        {  
+        {
             _sprite.Color = new Color(0, 255, 0, 190);
             _sprite.Draw(target, RenderStates.Default);
             //}
@@ -72,17 +71,35 @@ namespace MatrixScreen
 
         public void Update(ChronoEventArgs chronoArgs)
         {
-            _changeCounter += GetRandom.Float(1) * (float)chronoArgs.Delta;
-            if (_changeCounter > 1f - _chanceOfChange)
+            if (_twitch.IsTriggered(chronoArgs))
             {
-                _changeCounter = 0;
                 Index = GetRandom.Int(MAX_INDEX);
             }
-            // random change to change
+            
+            // isdraw = is contained in drawing area            
+        }        
+    }
 
-            // isdraw = is contained in drawing area
+    public class TwitchCalculator
+    {
+        private float _changeCounter;
+        private double _secondsCounter;
 
-            //_sprite.TextureRect = new IntRect(GLYPH_WIDTH * (int)(DateTime.Now.Second * 0.25f), ((int)(DateTime.Now.Millisecond * 0.008) % 4) * GLYPH_HEIGHT, GLYPH_WIDTH, GLYPH_HEIGHT);
+        private float _chanceOfChange;
+        private float _minTwitchFrequency;
+        private float _maxTwitchFrequency;
+
+        private bool _changeFrequencyOnTrigger = GetRandom.Bool(0.1f);
+
+        public TwitchCalculator()
+        {
+            _chanceOfChange = GetRandom.Float(0.4f);
         }
+
+        public bool IsTriggered(ChronoEventArgs chrono)
+        {
+
+        }
+
     }
 }
