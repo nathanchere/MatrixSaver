@@ -32,10 +32,22 @@ namespace MatrixScreen
         public Vector2f Position; // Stream position - scrolls down the screen
         public Vector2f GlyphPosition; // Individual glyphs location - doesn't change
 
-        public GlyphStream()
+        public GlyphStream(Rectangle workingArea)
         {
             glyphSprite = new Sprite(glyphTexture);
             glyphSprite.Origin = new Vector2f(GLYPH_WIDTH * 0.5f, GLYPH_HEIGHT * 0.5f);
+
+            movementRate = GetRandom.Float(50, 300);
+            numberOfGlyphs = GetRandom.Int(3, 6);
+            scale = GetRandom.Float(0.1f, 0.4f);
+
+            GlyphPosition = new Vector2f(
+                GetRandom.Int((int)-Size.X, workingArea.Width + (int)Size.X),
+                GetRandom.Int((int)-Size.Y, workingArea.Width + (int)Size.Y));
+
+            Position = new Vector2f(GlyphPosition.X, GlyphPosition.Y - Size.Y);
+
+            ClipGlyphs(workingArea);
         }
 
 

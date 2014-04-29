@@ -26,18 +26,7 @@ namespace MatrixScreen
 
         private void AddNewGlyphStream()
         {
-            var stream = new GlyphStream();
-            stream.movementRate = GetRandom.Float(50, 300);
-            stream.numberOfGlyphs = GetRandom.Int(3, 6);
-            stream.scale = GetRandom.Float(0.1f, 0.4f);
-
-            stream.GlyphPosition = new Vector2f(
-                GetRandom.Int((int)-stream.Size.X + _workingAreaMargin, _workingArea.Width + (int)stream.Size.X - _workingAreaMargin),
-                GetRandom.Int((int)-stream.Size.Y + _workingAreaMargin, _workingArea.Width + (int)stream.Size.Y - _workingAreaMargin));
-
-            stream.Position = new Vector2f(stream.GlyphPosition.X, stream.GlyphPosition.Y - stream.Size.Y);
-
-            stream.ClipGlyphs(_workingArea);
+            var stream = new GlyphStream(_workingArea);            
             streams.Add(stream);
         }
 
