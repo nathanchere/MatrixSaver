@@ -14,7 +14,7 @@ namespace MatrixScreen
         private float _maxTwitchFrequency;
         private float _chanceOfTrigger;
 
-        private bool _changeFrequencyOnTrigger = GetRandom.Bool(0.1f);
+        private readonly bool _changeFrequencyOnTrigger = GetRandom.Bool(0.1f);
 
         public TwitchCalculator()
         {
