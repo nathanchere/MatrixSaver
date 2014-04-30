@@ -65,6 +65,7 @@
     <Compile Include="ScreenSaverEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewportCollection.cs" />
+    <Compile Include="ViewPortSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
