@@ -17,9 +17,9 @@ namespace FerretLib.SFML
         /// <summary>
         /// .ctor
         /// </summary>
-        public ScreenSaverEngine()
+        public ScreenSaverEngine(ViewPortSettings settings)
         {
-            _viewPorts = new ViewPortCollection(true, true);
+            _viewPorts = new ViewPortCollection(settings.IsFullscreen, settings.IsMultiMonitorEnabled);
             _canvas = new RenderTexture((uint) _viewPorts.WorkingArea.Width, (uint) _viewPorts.WorkingArea.Height, false);
             _canvas.Clear(Color.Black);
             _canvas.Display(); // Needed due to FBO causing inverted co-ords otherwise

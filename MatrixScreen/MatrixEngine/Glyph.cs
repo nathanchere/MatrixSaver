@@ -71,12 +71,13 @@ namespace MatrixScreen
 
         public void Update(ChronoEventArgs chronoArgs)
         {
+            // isdraw = is contained in drawing area            
+            // smooth colour
+
             if (_twitch.IsTriggered(chronoArgs))
             {
                 Index = GetRandom.Int(MAX_INDEX);
-            }
-            
-            // isdraw = is contained in drawing area            
+            }                       
         }        
     }
 }

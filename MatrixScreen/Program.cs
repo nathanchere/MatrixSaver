@@ -6,8 +6,8 @@ namespace MatrixScreen
     {        
 
         private static void Main(string[] args)
-        {
-            var screenSaver = new ScreenSaverEngine();
+        {            
+            var screenSaver = new ScreenSaverEngine(Config.ViewPortSettings);
             screenSaver.Engine = new MatrixEngine();
             screenSaver.BindEscapeToExit();
             screenSaver.Run();            

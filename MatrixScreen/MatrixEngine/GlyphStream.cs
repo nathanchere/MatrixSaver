@@ -45,12 +45,12 @@ namespace MatrixScreen
                 _glyphs.Add(new Glyph(new Vector2f(GlyphPosition.X, y), scale));
             }
 
-            MaskPosition = new Vector2f(GlyphPosition.X, GlyphPosition.Y - Size.Y);
+            MaskPosition = new Vector2f(GlyphPosition.X, GlyphPosition.Y - MaskSize.Y);
 
         }
 
 
-        public Vector2f Size
+        public Vector2f MaskSize
         {
             get { return new Vector2f(GlyphSize.X, GlyphSize.Y + (GlyphSize.Y * (_glyphs.Count - 1) * marginScale)); }
         }
@@ -70,8 +70,8 @@ namespace MatrixScreen
             return new IntRect(
                 (int)MaskPosition.X,
                 (int)MaskPosition.Y,
-                (int)MaskPosition.X + (int)Size.X,
-                (int)MaskPosition.Y + (int)Size.Y
+                (int)MaskPosition.X + (int)MaskSize.X,
+                (int)MaskPosition.Y + (int)MaskSize.Y
                 );
         }
 
@@ -81,7 +81,7 @@ namespace MatrixScreen
 
             if (Config.IsDebugRendering) // debug
             {
-                var shape = new RectangleShape(Size)
+                var shape = new RectangleShape(MaskSize)
                 {
                     FillColor = new Color(0, 255, 0, 40),
                     Position = MaskPosition,
@@ -104,7 +104,7 @@ namespace MatrixScreen
         private void CheckIfExpired()
         {
             if (MaskPosition.Y > _workingArea.Bottom ||
-                MaskPosition.Y > GlyphPosition.Y + Size.Y)
+                MaskPosition.Y > GlyphPosition.Y + MaskSize.Y)
             {
                 IsExpired = true;
             }
