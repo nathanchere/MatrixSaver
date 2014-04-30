@@ -66,6 +66,7 @@
     <Compile Include="MatrixEngine\GlyphStreamManager.cs" />
     <Compile Include="MatrixEngine.cs" />
     <Compile Include="MatrixEngine\GlyphStream.cs" />
+    <Compile Include="MatrixEngine\TwitchCalculator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
