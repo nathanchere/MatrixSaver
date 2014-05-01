@@ -19,6 +19,7 @@ namespace MatrixScreen
 
         private readonly TwitchCalculator _twitch;
         private readonly Sprite _sprite;
+        private readonly IntRect _glyphArea;
         private static readonly Texture _texture = new Texture(@"data\glyphs.png")
         {
             Smooth = true,
@@ -54,30 +55,50 @@ namespace MatrixScreen
                 Position = location
             };
 
+            _glyphArea = new IntRect(
+                (int)location.X,
+                (int)location.Y,
+                (int)(GLYPH_WIDTH * scale),
+                (int)(GLYPH_HEIGHT * scale));
+
             Index = GetRandom.Int(MAX_INDEX);
             _twitch = new TwitchCalculator();
         }
 
         public void Render(RenderTarget target)
         {
-            _sprite.Color = new Color(0, 255, 0, 190);
-            _sprite.Draw(target, RenderStates.Default);
-            //}
-            //else
-            //{
-            //    glyphSprite.Color = new Color(255, 255, 255, 5);
-            //}            
+            if (!_isDraw) return;            
+            _sprite.Draw(target, RenderStates.Default);            
         }
 
         public void Update(ChronoEventArgs chronoArgs, IntRect visibleRegion)
         {
-            // isdraw = is contained in drawing area            
-            // smooth colour
+            var modifier = GetVisibility(visibleRegion);
+            
+            _isDraw = modifier > 0;
+
+            _sprite.Color = new Color(0, 255, 0, (byte)(190 * modifier));
 
             if (_twitch.IsTriggered(chronoArgs))
             {
                 Index = GetRandom.Int(MAX_INDEX);
-            }                       
-        }        
+            }
+        }
+
+        private float GetVisibility(IntRect visibleRegion)
+        {
+            // Outside bounds
+            if (visibleRegion.Top > _glyphArea.Top + _glyphArea.Height) return 0;
+            if (visibleRegion.Top + visibleRegion.Height < _glyphArea.Top) return 0;
+
+            // Completely within bounds
+            if (visibleRegion.Top < _glyphArea.Top + _glyphArea.Height
+                && visibleRegion.Top + visibleRegion.Height > _glyphArea.Top)
+                return 1;
+            
+            // Partially within bounds
+            if (visibleRegion.Top > _glyphArea.Top + _glyphArea.Height) return 0;
+            if (visibleRegion.Top + visibleRegion.Height < _glyphArea.Top) return 0;
+        }
     }
 }
