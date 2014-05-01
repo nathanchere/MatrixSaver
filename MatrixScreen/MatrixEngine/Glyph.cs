@@ -6,7 +6,7 @@ using SFML.Window;
 
 namespace MatrixScreen
 {
-    public class Glyph : IEntity
+    public class Glyph // :IEntity // - need to rethink this
     {
         public const int MAX_INDEX = 92; // maximum glyph character index
 
@@ -69,7 +69,7 @@ namespace MatrixScreen
             //}            
         }
 
-        public void Update(ChronoEventArgs chronoArgs)
+        public void Update(ChronoEventArgs chronoArgs, IntRect visibleRegion)
         {
             // isdraw = is contained in drawing area            
             // smooth colour

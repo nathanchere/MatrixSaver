@@ -96,7 +96,7 @@ namespace MatrixScreen
             if (IsExpired) return;
 
             MaskPosition.Y += (float)(movementRate * chronoArgs.Delta);
-            _glyphs.ForEach(g=>g.Update(chronoArgs));
+            _glyphs.ForEach(g=>g.Update(chronoArgs, MaskArea()));
 
             CheckIfExpired();
         }
