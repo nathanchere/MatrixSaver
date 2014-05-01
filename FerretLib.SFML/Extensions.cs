@@ -58,6 +58,18 @@ namespace FerretLib.SFML
         }
         #endregion
 
+        #region Rectangle helpers
+        public static int Bottom(this IntRect input)
+        {
+            return input.Top + input.Height;
+        }
+
+        public static int Right(this IntRect input)
+        {
+            return input.Left + input.Width;
+        }
+        #endregion
+
         public static Rectangle Normalize(this Rectangle rectangle)
         {
             return new Rectangle(0,0,rectangle.Width,rectangle.Height);
