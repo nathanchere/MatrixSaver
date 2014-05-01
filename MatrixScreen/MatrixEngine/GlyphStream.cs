@@ -83,7 +83,7 @@ namespace MatrixScreen
             {
                 var shape = new RectangleShape(MaskSize)
                 {
-                    FillColor = new Color(0, 255, 0, 40),
+                    FillColor = new Color(0, 255, 0, 20),
                     Position = MaskPosition,
                     Origin = new Vector2f(Glyph.GLYPH_WIDTH * 0.5f * scale, 0),
                 };
