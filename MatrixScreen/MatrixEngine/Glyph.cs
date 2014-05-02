@@ -110,15 +110,13 @@ namespace MatrixScreen
                 return 1;;
 
 
-            return (float)(visibleRegion.Bottom() - _glyphArea.Top) / _glyphArea.Height;
-
             // Partially within bounds - fading out
             if (visibleRegion.Top > _glyphArea.Top)
-                return visibleRegion.Top - (visibleRegion.Top - _glyphArea.Top) / _glyphArea.Height;
+                return (_glyphArea.Bottom() - visibleRegion.Top) / (float)(_glyphArea.Bottom() - _glyphArea.Top);
+
 
             // Partially within bounds - fading in
-            //if (visibleRegion.Bottom() < _glyphArea.Top) return 0;
-            
+            return (float)(visibleRegion.Bottom() - _glyphArea.Top) / _glyphArea.Height;
         }
     }
 }

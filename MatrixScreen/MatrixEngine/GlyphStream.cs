@@ -29,7 +29,7 @@ namespace MatrixScreen
         public GlyphStream(Rectangle workingArea)
         {
             _workingArea = workingArea;
-            movementRate = GetRandom.Float(50, 300) * 0.1f;
+            movementRate = GetRandom.Float(50, 300);
             var numberOfGlyphs = GetRandom.Int(MIN_GLYPHS, MAX_GLYPHS);
             scale = GetRandom.Float(0.1f, 0.6f);
 
@@ -90,11 +90,11 @@ namespace MatrixScreen
 
             if (Config.IsDebugRendering) // debug
             {
-                Debug.DrawRect(canvas, new Color(0, 255, 0, 20),
-                    MaskPosition.X, MaskPosition.Y,
-                    MaskSize.X, MaskSize.Y,
-                    //Glyph.GLYPH_WIDTH * 0.5f * scale,0);
-                    0,0);
+                //Debug.DrawRect(canvas, new Color(0, 255, 0, 20),
+                //    MaskPosition.X, MaskPosition.Y,
+                //    MaskSize.X, MaskSize.Y,
+                //    //Glyph.GLYPH_WIDTH * 0.5f * scale,0);
+                //    0,0);
 
                 Debug.DrawRect(canvas, new Color(0, 255, 255, 20),
                     MaskPosition.X - 5, MaskPosition.Y,
