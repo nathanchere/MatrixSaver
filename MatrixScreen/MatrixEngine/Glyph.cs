@@ -70,11 +70,15 @@ namespace MatrixScreen
 
         public void Render(RenderTarget target)
         {
-            if (!_isDraw) return;            
+            if (!_isDraw) return;
 
-            Debug.DrawRect(target,new Color(255,255,0,30),_sprite.Position.X,
-                _sprite.Position.Y, _sprite.TextureRect.Width * _sprite.Scale.X,
-                _sprite.TextureRect.Height * _sprite.Scale.Y,0,0);
+            if (Config.IsDebugRendering)
+            {
+                Debug.DrawRect(target, new Color(255, 255, 0, 30), _sprite.Position.X,
+                    _sprite.Position.Y, _sprite.TextureRect.Width*_sprite.Scale.X,
+                    _sprite.TextureRect.Height*_sprite.Scale.Y, 0, 0);
+            }
+
             _sprite.Draw(target, RenderStates.Default);
         }
 
@@ -83,6 +87,7 @@ namespace MatrixScreen
             var modifier = GetVisibility(visibleRegion);
 
             _isDraw = modifier > 0;
+            if(!_isDraw) return;
 
             _sprite.Color = new Color(0, 255, 0, (byte)(190 * modifier));
 
@@ -100,20 +105,20 @@ namespace MatrixScreen
                 return 0;
 
             // Completely within bounds
-            if (visibleRegion.Top < _glyphArea.Bottom()
-                && visibleRegion.Bottom() > _glyphArea.Top)
-                return 1;
+            if (visibleRegion.Top < _glyphArea.Top
+                && visibleRegion.Bottom() > _glyphArea.Bottom())
+                return 1;;
 
-            return 1;
 
-            // Partially within bounds - fading in
-            if (visibleRegion.Top > _glyphArea.Top)
-                return 0;
-            return visibleRegion.Top - (visibleRegion.Top - _glyphArea.Top) / _glyphArea.Height;
+            return (float)(visibleRegion.Bottom() - _glyphArea.Top) / _glyphArea.Height;
 
             // Partially within bounds - fading out
+            if (visibleRegion.Top > _glyphArea.Top)
+                return visibleRegion.Top - (visibleRegion.Top - _glyphArea.Top) / _glyphArea.Height;
+
+            // Partially within bounds - fading in
             //if (visibleRegion.Bottom() < _glyphArea.Top) return 0;
-            return (visibleRegion.Bottom() - _glyphArea.Top) / _glyphArea.Height;
+            
         }
     }
 }
