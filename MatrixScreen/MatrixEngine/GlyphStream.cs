@@ -39,7 +39,8 @@ namespace MatrixScreen
             
             numberOfGlyphs = 5;
             GlyphPosition = new Vector2f(10,10);
-            movementRate = 60;;
+            movementRate = 80;
+            scale = GetRandom.Float(0.1f, 0.3f);
 
             _glyphs = new List<Glyph>();
             for (int i = 0; i < numberOfGlyphs; i++)
@@ -59,7 +60,7 @@ namespace MatrixScreen
 
         public Vector2f MaskSize
         {
-            get { return new Vector2f(GlyphSize.X, GlyphSize.Y + (GlyphSize.Y * (_glyphs.Count - 1) * marginScale)); }
+            get { return new Vector2f(GlyphSize.X, GlyphSize.Y * _glyphs.Count); } //TODO: handle margin scale
         }
 
         public Vector2f GlyphSize
@@ -93,6 +94,18 @@ namespace MatrixScreen
                     MaskSize.X, MaskSize.Y,
                     //Glyph.GLYPH_WIDTH * 0.5f * scale,0);
                     0,0);
+
+                Debug.DrawRect(canvas, new Color(0, 255, 255, 20),
+                    MaskPosition.X, MaskPosition.Y,
+                    200, 10,
+                    0,5);
+
+                Debug.DrawRect(canvas, new Color(0, 255, 255, 20),
+                    MaskPosition.X, MaskPosition.Y + MaskSize.Y,
+                    200, 10,
+                    0,5);
+
+
             }
         }
 
