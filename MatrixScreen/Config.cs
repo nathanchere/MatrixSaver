@@ -8,7 +8,7 @@ namespace MatrixScreen
 {
     public static class Config
     {
-        public const bool IsDebugRendering = true;
+        public const bool IsDebugRendering = false;
         public static ViewPortSettings ViewPortSettings = new ViewPortSettings
         {
             IsFullscreen = false,

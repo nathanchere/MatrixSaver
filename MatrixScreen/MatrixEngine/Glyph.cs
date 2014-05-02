@@ -52,7 +52,7 @@ namespace MatrixScreen
         {
             _sprite = new Sprite(_texture) {
                 Scale = new Vector2f(scale, scale),
-                Position = location,
+                Position = location,                
             };
 
             var glyphAreaX = (GLYPH_WIDTH * scale);
@@ -79,7 +79,7 @@ namespace MatrixScreen
                     _sprite.TextureRect.Height*_sprite.Scale.Y, 0, 0);
             }
 
-            _sprite.Draw(target, RenderStates.Default);
+            _sprite.Draw(target, new RenderStates(BlendMode.Add));
         }
 
         public void Update(ChronoEventArgs chronoArgs, IntRect visibleRegion)
