@@ -11,7 +11,7 @@ namespace MatrixScreen
 {
     public class GlyphStreamManager : IEntity
     {
-        private const int MAX_STREAMS = 13;
+        private const int MAX_STREAMS = 1;
         private const float CHANCE_OF_NEW_STREAM = 0.2f; // TODO - implement chance of occurring per second, max MAX_STREAMS
 
         private readonly Rectangle _workingArea;

@@ -10,9 +10,12 @@ namespace MatrixScreen
 {
     public class GlyphStream : IEntity
     {
+        private const int MAX_GLYPHS = 8;
+        private const int MIN_GLYPHS = 1;
+
         private readonly float movementRate;
         private readonly float scale;
-        private float marginScale = 0.8f; // 1 for normal; lower for glyphs closer together vertically               
+        private float marginScale = 1f; // 1 for normal; lower for glyphs closer together vertically               
 
         private readonly Rectangle _workingArea;
 
@@ -27,13 +30,17 @@ namespace MatrixScreen
         {
             _workingArea = workingArea;
             movementRate = GetRandom.Float(50, 300) * 0.1f;
-            var numberOfGlyphs = GetRandom.Int(3, 12);
+            var numberOfGlyphs = GetRandom.Int(MIN_GLYPHS, MAX_GLYPHS);
             scale = GetRandom.Float(0.1f, 0.6f);
 
             GlyphPosition = new Vector2f(
                 GetRandom.Int((int)-GlyphSize.X, (int) (_workingArea.Width + GlyphSize.X)),
                 GetRandom.Int((int)-GlyphSize.Y, (int)(_workingArea.Height + GlyphSize.Y)));
             
+            numberOfGlyphs = 5;
+            GlyphPosition = new Vector2f(10,10);
+            movementRate = 60;;
+
             _glyphs = new List<Glyph>();
             for (int i = 0; i < numberOfGlyphs; i++)
             {
@@ -81,13 +88,11 @@ namespace MatrixScreen
 
             if (Config.IsDebugRendering) // debug
             {
-                var shape = new RectangleShape(MaskSize)
-                {
-                    FillColor = new Color(0, 255, 0, 20),
-                    Position = MaskPosition,
-                    Origin = new Vector2f(Glyph.GLYPH_WIDTH * 0.5f * scale, 0),
-                };
-                shape.Draw(canvas, RenderStates.Default);
+                Debug.DrawRect(canvas, new Color(0, 255, 0, 20),
+                    MaskPosition.X, MaskPosition.Y,
+                    MaskSize.X, MaskSize.Y,
+                    //Glyph.GLYPH_WIDTH * 0.5f * scale,0);
+                    0,0);
             }
         }
 
