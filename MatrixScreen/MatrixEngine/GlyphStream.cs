@@ -78,8 +78,8 @@ namespace MatrixScreen
             return new IntRect(
                 (int)MaskPosition.X,
                 (int)MaskPosition.Y,
-                (int)MaskPosition.X + (int)MaskSize.X,
-                (int)MaskPosition.Y + (int)MaskSize.Y
+                (int)MaskSize.X,
+                (int)MaskSize.Y
                 );
         }
 
