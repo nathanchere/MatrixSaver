@@ -70,13 +70,16 @@ namespace MatrixScreen
         {
             if (!_isDraw) return;
 
-            if (_glyphArea.Contains(Mouse.GetPosition().X, Mouse.GetPosition().Y))
+            if (Config.IsDebugRendering)
             {
-                _sprite.Color = new Color(255, 170, 170);
-                var x = new RectangleShape(new Vector2f(_glyphArea.Width, _glyphArea.Height));
-                x.Position = new Vector2f(_glyphArea.Left, _glyphArea.Top);
-                x.FillColor = new Color(255,255,0,30);
-                x.Draw(target,RenderStates.Default);
+                if (_glyphArea.Contains(Mouse.GetPosition().X, Mouse.GetPosition().Y))
+                {
+                    _sprite.Color = new Color(255, 170, 170);
+                    var x = new RectangleShape(new Vector2f(_glyphArea.Width, _glyphArea.Height));
+                    x.Position = new Vector2f(_glyphArea.Left, _glyphArea.Top);
+                    x.FillColor = new Color(255, 255, 0, 30);
+                    x.Draw(target, RenderStates.Default);
+                }
             }
 
             _sprite.Draw(target, RenderStates.Default);            
