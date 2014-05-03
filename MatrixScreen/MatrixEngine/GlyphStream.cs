@@ -15,7 +15,8 @@ namespace MatrixScreen
 
         private readonly float movementRate;
         private readonly float scale;
-        private float marginScale = 1f; // 1 for normal; lower for glyphs closer together vertically               
+        private float marginScale = 0.8f; // 1 for normal; lower for glyphs closer together vertically               
+        private float displayDurationMultipier; // affects how long 
 
         private readonly Rectangle _workingArea;
 
@@ -31,17 +32,22 @@ namespace MatrixScreen
             _workingArea = workingArea;
             movementRate = GetRandom.Float(50, 300);
             var numberOfGlyphs = GetRandom.Int(MIN_GLYPHS, MAX_GLYPHS);
-            scale = GetRandom.Float(0.1f, 0.6f);
+            scale = GetRandom.Float(0.02f, 0.36f);
+            displayDurationMultipier = GetRandom.Float(1f / numberOfGlyphs * 0.5f, 3f);
 
             GlyphPosition = new Vector2f(
                 GetRandom.Int((int)-GlyphSize.X, (int) (_workingArea.Width + GlyphSize.X)),
                 GetRandom.Int((int)-GlyphSize.Y, (int)(_workingArea.Height + GlyphSize.Y)));
-            
-            // Just for debugging
-            //numberOfGlyphs = 5;
-            //GlyphPosition = new Vector2f(10,10);
-            //movementRate = 80;
-            //scale = GetRandom.Float(0.1f, 0.3f);
+
+            if (Config.IsDebugGlyphStreams)
+            {
+                // Just for debugging
+                numberOfGlyphs = 6;
+                GlyphPosition = new Vector2f(10,10);
+                movementRate = 80;
+                scale = 0.2f;
+                displayDurationMultipier = 0.5f;
+            }
 
             _glyphs = new List<Glyph>();
             for (int i = 0; i < numberOfGlyphs; i++)
@@ -55,13 +61,12 @@ namespace MatrixScreen
             }
 
             MaskPosition = new Vector2f(GlyphPosition.X, GlyphPosition.Y - MaskSize.Y);
-
         }
 
 
         public Vector2f MaskSize
         {
-            get { return new Vector2f(GlyphSize.X, GlyphSize.Y * _glyphs.Count); } //TODO: handle margin scale
+            get { return new Vector2f(GlyphSize.X, GlyphSize.Y * _glyphs.Count * displayDurationMultipier); } //TODO: handle margin scale
         }
 
         public Vector2f GlyphSize

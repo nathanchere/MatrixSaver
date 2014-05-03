@@ -8,11 +8,16 @@ namespace MatrixScreen
 {
     public static class Config
     {
-        public const bool IsDebugRendering = false;
+        public const bool IsDebugRendering = true;
+        public const bool IsDebugGlyphStreams = true;
         public static ViewPortSettings ViewPortSettings = new ViewPortSettings
         {
-            IsFullscreen = false,
-            IsMultiMonitorEnabled = true,
+            IsFullscreen = Config.IsFullscreen,
+            IsMultiMonitorEnabled = Config.IsMultipleMonitorEnabled,
         };
+
+        public const bool IsFullscreen = true;
+        public const bool IsMultipleMonitorEnabled = true;
+        public const int MaximumGlyphStreams = 1; // 50;
     }
 }
