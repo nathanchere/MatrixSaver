@@ -26,6 +26,7 @@ namespace MatrixScreen
 
         private Vector2f MaskPosition; // Stream position - scrolls down the screen
         private Vector2f GlyphPosition; // Individual glyphs location - doesn't change
+        private IntRect GlyphArea; // Total glyph-occupied region - doesn't change
 
         public GlyphStream(Rectangle workingArea)
         {
@@ -61,6 +62,13 @@ namespace MatrixScreen
             }
 
             MaskPosition = new Vector2f(GlyphPosition.X, GlyphPosition.Y - MaskSize.Y);
+            
+            GlyphArea = new IntRect(
+                (int)GlyphPosition.X,
+                (int)GlyphPosition.Y,
+                (int)GlyphSize.X,
+                (int)GlyphSize.Y + (int)(GlyphSize.Y * marginScale * (_glyphs.Count - 1f))
+                );        
         }
 
 
@@ -87,7 +95,7 @@ namespace MatrixScreen
                 (int)MaskSize.X,
                 (int)MaskSize.Y
                 );
-        }
+        }        
 
         public void Render(RenderTarget canvas)
         {
@@ -128,7 +136,7 @@ namespace MatrixScreen
         private void CheckIfExpired()
         {
             if (MaskPosition.Y > _workingArea.Bottom ||
-                MaskPosition.Y > GlyphPosition.Y + MaskSize.Y)
+                MaskPosition.Y > GlyphPosition.Y + GlyphArea.Height)
             {
                 IsExpired = true;
             }

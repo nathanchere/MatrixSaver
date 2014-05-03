@@ -16,7 +16,7 @@ namespace MatrixScreen
             IsMultiMonitorEnabled = Config.IsMultipleMonitorEnabled,
         };
 
-        public const bool IsFullscreen = true;
+        public const bool IsFullscreen = false;
         public const bool IsMultipleMonitorEnabled = true;
         public const int MaximumGlyphStreams = 1; // 50;
     }
