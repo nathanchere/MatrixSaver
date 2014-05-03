@@ -33,7 +33,7 @@ namespace MatrixScreen
             _workingArea = workingArea;
             movementRate = GetRandom.Float(50, 300);
             var numberOfGlyphs = GetRandom.Int(MIN_GLYPHS, MAX_GLYPHS);
-            scale = GetRandom.Float(0.02f, 0.36f);
+            scale = GetRandom.Float(Config.GlyphScaleMinimum, Config.GlyphScaleMaximum);
             displayDurationMultipier = GetRandom.Float(1f / numberOfGlyphs * 0.5f, 3f);
 
             GlyphPosition = new Vector2f(

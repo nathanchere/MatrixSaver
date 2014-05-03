@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using System.Net.Configuration;
 using FerretLib.SFML;
 using SFML.Graphics;
 using SFML.Window;
@@ -16,6 +17,10 @@ namespace MatrixScreen
         public const int GLYPH_TEXTURE_SIZE = 2048;
         public const int GLYPH_WIDTH = GLYPH_TEXTURE_SIZE / GLYPH_TEXTURE_COLUMNS;
         public const int GLYPH_HEIGHT = GLYPH_TEXTURE_SIZE / GLYPH_TEXTURE_ROWS;
+
+        private readonly float _baseOpacity;
+        private readonly float _chanceOfFlicker;
+        private bool _isFlickering;
 
         private readonly TwitchCalculator _twitch;
         private readonly Sprite _sprite;
@@ -50,21 +55,24 @@ namespace MatrixScreen
 
         public Glyph(Vector2f location, float scale)
         {
-            _sprite = new Sprite(_texture) {
+            _sprite = new Sprite(_texture)
+            {
                 Scale = new Vector2f(scale, scale),
-                Position = location,                
+                Position = location,
             };
 
-            var glyphAreaX = (GLYPH_WIDTH * scale);
+            var glyphAreaX = (GLYPH_WIDTH*scale);
             _glyphArea = new IntRect(
-                (int)(location.X - 0.5f * glyphAreaX),
-                (int)location.Y,
-                (int)glyphAreaX,
-                (int)(GLYPH_HEIGHT * scale));
+                (int) (location.X - 0.5f*glyphAreaX),
+                (int) location.Y,
+                (int) glyphAreaX,
+                (int) (GLYPH_HEIGHT*scale));
 
             //_sprite.Origin = new Vector2f(GLYPH_WIDTH * 0.5f * scale, 0);
 
             Index = GetRandom.Int(MAX_INDEX);
+            _baseOpacity = GetRandom.Float(0.75f, 0.9f);
+            _chanceOfFlicker = GetRandom.Float(0, 0.002f);
             _twitch = new TwitchCalculator();
         }
 
@@ -79,7 +87,7 @@ namespace MatrixScreen
                     _sprite.TextureRect.Height*_sprite.Scale.Y, 0, 0);
             }
 
-            _sprite.Draw(target, new RenderStates(BlendMode.Add));
+            _sprite.Draw(target, new RenderStates(BlendMode.Alpha));
         }
 
         public void Update(ChronoEventArgs chronoArgs, IntRect visibleRegion)
@@ -88,12 +96,24 @@ namespace MatrixScreen
 
             _isDraw = modifier > 0;
             if(!_isDraw) return;
+            
+            if(GetRandom.Float(1f) < _chanceOfFlicker) _isFlickering = !_isFlickering;
 
-            _sprite.Color = new Color(0, 255, 0, (byte)(190 * modifier));
+            _sprite.Color = new Color(0, 255, 0, CalculateOpacity());
 
             if (_twitch.IsTriggered(chronoArgs)) {
                 Index = GetRandom.Int(MAX_INDEX);
             }
+        }
+
+        private byte CalculateOpacity()
+        {
+            float multiplier = (_isFlickering)
+                ? GetRandom.Float(0.02f,0.3f)
+                : _baseOpacity + GetRandom.Float(-0.2f, 0.2f);
+            
+            multiplier = Math.Min(1f, multiplier);
+            return (byte) (multiplier*255);
         }
 
         private float GetVisibility(IntRect visibleRegion)
