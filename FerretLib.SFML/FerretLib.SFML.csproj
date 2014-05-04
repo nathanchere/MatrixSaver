@@ -57,6 +57,8 @@
   <ItemGroup>
     <Compile Include="ChronoEventArgs.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="FpsCounter.cs" />
+    <Compile Include="FpsLimiter.cs" />
     <Compile Include="GetRandom.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IWorldEngine.cs" />
@@ -65,7 +67,8 @@
     <Compile Include="ScreenSaverEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewportCollection.cs" />
-    <Compile Include="ViewPortSettings.cs" />
+    <Compile Include="ScreenSaverSettings.cs" />
+    <Compile Include="~Refactor\SystemClock.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

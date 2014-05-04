@@ -12,12 +12,13 @@ namespace FerretLib.SFML
         private RenderTexture _canvas;
 
         private readonly Chrono _chrono;
+        private readonly FpsLimiter _fpsLimiter;
         private bool _isFinished = false;
 
         /// <summary>
         /// .ctor
         /// </summary>
-        public ScreenSaverEngine(ViewPortSettings settings)
+        public ScreenSaverEngine(ScreenSaverSettings settings)
         {
             _viewPorts = new ViewPortCollection(settings.IsFullscreen, settings.IsMultiMonitorEnabled);
             _canvas = new RenderTexture((uint) _viewPorts.WorkingArea.Width, (uint) _viewPorts.WorkingArea.Height, false);

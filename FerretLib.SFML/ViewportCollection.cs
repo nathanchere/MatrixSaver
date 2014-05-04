@@ -146,8 +146,8 @@ namespace FerretLib.SFML
         {
             var state = RenderStates.Default;
 
-            var val = Mouse.GetPosition().X;
-            if (val < 600)
+            var val = Mouse.GetPosition().X + 20;
+            if (val < 300)
             {
                 state.Shader = shader;
                 shader.SetParameter("texture", canvas.Texture);
