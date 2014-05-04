@@ -88,6 +88,7 @@ namespace MatrixScreen
             }
 
             _sprite.Draw(target, new RenderStates(BlendMode.Alpha));
+            _sprite.Draw(target, new RenderStates(BlendMode.Add));
         }
 
         public void Update(ChronoEventArgs chronoArgs, IntRect visibleRegion)

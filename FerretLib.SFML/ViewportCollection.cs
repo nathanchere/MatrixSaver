@@ -139,7 +139,7 @@ namespace FerretLib.SFML
 
         // shitty hack
         Shape hack = new RectangleShape(new Vector2f(0,0)){FillColor = new Color(0,0,0,0)};
-        Shader shader = new Shader(null, @"data/frag.txt");
+        Shader shader = new Shader(null, @"data/frag.c");
         
 
         public void Draw(RenderTexture canvas)
@@ -151,6 +151,9 @@ namespace FerretLib.SFML
             {
                 state.Shader = shader;
                 shader.SetParameter("texture", canvas.Texture);
+                shader.SetParameter("sigma", Mouse.GetPosition().Y);
+                shader.SetParameter("glowMultiplier", Mouse.GetPosition().X);
+                shader.SetParameter("width", 20);
                 shader.SetParameter("pixel_threshold", 0.7f / (3 * val));
             }
             

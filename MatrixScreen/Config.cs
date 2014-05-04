@@ -14,24 +14,30 @@ namespace MatrixScreen
         public const bool IsDebugRendering = false;
         public const bool IsDebugGlyphStreams = false;
         
-        //public const int MaximumGlyphStreams = 1;
-        //public const bool IsFullscreen = false;
-        //public const bool IsDebugRendering = true;
-        //public const bool IsDebugGlyphStreams = true;
-
-
         public static ScreenSaverSettings ScreenSaverSettings = new ScreenSaverSettings
         {
             IsFullscreen = Config.IsFullscreen,
             IsMultiMonitorEnabled = Config.IsMultipleMonitorEnabled,
             MaxFps = 60,
-        };        
+        };
+
+        //// Debugging
+        //public const int MaximumGlyphStreams = 1;
+        //public const bool IsFullscreen = false;
+        //public const bool IsDebugRendering = true;
+        //public const bool IsDebugGlyphStreams = true;
 
         //// Preset - mini
-        public const int MaximumGlyphStreams = 1000;
+        //public const int MaximumGlyphStreams = 1000;
+        //public const float ChanceOfNewGlyphStream = 0.08f;
+        //public const float GlyphScaleMinimum = 0.02f;
+        //public const float GlyphScaleMaximum = 0.08f;
+
+        //// Preset - mini
+        public const int MaximumGlyphStreams = 200;
         public const float ChanceOfNewGlyphStream = 0.08f;
         public const float GlyphScaleMinimum = 0.02f;
-        public const float GlyphScaleMaximum = 0.08f;
+        public const float GlyphScaleMaximum = 0.12f;
 
         // Preset - big stuff
         //public const int MaximumGlyphStreams = 50;
