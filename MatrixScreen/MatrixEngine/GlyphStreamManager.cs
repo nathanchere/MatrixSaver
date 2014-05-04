@@ -13,6 +13,7 @@ namespace MatrixScreen
     {
         private const int MAX_STREAMS = Config.MaximumGlyphStreams;
         private const float CHANCE_OF_NEW_STREAM = Config.ChanceOfNewGlyphStream; // TODO - implement chance of occurring per second, max MAX_STREAMS
+        private const float NEW_STREAM_CHECK_FREQUENCY = 0.016f;
 
         private readonly Rectangle _workingArea;
         private List<GlyphStream> streams;
@@ -43,20 +44,18 @@ namespace MatrixScreen
             // Add new streams
             _runningDelta += chronoArgs.Delta;
 
-            if (_runningDelta >= 1)
+            if (_runningDelta >= NEW_STREAM_CHECK_FREQUENCY)
             {
                 var outcome = GetRandom.Double(0, _runningDelta);
                 var chance = CHANCE_OF_NEW_STREAM;// GetRandom.Double(0, CHANCE_OF_NEW_STREAM);
-                while (outcome < chance)
+                while (streams.Count <= MAX_STREAMS && outcome < chance)
                 {
-                    chance -= 1;
+                    chance -= NEW_STREAM_CHECK_FREQUENCY;
                     AddNewGlyphStream();
                 }
 
-                _runningDelta -= 1;
-            }
-
-                                     
+                _runningDelta -= NEW_STREAM_CHECK_FREQUENCY;
+            }                            
         }
     }
 }
