@@ -1,43 +1,28 @@
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace FerretLib.SFML
 {
-    internal class FpsLimiter
+    internal class FpsLimiter : HighPerformanceTimer
     {
+        private double _frequency;
+        private double _nextTime;
 
-        //public int TargetFps { get; private set; }
+        public void SetTargetFps(int targetFps)
+        {
+            _frequency = 1f / targetFps;
+        }
 
-        //private long _monotonic;
-        //private FpsCounter _fps;
-    
-        //private readonly long POLL_INTERVAL; // Number of 'ticks' per second
-        //private readonly double POLL_MULTIPLIER; // Multiply by this to convert ticks to seconds
+        public FpsLimiter(int targetFps)
+        {
+            SetTargetFps(targetFps);
+            _nextTime = GetTicks();
+        }
 
-        //internal FpsLimiter()
-        //{            
-        //    QueryPerformanceFrequency(out POLL_INTERVAL);
-        //    POLL_MULTIPLIER = 1d / POLL_INTERVAL;
-
-        //    _fps = new FpsCounter(POLL_INTERVAL);
-        //    QueryPerformanceCounter(out _monotonic);
-        //}
-
-        //internal ChronoEventArgs Update()
-        //{
-        //    long ticks;
-        //    QueryPerformanceCounter(out ticks);
-            
-
-        //    var delta = (ticks - _monotonic) * POLL_MULTIPLIER;
-        //    var fps = _fps.Update(ticks);
-           
-        //    _monotonic = ticks;
-        //    return new ChronoEventArgs(_monotonic, delta, fps);
-        //}
-
-        //public FpsLimiter(int targetFps)
-        //{
-        //    TargetFps = targetFps;
-        //}
+        internal void Sleep()
+        {
+            while (GetTicks() < _nextTime) Thread.Sleep(1);
+            _nextTime += _frequency;
+        }
     }
 }
