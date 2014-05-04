@@ -138,9 +138,15 @@ namespace FerretLib.SFML
 
         // shitty hack
         Shape hack = new RectangleShape(new Vector2f(0,0)){FillColor = new Color(0,0,0,0)};
+        Shader shader = new Shader(null, @"data/frag.txt");
+        
 
         public void Draw(RenderTexture canvas)
         {
+            var state = new RenderStates(shader);
+            shader.SetParameter("texture", canvas.Texture);
+            shader.SetParameter("pixel_threshold", 0.7f / (3 * Mouse.GetPosition().X));
+
             var sprite = new Sprite(canvas.Texture)
             {
                 Position = new Vector2f()
@@ -155,7 +161,7 @@ namespace FerretLib.SFML
                     viewport.WorkingArea.Width,
                     viewport.WorkingArea.Height);
                 sprite.TextureRect = rect;
-                viewport.Window.Draw(sprite);
+                viewport.Window.Draw(sprite, state);
             }
 
             ViewPorts.ForEach(x => x.Window.Draw(hack));

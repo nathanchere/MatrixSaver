@@ -17,13 +17,13 @@ namespace MatrixScreen
         {
             chrono = new ChronoDisplay();
         }
-
-        #region Contracts       
+   
         public void Render(RenderTarget canvas)
         {
             ((RenderTexture)canvas).Display();
             ((RenderTexture)canvas).Clear(Color.Black);
             _glyphsStream.Render(canvas);
+
             chrono.Render(canvas);
         }
 
@@ -40,7 +40,5 @@ namespace MatrixScreen
                 (uint)viewports.WorkingArea.Height);
             _glyphsStream = new GlyphStreamManager(area);
         }
-        #endregion
-
     }
 }
