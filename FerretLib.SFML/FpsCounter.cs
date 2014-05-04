@@ -16,7 +16,7 @@ namespace FerretLib.SFML
             {
                 _fps = (float)Math.Round(_frames * (ticks - _nextTicks + 1f), 2);
                 _frames = 0;
-                _nextTicks++;
+                _nextTicks = ticks + 1f;
             }
 
             return _fps;
