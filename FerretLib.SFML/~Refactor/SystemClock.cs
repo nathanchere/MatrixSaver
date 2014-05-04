@@ -16,23 +16,21 @@ namespace FerretLib.SFML
 
         [DllImport("Kernel32.dll")]
         protected static extern bool QueryPerformanceFrequency(out long lpFrequency);
-
-        protected long _monotonic;
-        protected readonly long POLL_INTERVAL; // Number of 'ticks' per second
+        
+        private readonly long POLL_INTERVAL; // Number of 'ticks' per second
         protected readonly double POLL_MULTIPLIER; // Multiply by this to convert ticks to seconds
 
         public HighPerformanceTimer()
         {                       
             QueryPerformanceFrequency(out POLL_INTERVAL);
-            POLL_MULTIPLIER = 1d / POLL_INTERVAL;
-            QueryPerformanceCounter(out _monotonic);        
+            POLL_MULTIPLIER = 1d / POLL_INTERVAL;               
         }
 
-        public long GetTicks()
+        public double GetTicks()
         {
             long ticks;
             QueryPerformanceCounter(out ticks);
-            return ticks;
+            return ticks * POLL_MULTIPLIER;
         }
     }
 }

@@ -6,17 +6,22 @@ namespace FerretLib.SFML
     internal class Chrono : HighPerformanceTimer
     {                
         private FpsCounter _fps;
+        protected double _monotonic;
     
         internal Chrono() : base()
-        {            
-            _fps = new FpsCounter(POLL_INTERVAL);
+        {
+            long ticks;
+            QueryPerformanceCounter(out ticks);
+            _monotonic = ticks * POLL_MULTIPLIER;
+
+            _fps = new FpsCounter();
         }
 
         internal ChronoEventArgs Update()
         {
             var ticks = GetTicks();
             
-            var delta = (ticks - _monotonic) * POLL_MULTIPLIER;
+            var delta = ticks - _monotonic;
             var fps = _fps.Update(ticks);
            
             _monotonic = ticks;
