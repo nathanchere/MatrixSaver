@@ -16,6 +16,7 @@ namespace MatrixScreen
 
         private readonly Rectangle _workingArea;
         private List<GlyphStream> streams;
+        private double _runningDelta;
 
         public GlyphStreamManager(Vector2u workingArea)
         {
@@ -40,8 +41,22 @@ namespace MatrixScreen
             streams = streams.Where(x => !x.IsExpired).ToList();
 
             // Add new streams
-            if (streams.Count < MAX_STREAMS && GetRandom.Float(0,1) < CHANCE_OF_NEW_STREAM)
-                AddNewGlyphStream();
+            _runningDelta += chronoArgs.Delta;
+
+            if (_runningDelta >= 1)
+            {
+                var outcome = GetRandom.Double(0, _runningDelta);
+                var chance = CHANCE_OF_NEW_STREAM;// GetRandom.Double(0, CHANCE_OF_NEW_STREAM);
+                while (outcome < chance)
+                {
+                    chance -= 1;
+                    AddNewGlyphStream();
+                }
+
+                _runningDelta -= 1;
+            }
+
+                                     
         }
     }
 }
