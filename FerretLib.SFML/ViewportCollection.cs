@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Services;
 using System.Windows.Forms;
 using SFML.Graphics;
 using SFML.Window;
@@ -143,10 +144,16 @@ namespace FerretLib.SFML
 
         public void Draw(RenderTexture canvas)
         {
-            var state = new RenderStates(shader);
-            shader.SetParameter("texture", canvas.Texture);
-            shader.SetParameter("pixel_threshold", 0.7f / (3 * Mouse.GetPosition().X));
+            var state = RenderStates.Default;
 
+            var val = Mouse.GetPosition().X;
+            if (val < 600)
+            {
+                state.Shader = shader;
+                shader.SetParameter("texture", canvas.Texture);
+                shader.SetParameter("pixel_threshold", 0.7f / (3 * val));
+            }
+            
             var sprite = new Sprite(canvas.Texture)
             {
                 Position = new Vector2f()
