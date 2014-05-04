@@ -28,15 +28,15 @@ namespace MatrixScreen
         };        
 
         //// Preset - mini
-        //public const int MaximumGlyphStreams = 500;
-        //public const float ChanceOfNewGlyphStream = 0.08f;
-        //public const float GlyphScaleMinimum = 0.02f;
-        //public const float GlyphScaleMaximum = 0.08f;
+        public const int MaximumGlyphStreams = 1000;
+        public const float ChanceOfNewGlyphStream = 0.18f;
+        public const float GlyphScaleMinimum = 0.02f;
+        public const float GlyphScaleMaximum = 0.08f;
 
         // Preset - big stuff
-        public const int MaximumGlyphStreams = 50;
-        public const float GlyphScaleMinimum = 0.02f;
-        public const float GlyphScaleMaximum = 0.36f;
-        public const float ChanceOfNewGlyphStream = 0.03f;
+        //public const int MaximumGlyphStreams = 50;
+        //public const float GlyphScaleMinimum = 0.02f;
+        //public const float GlyphScaleMaximum = 0.36f;
+        //public const float ChanceOfNewGlyphStream = 0.03f;
     }
 }

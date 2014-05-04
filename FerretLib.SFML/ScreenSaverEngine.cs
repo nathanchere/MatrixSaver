@@ -25,6 +25,7 @@ namespace FerretLib.SFML
             _canvas.Clear(Color.Black);
             _canvas.Display(); // Needed due to FBO causing inverted co-ords otherwise
             _chrono = new Chrono();
+            _fpsLimiter = new FpsLimiter(settings.MaxFps);
         }
 
         /// <summary>
@@ -51,6 +52,8 @@ namespace FerretLib.SFML
             
             while (!_isFinished)
             {
+                _fpsLimiter.Sleep();
+                
                 var updateArgs = _chrono.Update();
 
                 _viewPorts.HandleEvents();
