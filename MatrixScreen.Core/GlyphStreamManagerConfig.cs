@@ -4,10 +4,13 @@ namespace MatrixScreen
 {
     public class GlyphStreamManagerConfig
     {
+        public const string SHADER_GLITCH = @"GLITCH";
+
         public GlyphStreamConfig GlyphStreamConfig { get; private set; }
 
         public int MaximumGlyphStreams;
         public float ChanceOfNewGlyphStream;
+        public string ShaderType;
 
         internal static GlyphStreamManagerConfig Debug()
         {
@@ -80,11 +83,13 @@ namespace MatrixScreen
             {
                 MaximumGlyphStreams = 6,
                 ChanceOfNewGlyphStream = 0.09f,
+                ShaderType = SHADER_GLITCH,
+
                 GlyphStreamConfig = new GlyphStreamConfig()
                 {
                     MaxGlyphs = 20,
                     MinGlyphs = 3,
-                    MaxMovementRate = 700f,
+                    MaxMovementRate = 300f,
                     MinMovementRate = 30f,
 
                     MinGlyphScale = 0.08f,

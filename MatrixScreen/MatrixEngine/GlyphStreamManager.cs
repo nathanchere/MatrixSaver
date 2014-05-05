@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FerretLib.SFML;
+using Microsoft.Win32.SafeHandles;
 using SFML.Graphics;
 using SFML.Window;
+using Color = SFML.Graphics.Color;
 
 namespace MatrixScreen
 {
@@ -26,9 +28,9 @@ namespace MatrixScreen
             streams = new List<GlyphStream>();
             _settings = settings;
 
-            if (true) // TODO: configurable shader
+            if (!string.IsNullOrEmpty(settings.ShaderType)) // TODO: configurable shader
             {
-                shader = new GlitchShader();
+                shader = ShaderWrapper.Get(settings.ShaderType);
                 tempCanvas = new RenderTexture(workingArea.X, workingArea.Y, true);
                 tempCanvas.Display();
             }
@@ -46,17 +48,19 @@ namespace MatrixScreen
         {           
             if (shader != null)
             {                
+                tempCanvas.Clear(new Color(0,0,0,0));
                 streams.ForEach(x => x.Render(tempCanvas));                
                 canvas.Draw(new Sprite(tempCanvas.Texture), shader.Bind(tempCanvas));
             }
             else
             {
                 streams.ForEach(x => x.Render(canvas));
-            }
+            }            
         }
 
         public void Update(ChronoEventArgs chronoArgs)
         {
+            if(shader != null) shader.Update(chronoArgs);
             UpdateStreams(chronoArgs);
             PurgeOldStreams();
             AddNewStreams(chronoArgs);            

@@ -29,7 +29,7 @@ namespace MatrixScreen
                 IsDebugGlyphStreams = false,
 
                 RenderLayers = new List<GlyphStreamManagerConfig>{
-                    GlyphStreamManagerConfig.Mini(),
+                    //GlyphStreamManagerConfig.Mini(),
                     GlyphStreamManagerConfig.BigFew(),
                 },
             };
