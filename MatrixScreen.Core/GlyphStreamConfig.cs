@@ -11,6 +11,11 @@ namespace MatrixScreen
         public float MaxGlyphScale { get; set; }
         public float MinGlyphScale{ get; set; }
 
+        /// <summary>
+        /// 1 for normal; lower for glyphs closer together vertically
+        /// </summary>
+        public float MarginScale { get; set; }
+
         public GlyphConfig GlyphConfig { get; set; }
     }
 }

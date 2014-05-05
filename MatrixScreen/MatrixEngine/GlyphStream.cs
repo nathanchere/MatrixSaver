@@ -16,11 +16,11 @@ namespace MatrixScreen
         private readonly float MIN_MOVEMENTRATE;
         private readonly float MIN_GLYPHSCALE;
         private readonly float MAX_GLYPHSCALE;
-        private readonly GlyphStreamConfig _settings;
+        private readonly float MARGIN_SCALE;        
 
         private readonly float movementRate;
         private readonly float scale;
-        private float marginScale = 0.8f; // 1 for normal; lower for glyphs closer together vertically               
+        private readonly GlyphConfig _glyphConfig;
         private float displayDurationMultipier; // affects how long 
 
         private readonly Rectangle _workingArea;
@@ -35,15 +35,16 @@ namespace MatrixScreen
 
         public GlyphStream(GlyphStreamConfig settings, Rectangle workingArea)
         {
-            _settings = settings;
             _workingArea = workingArea;
+            _glyphConfig = settings.GlyphConfig;
 
-            MAX_GLYPHS = _settings.MaxGlyphs;
-            MIN_GLYPHS = _settings.MinGlyphs;
-            MAX_MOVEMENTRATE = _settings.MaxMovementRate;
-            MIN_MOVEMENTRATE = _settings.MinMovementRate;
-            MIN_GLYPHSCALE = _settings.MinGlyphScale;
-            MAX_GLYPHSCALE = _settings.MaxGlyphScale;
+            MAX_GLYPHS = settings.MaxGlyphs;
+            MIN_GLYPHS = settings.MinGlyphs;
+            MAX_MOVEMENTRATE = settings.MaxMovementRate;
+            MIN_MOVEMENTRATE = settings.MinMovementRate;
+            MIN_GLYPHSCALE = settings.MinGlyphScale;
+            MAX_GLYPHSCALE = settings.MaxGlyphScale;
+            MARGIN_SCALE = settings.MarginScale;
 
             movementRate = GetRandom.Float(MIN_MOVEMENTRATE, MAX_MOVEMENTRATE);
             var numberOfGlyphs = GetRandom.Int(MIN_GLYPHS, MAX_GLYPHS);
@@ -68,12 +69,12 @@ namespace MatrixScreen
             _glyphs = new List<Glyph>();
             for (int i = 0; i < numberOfGlyphs; i++)
             {
-                var y = GlyphPosition.Y + (i * Glyph.GLYPH_HEIGHT * scale * marginScale);
+                var y = GlyphPosition.Y + (i * Glyph.GLYPH_HEIGHT * scale * MARGIN_SCALE);
 
                 if (y + Glyph.GLYPH_HEIGHT < 0) continue;
                 if (y > workingArea.Height) continue;
 
-                _glyphs.Add(new Glyph(new Vector2f(GlyphPosition.X, y), scale, _settings.GlyphConfig));
+                _glyphs.Add(new Glyph(new Vector2f(GlyphPosition.X, y), scale, _glyphConfig));
             }
 
             MaskPosition = new Vector2f(GlyphPosition.X, GlyphPosition.Y - MaskSize.Y);
@@ -82,7 +83,7 @@ namespace MatrixScreen
                 (int)GlyphPosition.X,
                 (int)GlyphPosition.Y,
                 (int)GlyphSize.X,
-                (int)GlyphSize.Y + (int)(GlyphSize.Y * marginScale * (_glyphs.Count - 1f))
+                (int)GlyphSize.Y + (int)(GlyphSize.Y * MARGIN_SCALE * (_glyphs.Count - 1f))
                 );        
         }
 
