@@ -25,15 +25,18 @@ namespace MatrixScreen
             _workingArea = workingArea.ToRectangle();
             streams = new List<GlyphStream>();
             _settings = settings;
-            shader = new GlitchShader();
 
-            tempCanvas = new RenderTexture(workingArea.X, workingArea.Y, true);
-            tempCanvas.Display();
+            if (true) // TODO: configurable shader
+            {
+                shader = new GlitchShader();
+                tempCanvas = new RenderTexture(workingArea.X, workingArea.Y, true);
+                tempCanvas.Display();
+            }
 
             _maximumStreams = settings.MaximumGlyphStreams;
             _chanceOfNewStream = settings.ChanceOfNewGlyphStream;
         }
-
+        
         private void AddNewGlyphStream()
         {    
             streams.Add(new GlyphStream(_settings.GlyphStreamConfig, _workingArea));
@@ -43,10 +46,8 @@ namespace MatrixScreen
         {           
             if (shader != null)
             {                
-                streams.ForEach(x => x.Render(tempCanvas));
-                //shader.Bind(canvas as RenderTexture);
-                //canvas.Draw(new Sprite(tempCanvas.Texture), new RenderStates(shader.Shader));
-                canvas.Draw(new Sprite(tempCanvas.Texture), RenderStates.Default);                
+                streams.ForEach(x => x.Render(tempCanvas));                
+                canvas.Draw(new Sprite(tempCanvas.Texture), shader.Bind(tempCanvas));
             }
             else
             {

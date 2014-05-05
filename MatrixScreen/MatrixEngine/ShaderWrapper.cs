@@ -1,3 +1,4 @@
+using System;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -6,7 +7,7 @@ namespace MatrixScreen
     public abstract class ShaderWrapper
     {        
         public Shader Shader { get; protected set; }
-        public abstract void Bind(RenderTexture canvas);
+        public abstract RenderStates Bind(RenderTexture canvas);
     }
 
     public class GlitchShader : ShaderWrapper
@@ -16,17 +17,19 @@ namespace MatrixScreen
             Shader = new Shader(null, @"data/frag.c");     
         }
 
-        public override void Bind(RenderTexture canvas)
+        public override RenderStates Bind(RenderTexture canvas)
         {
-            var val = Mouse.GetPosition().X + 20;
-            if (val < 300)
-            {                
+            var result = RenderStates.Default;
+
+            if (DateTime.Now.Millisecond > 700)
+            {
                 Shader.SetParameter("texture", canvas.Texture);
-                Shader.SetParameter("sigma", Mouse.GetPosition().Y);
+                Shader.SetParameter("sigma", 0.5f);
                 Shader.SetParameter("glowMultiplier", Mouse.GetPosition().X);
-                Shader.SetParameter("width", 20);
-                Shader.SetParameter("pixel_threshold", 0.7f / (3 * val));
+                Shader.SetParameter("width", Mouse.GetPosition().Y); // 1 = horizontal lines, up to around 1000 is good
+                result.Shader = Shader;
             }
+            return result;
         }
     } 
 }

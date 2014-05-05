@@ -138,26 +138,10 @@ namespace FerretLib.SFML
         #endregion
 
         // shitty hack
-        Shape hack = new RectangleShape(new Vector2f(0,0)){FillColor = new Color(0,0,0,0)};
-        Shader shader = new Shader(null, @"data/frag.c");
-        
+        Shape hack = new RectangleShape(new Vector2f(0,0)){FillColor = new Color(0,0,0,0)};        
 
         public void Draw(RenderTexture canvas)
-        {
-            var state = RenderStates.Default;
-
-            var val = Mouse.GetPosition().X + 20;
-            if (val < 300)
-            {
-                state.Shader = shader;
-                state.BlendMode = BlendMode.Add;
-                shader.SetParameter("texture", canvas.Texture);
-                shader.SetParameter("sigma", Mouse.GetPosition().Y);
-                shader.SetParameter("glowMultiplier", Mouse.GetPosition().X);
-                shader.SetParameter("width", 20);
-                shader.SetParameter("pixel_threshold", 0.7f / (3 * val));
-            }
-            
+        {                      
             var sprite = new Sprite(canvas.Texture)
             {
                 Position = new Vector2f()
@@ -172,8 +156,7 @@ namespace FerretLib.SFML
                     viewport.WorkingArea.Width,
                     viewport.WorkingArea.Height);
                 sprite.TextureRect = rect;
-                viewport.Window.Draw(sprite, RenderStates.Default);
-                if(val < 300) viewport.Window.Draw(sprite, state);
+                viewport.Window.Draw(sprite, RenderStates.Default);                
             }
 
             ViewPorts.ForEach(x => x.Window.Draw(hack));
