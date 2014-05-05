@@ -43,8 +43,8 @@ namespace MatrixScreen
                     MaxMovementRate = 300f,
                     MinMovementRate = 40f,
 
-                    MinGlyphScale= 0.02f,
-                    MaxGlyphScale = 0.12f,
+                    MinGlyphScale= 0.01f,
+                    MaxGlyphScale = 0.045f,
                     MarginScale = 0.8f,
 
                     GlyphConfig = GlyphConfig.Default(),
@@ -88,7 +88,7 @@ namespace MatrixScreen
                     MinMovementRate = 30f,
 
                     MinGlyphScale = 0.08f,
-                    MaxGlyphScale = 0.7f,
+                    MaxGlyphScale = 0.2f,
                     MarginScale = 0.8f,
 
                     GlyphConfig = GlyphConfig.Default(),
