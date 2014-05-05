@@ -8,7 +8,7 @@ namespace MatrixScreen
         {
             var result = GetDevConfig();
             result.FpsLimit = 60;
-            result.IsFullscreen = false;
+            result.IsFullscreen = true;
             return result;
         }
 

@@ -9,13 +9,13 @@ namespace MatrixScreen
         private static void Main(string[] args)
         {
             if (args.Length == 0) return;
-            if (args[0].ToUpperInvariant().StartsWith(@"/c"))
+            if (args[0].ToUpperInvariant().StartsWith(@"/C"))
             {
                 // TODO: config
                 return;
             }
 
-            if (args[0].ToUpperInvariant().StartsWith(@"/p"))
+            if (args[0].ToUpperInvariant().StartsWith(@"/P"))
             {
                 // TODO: preview
                 return;
