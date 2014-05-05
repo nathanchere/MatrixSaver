@@ -49,12 +49,15 @@ namespace MatrixScreen
                 _index = value;
                 var x = value % GLYPH_TEXTURE_COLUMNS;
                 var y = (value - x) / GLYPH_TEXTURE_COLUMNS;
-                _sprite.TextureRect = new IntRect(
+                var textureRect = new IntRect(
                     x * GLYPH_WIDTH,
                     y * GLYPH_HEIGHT,
                     GLYPH_WIDTH,
                     GLYPH_HEIGHT
                 );
+
+                _sprite.TextureRect = textureRect;
+                _spriteOutline.TextureRect = textureRect;
             }
         }
 
@@ -98,9 +101,9 @@ namespace MatrixScreen
             //        _sprite.Position.Y, _sprite.TextureRect.Width*_sprite.Scale.X,
             //        _sprite.TextureRect.Height*_sprite.Scale.Y, 0, 0);
             //}
-
-            _spriteOutline.Draw(target, new RenderStates(BlendMode.Alpha));
+            
             _sprite.Draw(target, new RenderStates(BlendMode.Add));
+            _spriteOutline.Draw(target, new RenderStates(BlendMode.Alpha));
         }
 
         public void Update(ChronoEventArgs chronoArgs, IntRect visibleRegion)
@@ -112,7 +115,8 @@ namespace MatrixScreen
             
             if(GetRandom.Float(1f) < _config.ChanceOfHeavyFlicker) _isFlickering = !_isFlickering;
 
-            _sprite.Color = new Color(0, 255, 0, CalculateOpacity());
+            _spriteOutline.Color = new Color(0, 0, 0, (byte)(CalculateOpacity() * 0.6f));
+            _sprite.Color = new Color(0, 255, 0, CalculateOpacity());            
 
             if (_twitch.IsTriggered(chronoArgs)) {
                 Index = GetRandom.Int(MAX_INDEX);
