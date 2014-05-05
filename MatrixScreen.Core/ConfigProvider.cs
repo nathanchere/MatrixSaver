@@ -6,10 +6,27 @@ namespace MatrixScreen
     {
         public static MatrixConfig GetConfig()
         {
-            var result = GetNormalConfig();
+            var result = GetDevConfig();
             result.FpsLimit = 60;
             result.IsFullscreen = false;
             return result;
+        }
+
+        public static MatrixConfig GetDevConfig()
+        {
+            return new MatrixConfig
+            {
+                FpsLimit = 60,
+                IsFullscreen = true,
+                IsMultipleMonitorEnabled = true,
+                IsDebugRendering = false,
+                IsDebugGlyphStreams = false,
+
+                RenderLayers = new List<GlyphStreamManagerConfig>{
+                    GlyphStreamManagerConfig.Mini(),
+                    GlyphStreamManagerConfig.BigFew(),
+                },
+            };
         }
 
         public static MatrixConfig GetNormalConfig()

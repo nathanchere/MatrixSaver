@@ -7,7 +7,7 @@ using SFML.Window;
 
 namespace MatrixScreen
 {
-    public class Glyph // :IEntity // - need to rethink this
+    public class Glyph
     {
         public const int MAX_INDEX = 92; // maximum glyph character index
 

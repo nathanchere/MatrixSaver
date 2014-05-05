@@ -33,7 +33,7 @@ namespace MatrixScreen
         {
             return new GlyphStreamManagerConfig()
             {
-                MaximumGlyphStreams = 1000,
+                MaximumGlyphStreams = 600,
                 ChanceOfNewGlyphStream = 0.08f,                
                 GlyphStreamConfig = new GlyphStreamConfig(){
                     MaxGlyphs = 20,
@@ -42,7 +42,7 @@ namespace MatrixScreen
                     MinMovementRate = 40f,
 
                     MinGlyphScale= 0.02f,
-                    MaxGlyphScale = 0.08f,
+                    MaxGlyphScale = 0.12f,
                 },
             };
         }
@@ -62,6 +62,25 @@ namespace MatrixScreen
 
                     MinGlyphScale = 0.02f,
                     MaxGlyphScale = 0.36f,
+                },
+            };
+        }
+
+        internal static GlyphStreamManagerConfig BigFew()
+        {
+            return new GlyphStreamManagerConfig()
+            {
+                MaximumGlyphStreams = 6,
+                ChanceOfNewGlyphStream = 0.09f,
+                GlyphStreamConfig = new GlyphStreamConfig()
+                {
+                    MaxGlyphs = 20,
+                    MinGlyphs = 3,
+                    MaxMovementRate = 700f,
+                    MinMovementRate = 30f,
+
+                    MinGlyphScale = 0.08f,
+                    MaxGlyphScale = 0.7f,
                 },
             };
         }
