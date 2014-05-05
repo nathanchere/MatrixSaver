@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using FerretLib.SFML;
 using SFML.Graphics;
 using SFML.Window;
-using Color = SFML.Graphics.Color;
 
 namespace MatrixScreen
 {

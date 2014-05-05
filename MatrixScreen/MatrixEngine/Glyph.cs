@@ -24,8 +24,15 @@ namespace MatrixScreen
 
         private readonly TwitchCalculator _twitch;
         private readonly Sprite _sprite;
+        private readonly Sprite _spriteOutline;
         private readonly IntRect _glyphArea;
-        private static readonly Texture _texture = new Texture(@"data\glyphs.png") {
+        private static readonly Texture _texture = new Texture(@"data\glyphs.png")
+        {
+            Smooth = true,
+            Repeated = false,
+        };
+        private static readonly Texture _textureOutline = new Texture(@"data\glyphsOutline.png")
+        {
             Smooth = true,
             Repeated = false,
         };
@@ -63,14 +70,18 @@ namespace MatrixScreen
                 Position = location,
             };
 
+            _spriteOutline = new Sprite(_textureOutline)
+            {
+                Scale = new Vector2f(scale, scale),
+                Position = location,
+            };
+
             var glyphAreaX = (GLYPH_WIDTH*scale);
             _glyphArea = new IntRect(
                 (int) (location.X - 0.5f*glyphAreaX),
                 (int) location.Y,
                 (int) glyphAreaX,
                 (int) (GLYPH_HEIGHT*scale));
-
-            //_sprite.Origin = new Vector2f(GLYPH_WIDTH * 0.5f * scale, 0);
 
             Index = GetRandom.Int(MAX_INDEX);
             _twitch = new TwitchCalculator();
@@ -88,7 +99,7 @@ namespace MatrixScreen
             //        _sprite.TextureRect.Height*_sprite.Scale.Y, 0, 0);
             //}
 
-            _sprite.Draw(target, new RenderStates(BlendMode.Alpha));
+            _spriteOutline.Draw(target, new RenderStates(BlendMode.Alpha));
             _sprite.Draw(target, new RenderStates(BlendMode.Add));
         }
 
