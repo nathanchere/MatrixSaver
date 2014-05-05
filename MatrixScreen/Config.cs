@@ -8,6 +8,8 @@ namespace MatrixScreen
 {
     public static class Config
     {                
+        
+
         public const bool IsFullscreen = false;
         public const bool IsMultipleMonitorEnabled = true;
 
@@ -44,5 +46,19 @@ namespace MatrixScreen
         //public const float GlyphScaleMinimum = 0.02f;
         //public const float GlyphScaleMaximum = 0.36f;
         //public const float ChanceOfNewGlyphStream = 0.03f;
+    }
+
+    public class MatrixConfig
+    {
+        public bool IsFullscreen;
+        public bool IsMultipleMonitorEnabled;
+
+        public bool IsDebugRendering;
+        public bool IsDebugGlyphStreams;
+
+        public int MaximumGlyphStreams;
+        public float ChanceOfNewGlyphStream;
+        public float GlyphScaleMinimum;
+        public float GlyphScaleMaximum;
     }
 }
