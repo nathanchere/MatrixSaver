@@ -150,6 +150,7 @@ namespace FerretLib.SFML
             if (val < 300)
             {
                 state.Shader = shader;
+                state.BlendMode = BlendMode.Add;
                 shader.SetParameter("texture", canvas.Texture);
                 shader.SetParameter("sigma", Mouse.GetPosition().Y);
                 shader.SetParameter("glowMultiplier", Mouse.GetPosition().X);
@@ -171,7 +172,8 @@ namespace FerretLib.SFML
                     viewport.WorkingArea.Width,
                     viewport.WorkingArea.Height);
                 sprite.TextureRect = rect;
-                viewport.Window.Draw(sprite, state);
+                viewport.Window.Draw(sprite, RenderStates.Default);
+                if(val < 300) viewport.Window.Draw(sprite, state);
             }
 
             ViewPorts.ForEach(x => x.Window.Draw(hack));

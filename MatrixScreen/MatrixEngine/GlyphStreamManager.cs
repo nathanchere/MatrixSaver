@@ -13,6 +13,8 @@ namespace MatrixScreen
         private readonly float _chanceOfNewStream;
         private readonly float NEW_STREAM_CHECK_FREQUENCY = 0.016f; // TODO: config
         private readonly GlyphStreamManagerConfig _settings;
+        private readonly RenderTexture tempCanvas;
+        private readonly ShaderWrapper shader;
 
         private readonly Rectangle _workingArea;
         private List<GlyphStream> streams;
@@ -23,6 +25,10 @@ namespace MatrixScreen
             _workingArea = workingArea.ToRectangle();
             streams = new List<GlyphStream>();
             _settings = settings;
+            shader = new GlitchShader();
+
+            tempCanvas = new RenderTexture(workingArea.X, workingArea.Y, true);
+            tempCanvas.Display();
 
             _maximumStreams = settings.MaximumGlyphStreams;
             _chanceOfNewStream = settings.ChanceOfNewGlyphStream;
@@ -34,15 +40,25 @@ namespace MatrixScreen
         }
 
         public void Render(RenderTarget canvas)
-        {
-            streams.ForEach(x => x.Render(canvas));
+        {           
+            if (shader != null)
+            {                
+                streams.ForEach(x => x.Render(tempCanvas));
+                //shader.Bind(canvas as RenderTexture);
+                //canvas.Draw(new Sprite(tempCanvas.Texture), new RenderStates(shader.Shader));
+                canvas.Draw(new Sprite(tempCanvas.Texture), RenderStates.Default);                
+            }
+            else
+            {
+                streams.ForEach(x => x.Render(canvas));
+            }
         }
 
         public void Update(ChronoEventArgs chronoArgs)
         {
             UpdateStreams(chronoArgs);
             PurgeOldStreams();
-            AddNewStreams(chronoArgs);
+            AddNewStreams(chronoArgs);            
         }
 
         private void UpdateStreams(ChronoEventArgs chronoArgs)

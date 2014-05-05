@@ -2,6 +2,12 @@
 
 namespace MatrixScreen
 {
+
+    /// <summary>
+    /// TODO:
+    /// Configure keyboard exit
+    /// Configure mouse exit threshold
+    /// </summary>
     public static class ConfigProvider
     {
         public static MatrixConfig GetConfig()

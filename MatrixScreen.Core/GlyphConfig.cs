@@ -23,7 +23,8 @@
 
         public static GlyphConfig Default()
         {
-            return new GlyphConfig {
+            return new GlyphConfig
+            {
                 MinR = 0,
                 MaxR = 128,
                 MinG = 224,
@@ -36,6 +37,28 @@
                 LightFlickerAlphaMaxVariation = 0.1f,
                 HeavyFlickerMinAlpha = 32,
                 HeavyFlickerMaxAlpha = 128,
+                HeavyFickerAlphaVariation = 0.1f,
+
+                ChanceOfHeavyFlicker = 0.01f,
+            };
+        }
+
+        public static GlyphConfig Bright()
+        {
+            return new GlyphConfig
+            {
+                MinR = 0,
+                MaxR = 128,
+                MinG = 224,
+                MaxG = 255,
+                MinB = 0,
+                MaxB = 64,
+                MinA = 239,
+                MaxA = 255,
+                BrightnessVariation = 0f,
+                LightFlickerAlphaMaxVariation = 0.1f,
+                HeavyFlickerMinAlpha = 0,
+                HeavyFlickerMaxAlpha = 16,
                 HeavyFickerAlphaVariation = 0.1f,
 
                 ChanceOfHeavyFlicker = 0.01f,
