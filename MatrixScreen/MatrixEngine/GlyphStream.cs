@@ -43,7 +43,7 @@ namespace MatrixScreen
             MAX_MOVEMENTRATE = _settings.MaxMovementRate;
             MIN_MOVEMENTRATE = _settings.MinMovementRate;
             MIN_GLYPHSCALE = _settings.MinGlyphScale;
-            MAX_GLYPHSCALE = _settings.MinGlyphScale;
+            MAX_GLYPHSCALE = _settings.MaxGlyphScale;
 
             movementRate = GetRandom.Float(MIN_MOVEMENTRATE, MAX_MOVEMENTRATE);
             var numberOfGlyphs = GetRandom.Int(MIN_GLYPHS, MAX_GLYPHS);
