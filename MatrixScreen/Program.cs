@@ -1,4 +1,5 @@
-﻿using FerretLib.SFML;
+﻿using System.Linq;
+using FerretLib.SFML;
 
 namespace MatrixScreen
 {
@@ -7,6 +8,19 @@ namespace MatrixScreen
 
         private static void Main(string[] args)
         {
+            if (args.Length == 0) return;
+            if (args[0].ToUpperInvariant().StartsWith(@"/c"))
+            {
+                // TODO: config
+                return;
+            }
+
+            if (args[0].ToUpperInvariant().StartsWith(@"/p"))
+            {
+                // TODO: preview
+                return;
+            }
+
             var settings = ConfigProvider.GetConfig();
             var engineSettings = new ScreenSaverSettings() { 
                 IsFullscreen = settings.IsFullscreen,
