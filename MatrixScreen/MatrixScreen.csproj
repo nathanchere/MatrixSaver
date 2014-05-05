@@ -55,13 +55,11 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChronoDisplay.cs" />
-    <Compile Include="Config.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="MatrixEngine\Glyph.cs" />
     <Compile Include="MatrixEngine\GlyphStreamManager.cs" />
@@ -75,6 +73,10 @@
     <ProjectReference Include="..\FerretLib.SFML\FerretLib.SFML.csproj">
       <Project>{A8A5B3D5-9042-453C-81C7-C66A66F79855}</Project>
       <Name>FerretLib.SFML</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MatrixScreen.Core\MatrixScreen.Core.csproj">
+      <Project>{ec21f371-d920-4485-9e87-0ffb0a114fed}</Project>
+      <Name>MatrixScreen.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
