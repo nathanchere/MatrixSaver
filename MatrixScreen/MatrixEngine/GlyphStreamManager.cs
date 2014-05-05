@@ -11,23 +11,28 @@ namespace MatrixScreen
 {
     public class GlyphStreamManager : IEntity
     {
-        private const int MAX_STREAMS = Config.MaximumGlyphStreams;
-        private const float CHANCE_OF_NEW_STREAM = Config.ChanceOfNewGlyphStream; // TODO - implement chance of occurring per second, max MAX_STREAMS
-        private const float NEW_STREAM_CHECK_FREQUENCY = 0.016f;
+        private readonly int MAX_STREAMS;
+        private readonly float CHANCE_OF_NEW_STREAM;
+        private readonly float NEW_STREAM_CHECK_FREQUENCY = 0.016f; // TODO: config
+        private readonly GlyphStreamManagerConfig _settings;
 
         private readonly Rectangle _workingArea;
         private List<GlyphStream> streams;
         private double _runningDelta;
 
-        public GlyphStreamManager(Vector2u workingArea)
+        public GlyphStreamManager(GlyphStreamManagerConfig settings, Vector2u workingArea)
         {
             _workingArea = workingArea.ToRectangle();
-            streams = new List<GlyphStream>();            
+            streams = new List<GlyphStream>();
+            _settings = settings;
+
+            MAX_STREAMS = settings.MaximumGlyphStreams;
+            CHANCE_OF_NEW_STREAM = settings.ChanceOfNewGlyphStream;
         }
 
         private void AddNewGlyphStream()
         {    
-            streams.Add(new GlyphStream(_workingArea));
+            streams.Add(new GlyphStream(_settings.GlyphStreamConfig, _workingArea));
         }
 
         public void Render(RenderTarget canvas)

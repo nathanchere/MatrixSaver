@@ -22,7 +22,7 @@ namespace MatrixScreen
                 IsDebugRendering = false,
                 IsDebugGlyphStreams = false,
 
-                RenderLayers = new List<RenderLayerConfig>(),
+                RenderLayers = new List<GlyphStreamManagerConfig>(),
             };
         }
 
@@ -36,8 +36,8 @@ namespace MatrixScreen
                 IsDebugRendering = true,
                 IsDebugGlyphStreams = true,
 
-                RenderLayers = new List<RenderLayerConfig>{
-                    RenderLayerConfig.Mini(),
+                RenderLayers = new List<GlyphStreamManagerConfig>{
+                    GlyphStreamManagerConfig.Mini(),
                 },
             };
         }

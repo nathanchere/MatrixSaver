@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using FerretLib.SFML;
@@ -10,28 +11,30 @@ namespace MatrixScreen
 {
     public class MatrixEngine : IWorldEngine
     {
-        private GlyphStreamManager _glyphsStream;
+        private List<GlyphStreamManager> _glyphsStreams;
 
-        private ChronoDisplay chrono;
+        private ChronoDisplay _chrono;
+        private MatrixConfig _settings;
 
-        public MatrixEngine()
+        public MatrixEngine(MatrixConfig settings)
         {
-            chrono = new ChronoDisplay();
+            _chrono = new ChronoDisplay();
+            _settings = settings;
         }
-   
+
         public void Render(RenderTarget canvas)
         {
             ((RenderTexture)canvas).Display();
             ((RenderTexture)canvas).Clear(Color.Black);
-            _glyphsStream.Render(canvas);
+            _glyphsStreams.ForEach(x=>x.Render(canvas));
 
-            chrono.Render(canvas);
+            _chrono.Render(canvas);
         }
 
         public void Update(ChronoEventArgs chronoArgs)
         {
-            chrono.Update(chronoArgs);
-            _glyphsStream.Update(chronoArgs);
+            _chrono.Update(chronoArgs);
+            _glyphsStreams.ForEach(x=>x.Update(chronoArgs));
         }
 
         void IWorldEngine.Initialise(ViewPortCollection viewports)
@@ -39,7 +42,12 @@ namespace MatrixScreen
             var area = new Vector2u(
                 (uint)viewports.WorkingArea.Width,
                 (uint)viewports.WorkingArea.Height);
-            _glyphsStream = new GlyphStreamManager(area);
+
+            _glyphsStreams = new List<GlyphStreamManager>();
+            foreach (var setting in _settings.RenderLayers)
+            {
+                _glyphsStreams.Add(new GlyphStreamManager(setting, area));
+            }            
         }
     }
 }

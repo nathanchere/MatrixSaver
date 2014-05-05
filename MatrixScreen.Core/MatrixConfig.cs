@@ -12,6 +12,6 @@ namespace MatrixScreen
         public bool IsDebugRendering; //TODO: remove these
         public bool IsDebugGlyphStreams; //TODO: remove these
 
-        public List<RenderLayerConfig> RenderLayers { get; set; }
+        public List<GlyphStreamManagerConfig> RenderLayers { get; set; }
     }
 }

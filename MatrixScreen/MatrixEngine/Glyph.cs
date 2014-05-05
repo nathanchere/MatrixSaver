@@ -80,12 +80,13 @@ namespace MatrixScreen
         {
             if (!_isDraw) return;
 
-            if (Config.IsDebugRendering)
-            {
-                Debug.DrawRect(target, new Color(255, 255, 0, 30), _sprite.Position.X,
-                    _sprite.Position.Y, _sprite.TextureRect.Width*_sprite.Scale.X,
-                    _sprite.TextureRect.Height*_sprite.Scale.Y, 0, 0);
-            }
+            //// TODO: refactor to a debugGlyph class
+            //if (Config.IsDebugRendering)
+            //{
+            //    Debug.DrawRect(target, new Color(255, 255, 0, 30), _sprite.Position.X,
+            //        _sprite.Position.Y, _sprite.TextureRect.Width*_sprite.Scale.X,
+            //        _sprite.TextureRect.Height*_sprite.Scale.Y, 0, 0);
+            //}
 
             _sprite.Draw(target, new RenderStates(BlendMode.Alpha));
             _sprite.Draw(target, new RenderStates(BlendMode.Add));

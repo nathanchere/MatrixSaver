@@ -6,9 +6,16 @@ namespace MatrixScreen
     {        
 
         private static void Main(string[] args)
-        {            
-            var screenSaver = new ScreenSaverEngine(Config.ScreenSaverSettings);
-            screenSaver.Engine = new MatrixEngine();
+        {
+            var settings = ConfigProvider.GetConfig();
+            var engineSettings = new ScreenSaverSettings() { 
+                IsFullscreen = settings.IsFullscreen,
+                IsMultiMonitorEnabled = settings.IsMultipleMonitorEnabled,
+                MaxFps = settings.FpsLimit,
+            };
+
+            var screenSaver = new ScreenSaverEngine(engineSettings);
+            screenSaver.Engine = new MatrixEngine(settings);
             screenSaver.BindEscapeToExit();
             screenSaver.Run();            
         }

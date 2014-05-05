@@ -41,9 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigProvider.cs" />
+    <Compile Include="GlyphStreamConfig.cs" />
     <Compile Include="MatrixConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RenderLayerConfig.cs" />
+    <Compile Include="GlyphStreamManagerConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
