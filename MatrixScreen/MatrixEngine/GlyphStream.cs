@@ -73,7 +73,7 @@ namespace MatrixScreen
                 if (y + Glyph.GLYPH_HEIGHT < 0) continue;
                 if (y > workingArea.Height) continue;
 
-                _glyphs.Add(new Glyph(new Vector2f(GlyphPosition.X, y), scale));
+                _glyphs.Add(new Glyph(new Vector2f(GlyphPosition.X, y), scale, _settings.GlyphConfig));
             }
 
             MaskPosition = new Vector2f(GlyphPosition.X, GlyphPosition.Y - MaskSize.Y);

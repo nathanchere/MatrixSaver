@@ -25,6 +25,8 @@ namespace MatrixScreen
 
                     MinGlyphScale = 0.05f,
                     MaxGlyphScale = 0.4f,
+
+                    GlyphConfig = GlyphConfig.Default(),
                 },
             };
         }
@@ -43,6 +45,8 @@ namespace MatrixScreen
 
                     MinGlyphScale= 0.02f,
                     MaxGlyphScale = 0.12f,
+
+                    GlyphConfig = GlyphConfig.Default(),
                 },
             };
         }
@@ -62,6 +66,8 @@ namespace MatrixScreen
 
                     MinGlyphScale = 0.02f,
                     MaxGlyphScale = 0.36f,
+
+                    GlyphConfig = GlyphConfig.Default(),
                 },
             };
         }
@@ -81,6 +87,8 @@ namespace MatrixScreen
 
                     MinGlyphScale = 0.08f,
                     MaxGlyphScale = 0.7f,
+
+                    GlyphConfig = GlyphConfig.Default(),
                 },
             };
         }

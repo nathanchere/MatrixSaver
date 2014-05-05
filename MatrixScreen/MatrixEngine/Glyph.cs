@@ -18,8 +18,8 @@ namespace MatrixScreen
         public const int GLYPH_WIDTH = GLYPH_TEXTURE_SIZE / GLYPH_TEXTURE_COLUMNS;
         public const int GLYPH_HEIGHT = GLYPH_TEXTURE_SIZE / GLYPH_TEXTURE_ROWS;
 
-        private readonly float _baseOpacity;
-        private readonly float _chanceOfFlicker;
+        private readonly GlyphConfig _config;
+
         private bool _isFlickering;
 
         private readonly TwitchCalculator _twitch;
@@ -53,8 +53,10 @@ namespace MatrixScreen
 
         bool _isDraw = false;
 
-        public Glyph(Vector2f location, float scale)
+        public Glyph(Vector2f location, float scale, GlyphConfig settings)
         {
+            _config = settings;
+
             _sprite = new Sprite(_texture)
             {
                 Scale = new Vector2f(scale, scale),
@@ -71,8 +73,6 @@ namespace MatrixScreen
             //_sprite.Origin = new Vector2f(GLYPH_WIDTH * 0.5f * scale, 0);
 
             Index = GetRandom.Int(MAX_INDEX);
-            _baseOpacity = GetRandom.Float(0.75f, 0.9f);
-            _chanceOfFlicker = GetRandom.Float(0, 0.002f);
             _twitch = new TwitchCalculator();
         }
 
@@ -99,7 +99,7 @@ namespace MatrixScreen
             _isDraw = modifier > 0;
             if(!_isDraw) return;
             
-            if(GetRandom.Float(1f) < _chanceOfFlicker) _isFlickering = !_isFlickering;
+            if(GetRandom.Float(1f) < _config.ChanceOfHeavyFlicker) _isFlickering = !_isFlickering;
 
             _sprite.Color = new Color(0, 255, 0, CalculateOpacity());
 
@@ -110,12 +110,9 @@ namespace MatrixScreen
 
         private byte CalculateOpacity()
         {
-            float multiplier = (_isFlickering)
-                ? GetRandom.Float(0.02f,0.3f)
-                : _baseOpacity + GetRandom.Float(-0.2f, 0.2f);
-            
-            multiplier = Math.Min(1f, multiplier);
-            return (byte) (multiplier*255);
+            return _isFlickering 
+                ? GetRandom.Byte(_config.HeavyFlickerMinAlpha, _config.HeavyFlickerMinAlpha)
+                : GetRandom.Byte(_config.MinA, _config.MaxA);
         }
 
         private float GetVisibility(IntRect visibleRegion)

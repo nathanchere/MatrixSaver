@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigProvider.cs" />
+    <Compile Include="GlyphConfig.cs" />
     <Compile Include="GlyphStreamConfig.cs" />
     <Compile Include="MatrixConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
