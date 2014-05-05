@@ -11,8 +11,8 @@ namespace MatrixScreen
 {
     public class GlyphStreamManager : IEntity
     {
-        private readonly int MAX_STREAMS;
-        private readonly float CHANCE_OF_NEW_STREAM;
+        private readonly int _maximumStreams;
+        private readonly float _chanceOfNewStream;
         private readonly float NEW_STREAM_CHECK_FREQUENCY = 0.016f; // TODO: config
         private readonly GlyphStreamManagerConfig _settings;
 
@@ -26,8 +26,8 @@ namespace MatrixScreen
             streams = new List<GlyphStream>();
             _settings = settings;
 
-            MAX_STREAMS = settings.MaximumGlyphStreams;
-            CHANCE_OF_NEW_STREAM = settings.ChanceOfNewGlyphStream;
+            _maximumStreams = settings.MaximumGlyphStreams;
+            _chanceOfNewStream = settings.ChanceOfNewGlyphStream;
         }
 
         private void AddNewGlyphStream()
@@ -42,25 +42,37 @@ namespace MatrixScreen
 
         public void Update(ChronoEventArgs chronoArgs)
         {
+            UpdateStreams(chronoArgs);
+            PurgeOldStreams();
+            AddNewStreams(chronoArgs);
+        }
+
+        private void UpdateStreams(ChronoEventArgs chronoArgs)
+        {
             streams.ForEach(x => x.Update(chronoArgs));
+        }
 
+        private void PurgeOldStreams()
+        {
             streams = streams.Where(x => !x.IsExpired).ToList();
+        }
 
-            // Add new streams
+        private void AddNewStreams(ChronoEventArgs chronoArgs)
+        {            
             _runningDelta += chronoArgs.Delta;
 
             if (_runningDelta >= NEW_STREAM_CHECK_FREQUENCY)
             {
                 var outcome = GetRandom.Double(0, _runningDelta);
-                var chance = CHANCE_OF_NEW_STREAM;// GetRandom.Double(0, CHANCE_OF_NEW_STREAM);
-                while (streams.Count <= MAX_STREAMS && outcome < chance)
+                var chance = _chanceOfNewStream;
+                while (streams.Count <= _maximumStreams && outcome < chance)
                 {
                     chance -= NEW_STREAM_CHECK_FREQUENCY;
                     AddNewGlyphStream();
                 }
 
                 _runningDelta -= NEW_STREAM_CHECK_FREQUENCY;
-            }                            
+            }
         }
     }
 }
