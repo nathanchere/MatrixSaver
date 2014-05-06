@@ -25,11 +25,8 @@ namespace MatrixScreen
                 FpsLimit = 60,
                 IsFullscreen = true,
                 IsMultipleMonitorEnabled = true,
-                IsDebugRendering = false,
-                IsDebugGlyphStreams = false,
-
                 RenderLayers = new List<GlyphStreamManagerConfig>{
-                    //GlyphStreamManagerConfig.Mini(),
+                    GlyphStreamManagerConfig.Mini(),
                     GlyphStreamManagerConfig.BigFew(),
                 },
             };
@@ -42,8 +39,6 @@ namespace MatrixScreen
                 FpsLimit = 60,
                 IsFullscreen = true,
                 IsMultipleMonitorEnabled = true,
-                IsDebugRendering = false,
-                IsDebugGlyphStreams = false,
 
                 RenderLayers = new List<GlyphStreamManagerConfig>{
                     GlyphStreamManagerConfig.Big(),
@@ -58,8 +53,6 @@ namespace MatrixScreen
                 FpsLimit = 60,
                 IsFullscreen = false,
                 IsMultipleMonitorEnabled = false,
-                IsDebugRendering = true,
-                IsDebugGlyphStreams = true,
 
                 RenderLayers = new List<GlyphStreamManagerConfig>{
                     GlyphStreamManagerConfig.Debug(),

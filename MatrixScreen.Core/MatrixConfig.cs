@@ -9,9 +9,6 @@ namespace MatrixScreen
 
         public int FpsLimit;
 
-        public bool IsDebugRendering; //TODO: remove these
-        public bool IsDebugGlyphStreams; //TODO: remove these
-
         public List<GlyphStreamManagerConfig> RenderLayers { get; set; }
     }
 }

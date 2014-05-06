@@ -5,6 +5,7 @@ namespace MatrixScreen
     public class GlyphStreamManagerConfig
     {
         public const string SHADER_GLITCH = @"GLITCH";
+        public const string SHADER_GHOST = @"GHOST";
 
         public GlyphStreamConfig GlyphStreamConfig { get; private set; }
 
@@ -39,7 +40,8 @@ namespace MatrixScreen
             return new GlyphStreamManagerConfig()
             {
                 MaximumGlyphStreams = 800,
-                ChanceOfNewGlyphStream = 0.31f,                
+                ChanceOfNewGlyphStream = 0.31f,
+                ShaderType = SHADER_GHOST,
                 GlyphStreamConfig = new GlyphStreamConfig(){
                     MaxGlyphs = 20,
                     MinGlyphs = 3,
@@ -53,7 +55,7 @@ namespace MatrixScreen
                     GlyphConfig = GlyphConfig.Default(),
                 },
             };
-        }
+        }        
 
         internal static GlyphStreamManagerConfig Big()
         {
@@ -96,7 +98,7 @@ namespace MatrixScreen
                     MaxGlyphScale = 0.2f,
                     MarginScale = 0.8f,
 
-                    GlyphConfig = GlyphConfig.Default(),
+                    GlyphConfig = GlyphConfig.Bright(),
                 },
             };
         }
