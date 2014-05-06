@@ -6,7 +6,10 @@ using SFML.Window;
 
 namespace MatrixScreen
 {
-    public class GlyphStream : IEntity
+    /// <summary>
+    /// Not what I intended but looks cool enough to keep to maybe work in later
+    /// </summary>
+    public class GlyphStreamNoise : IEntity
     {
         private readonly float _movementRate;
         private readonly float _scale;
@@ -21,7 +24,7 @@ namespace MatrixScreen
 
         public bool IsExpired { get; private set; }
 
-        public GlyphStream(GlyphStreamConfig settings, Rectangle workingArea)
+        public GlyphStreamNoise(GlyphStreamConfig settings, Rectangle workingArea)
         {
             _glyphs = new List<Glyph>();
             _workingArea = workingArea;
@@ -31,7 +34,9 @@ namespace MatrixScreen
             var glyphCount = GetRandom.Int(settings.MinGlyphs, settings.MaxGlyphs);
             float displayDurationMultipier = GetRandom.Float(0.5f, 2f);
             
-            var glyphSize = new Vector2f(Glyph.GLYPH_WIDTH * _scale, Glyph.GLYPH_HEIGHT * _scale);                       
+            var glyphSize = new Vector2f(Glyph.GLYPH_WIDTH * _scale, Glyph.GLYPH_HEIGHT * _scale);
+            
+            _maskSize = new Vector2f(glyphSize.X, glyphSize.Y * _glyphs.Count * displayDurationMultipier); // TODO: incorporate margin
 
             GlyphPosition = new Vector2f(
                 GetRandom.Int((int)-glyphSize.X, (int)(_workingArea.Width + glyphSize.X)),
@@ -54,7 +59,6 @@ namespace MatrixScreen
                 _glyphs.Add(new Glyph(new Vector2f(GlyphPosition.X, y), _scale, settings.GlyphConfig));
             }
 
-            _maskSize = new Vector2f(glyphSize.X, glyphSize.Y * _glyphs.Count * displayDurationMultipier); // TODO: incorporate margin
             MaskPosition = new Vector2f(GlyphPosition.X, GlyphPosition.Y - _maskSize.Y);                       
         }
 

@@ -20,14 +20,34 @@ namespace MatrixScreen
 
         public static MatrixConfig GetDevConfig()
         {
+            var smallConfigGlitch = GlyphStreamManagerConfig.Mini();
+            smallConfigGlitch.MaximumGlyphStreams = 100;
+            smallConfigGlitch.ShaderType = GlyphStreamManagerConfig.SHADER_GLITCH;
+
+            var bigConfigNoGlitch = GlyphStreamManagerConfig.BigFew();
+            bigConfigNoGlitch.ShaderType = null;
+            var bigConfigGlitch = GlyphStreamManagerConfig.BigFew();
+            bigConfigGlitch.MaximumGlyphStreams = 2;
+            var bigConfigGhost = GlyphStreamManagerConfig.BigFew();
+            bigConfigGhost.MaximumGlyphStreams = 2;
+            bigConfigGhost.ShaderType = GlyphStreamManagerConfig.SHADER_GHOST;
+                 
             return new MatrixConfig
-            {
+            {   
                 FpsLimit = 60,
                 IsFullscreen = true,
                 IsMultipleMonitorEnabled = true,
                 RenderLayers = new List<GlyphStreamManagerConfig>{
-                    GlyphStreamManagerConfig.Mini(),
-                    GlyphStreamManagerConfig.BigFew(),
+                    smallConfigGlitch,
+                    smallConfigGlitch,
+                    smallConfigGlitch,
+                    smallConfigGlitch,
+                    smallConfigGlitch,
+                    bigConfigNoGlitch,
+                    bigConfigGlitch,
+                    bigConfigGlitch,
+                    bigConfigGlitch,
+                    bigConfigGhost,
                 },
             };
         }
