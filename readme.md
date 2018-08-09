@@ -1,11 +1,10 @@
 # MatrixSaver
-###A completely unoriginal name for a completely unoriginal product
+
+### A completely unoriginal name for a completely unoriginal product
 
 In short: my take on the "digital rain" effect made famous by The Matrix. Heavy lifting handled by [SFML](http://www.sfml-dev.org). 
 
 The main itch being scratched here is multi-monitor support. Why is it so hard to find good screensavers with good multiple monitor support (and performance)? For fellow developers the main point of interest here would be as an example of SFML.Net in the 'real world'.
-
-[![Send me a tweet](http://nathanchere.github.io/twitter_tweet.png)](https://twitter.com/intent/tweet?screen_name=nathanchere "Send me a tweet") [![Follow me](http://nathanchere.github.io/twitter_follow.png)](https://twitter.com/intent/user?screen_name=nathanchere "Follow me")
 
 ## Status
 
