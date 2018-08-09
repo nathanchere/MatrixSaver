@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FerretLib.SFML", "FerretLib.SFML\FerretLib.SFML.csproj", "{A8A5B3D5-9042-453C-81C7-C66A66F79855}"
 EndProject
@@ -17,6 +17,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatrixScreen.ConfigUI", "MatrixScreen.ConfigUI\MatrixScreen.ConfigUI.csproj", "{84000BDE-7578-413D-94E8-9C0732D24EC1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatrixScreen.Core", "MatrixScreen.Core\MatrixScreen.Core.csproj", "{EC21F371-D920-4485-9E87-0FFB0A114FED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{F1EE6F72-5FBF-410D-AE5A-069F7EDBFBB4}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		license = license
+		readme.md = readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,5 +78,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {855899FD-39BF-4758-8F8E-7F773627754B}
 	EndGlobalSection
 EndGlobal
