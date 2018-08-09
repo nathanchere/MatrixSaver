@@ -23,7 +23,7 @@ namespace MatrixScreen
                 }
             }
 
-            var settings = ConfigProvider.GetConfig();
+            var settings = ConfigProvider.GetDebugConfig();
             var engineSettings = new ScreenSaverSettings() { 
                 IsFullscreen = settings.IsFullscreen,
                 IsMultiMonitorEnabled = settings.IsMultipleMonitorEnabled,

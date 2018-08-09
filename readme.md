@@ -8,20 +8,9 @@ The main itch being scratched here is multi-monitor support. Why is it so hard t
 
 ## Status
 
-Branch | Status | Download | Description
-------|-----|------|--------
-master | [![Build status](https://ci.appveyor.com/api/projects/status/93dn556v0jw4q6la/branch/master)](https://ci.appveyor.com/project/nathanchere/nfmod) | [.zip](https://github.com/nathanchere/nFMOD/archive/master.zip) | for those who want to live on the bleeding edge
-stable | [![Build status](https://ci.appveyor.com/api/projects/status/93dn556v0jw4q6la/branch/stable)](https://ci.appveyor.com/project/nathanchere/nfmod) | [.zip](https://github.com/nathanchere/nFMOD/archive/stable.zip) | latest released/numbered code
+I am in the process of sorting through my repos, culling the ones which have succumbed to disinterest and/or code rot, and migrating the remainder to GitLab.
 
-*CI generously provided by [Appveyor](http://appveyor.com)*
-
-How I approach my public projects is explained on [my github home page](http://nathanchere.github.io).
-
-## Release history
-
-####vAlpha (2014-04-28)
-
-* initial release to GitHub
+This sits in limbo between those two states. As of August 2018 I haven't gotten around to fixing some bugs preventing it from working out-of-the-box so it remains on GitHub for now. 
 
 ## Credits / thanks
 
